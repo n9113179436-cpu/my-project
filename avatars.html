@@ -331,8 +331,18 @@
       background: linear-gradient(135deg, var(--indigo), var(--cyan));
       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
       animation: morph 9s ease-in-out infinite;
-      filter: blur(2px);
-      opacity: 0.7;
+      opacity: 0.9;
+      overflow: hidden;
+      position: relative;
+    }
+    .blob img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: luminosity;
+      opacity: 0.85;
     }
     @keyframes morph {
       0%,100%{border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%}
@@ -363,6 +373,7 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 18px;
       font-weight: 700;
+      top: 20px;
     }
 
     /* ─── STEPS ─── */
@@ -1022,7 +1033,7 @@
         </div>
         <div class="what-visual fade-up">
           <div class="blob-ring"></div>
-          <div class="blob"></div>
+          <div class="blob"><img src="photo.jpg" alt="Наталья Ивахненко"></div>
           <div class="blob-text">AVATARS</div>
         </div>
       </div>
