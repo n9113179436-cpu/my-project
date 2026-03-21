@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVATARS — Цифровая экосистема будущего</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D0F1A;
+      --bg2: #111427;
+      --indigo: #6C63FF;
+      --cyan: #00E5FF;
+      --lavender: #A78BFA;
+      --green: #10B981;
+      --white: #F0F4FF;
+      --muted: rgba(240,244,255,0.55);
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(108,99,255,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+    }
+
+    /* ─── AURORA BG ─── */
+    .aurora {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .aurora::before, .aurora::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+    }
+    .aurora::before {
+      width: 700px; height: 700px;
+      top: -200px; left: -150px;
+      background: conic-gradient(from 0deg, #6C63FF, #00E5FF, #A78BFA, #6C63FF);
+      animation: aurora-spin 18s linear infinite;
+    }
+    .aurora::after {
+      width: 500px; height: 500px;
+      bottom: -150px; right: -100px;
+      background: conic-gradient(from 180deg, #10B981, #6C63FF, #00E5FF, #10B981);
+      animation: aurora-spin 24s linear infinite reverse;
+    }
+    @keyframes aurora-spin { to { transform: rotate(360deg); } }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,15,26,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      color: var(--bg);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+    #particles-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.35);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lavender);
+      margin-bottom: 28px;
+    }
+    .hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: var(--lavender); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+
+    .hero-title {
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+    .hero-title .grad {
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--cyan) 50%, var(--lavender) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: grad-shift 5s ease infinite;
+    }
+    @keyframes grad-shift {
+      0%,100%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+    }
+    .hero-sub {
+      font-size: clamp(17px, 2.5vw, 21px);
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 44px;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      color: var(--bg);
+      border: none;
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 30px rgba(108,99,255,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 50px rgba(108,99,255,0.55);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .btn-secondary:hover { border-color: var(--indigo); transform: translateY(-3px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      z-index: 1;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--indigo), transparent);
+      animation: scroll-line 2s ease-in-out infinite;
+    }
+    @keyframes scroll-line { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:0.3;transform:scaleY(0.5)} }
+
+    /* ─── PROBLEM ─── */
+    #problem {
+      padding: 100px 24px;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--indigo);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 64px;
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .problem-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .problem-card:hover { border-color: rgba(108,99,255,0.5); transform: translateY(-4px); }
+    .problem-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .problem-card h3 { font-size: 20px; margin-bottom: 10px; }
+    .problem-card p { color: var(--muted); font-size: 15px; }
+
+    /* ─── WHAT IS ─── */
+    #what {
+      padding: 100px 24px;
+      background: var(--bg);
+    }
+    .what-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .what-text .section-sub { margin-bottom: 36px; }
+    .what-modules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 36px;
+    }
+    .what-module {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.3s;
+    }
+    .what-module:hover { border-color: rgba(108,99,255,0.5); }
+    .what-module-icon { font-size: 24px; }
+    .what-module span { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; }
+    .what-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 420px;
+    }
+    .blob {
+      width: 280px;
+      height: 280px;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      animation: morph 9s ease-in-out infinite;
+      filter: blur(2px);
+      opacity: 0.7;
+    }
+    @keyframes morph {
+      0%,100%{border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%}
+      25%{border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%}
+      50%{border-radius: 50% 60% 30% 60% / 30% 40% 70% 50%}
+      75%{border-radius: 70% 30% 50% 40% / 40% 70% 30% 50%}
+    }
+    .blob-ring {
+      position: absolute;
+      width: 340px; height: 340px;
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 50%;
+      animation: ring-spin 12s linear infinite;
+    }
+    .blob-ring::after {
+      content: '';
+      position: absolute;
+      top: -5px; left: 50%;
+      width: 10px; height: 10px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--cyan);
+    }
+    @keyframes ring-spin { to { transform: rotate(360deg); } }
+    .blob-text {
+      position: absolute;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    /* ─── STEPS ─── */
+    #steps {
+      padding: 100px 24px;
+      background: var(--bg2);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 48px;
+      left: calc(16.6% + 32px);
+      right: calc(16.6% + 32px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--indigo), transparent);
+    }
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      backdrop-filter: blur(12px);
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .step-card:hover { border-color: rgba(108,99,255,0.5); transform: translateY(-5px); }
+    .step-num {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--bg);
+      margin: 0 auto 24px;
+    }
+    .step-card h3 { font-size: 20px; margin-bottom: 10px; }
+    .step-card p { color: var(--muted); font-size: 15px; }
+
+    /* ─── DIRECTIONS (BENTO) ─── */
+    #directions {
+      padding: 100px 24px;
+      background: var(--bg);
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 20px;
+    }
+    .bento-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px;
+      backdrop-filter: blur(16px);
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .bento-card:hover { border-color: rgba(108,99,255,0.5); transform: translateY(-5px); }
+    .bento-ai    { grid-column: span 7; }
+    .bento-vr    { grid-column: span 5; }
+    .bento-avat  { grid-column: span 5; }
+    .bento-tools { grid-column: span 7; }
+    .bento-icon { font-size: 44px; margin-bottom: 20px; display: block; }
+    .bento-card h3 { font-size: 24px; margin-bottom: 12px; }
+    .bento-card p { color: var(--muted); font-size: 15px; max-width: 420px; }
+    .bento-tag {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 6px 16px;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--lavender);
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      padding: 80px 24px;
+      background: var(--bg2);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label { color: var(--muted); font-size: 15px; }
+
+    /* ─── UNIQUE ─── */
+    #unique {
+      padding: 100px 24px;
+      background: var(--bg);
+    }
+    .unique-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .unique-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .unique-card:hover { border-color: rgba(108,99,255,0.5); transform: translateY(-4px); }
+    .unique-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .unique-card h3 { font-size: 19px; margin-bottom: 10px; }
+    .unique-card p { color: var(--muted); font-size: 15px; }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      padding: 100px 24px;
+      background: var(--bg2);
+      overflow: hidden;
+    }
+    .marquee-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-wrap::before, .marquee-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, var(--bg2), transparent); }
+    .marquee-track {
+      display: flex;
+      gap: 24px;
+      animation: marquee 35s linear infinite;
+      width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 32px;
+      width: 340px;
+      flex-shrink: 0;
+      backdrop-filter: blur(12px);
+    }
+    .testi-text {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .testi-text::before { content: '«'; color: var(--indigo); font-style: normal; }
+    .testi-text::after  { content: '»'; color: var(--indigo); font-style: normal; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--indigo), var(--lavender));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 16px; color: var(--bg);
+    }
+    .testi-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; }
+    .testi-role { font-size: 13px; color: var(--muted); }
+
+    /* ─── CTA FINAL ─── */
+    #cta-final {
+      padding: 120px 24px;
+      background: var(--bg);
+      text-align: center;
+      position: relative;
+    }
+    .cta-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(108,99,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-inner .section-title { font-size: clamp(32px, 5vw, 58px); max-width: 700px; margin: 0 auto 20px; }
+    .cta-inner .section-sub { max-width: 500px; margin: 0 auto 48px; }
+    .cta-note { color: var(--muted); font-size: 14px; margin-top: 16px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 48px 40px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-tg {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--white);
+      text-decoration: none;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: border-color 0.3s;
+    }
+    .footer-tg:hover { border-color: var(--indigo); }
+
+    /* ─── NEON DIVIDER ─── */
+    .neon-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--indigo), var(--cyan), transparent);
+      box-shadow: 0 0 8px rgba(108,99,255,0.4);
+    }
+
+    /* ─── FADE IN ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ─── AI TOOLS ─── */
+    #ai-tools { padding: 100px 24px; background: var(--bg2); }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+      margin-top: 48px;
+    }
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 22px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .tool-card:hover { border-color: rgba(108,99,255,0.55); transform: translateY(-5px); }
+    .tool-emoji { font-size: 38px; display: block; margin-bottom: 12px; }
+    .tool-card h4 { font-size: 15px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+
+    /* ─── PRICING ─── */
+    #pricing { padding: 100px 24px; background: var(--bg); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+      align-items: start;
+    }
+    .price-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px 30px;
+      backdrop-filter: blur(16px);
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .price-card:hover { border-color: rgba(108,99,255,0.5); transform: translateY(-5px); }
+    .price-card.featured {
+      border-color: rgba(108,99,255,0.6);
+      background: rgba(108,99,255,0.08);
+      transform: scale(1.04);
+    }
+    .price-card.featured:hover { transform: scale(1.04) translateY(-5px); }
+    .price-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      color: var(--bg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .price-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .price-amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .price-amount sup { font-size: 24px; vertical-align: super; }
+    .price-desc { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+    .price-features { list-style: none; margin-bottom: 32px; }
+    .price-features li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .price-features li.muted-feat::before { content: '○'; color: var(--muted); }
+    .price-features li.muted-feat { color: var(--muted); }
+    .btn-price {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+    }
+    .btn-price-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+    }
+    .btn-price-outline:hover { border-color: var(--indigo); transform: translateY(-2px); }
+    .btn-price-filled {
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      color: var(--bg);
+      box-shadow: 0 0 24px rgba(108,99,255,0.35);
+    }
+    .btn-price-filled:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(108,99,255,0.55); }
+
+    /* ─── CRYPTOBOX ─── */
+    #cryptobox { padding: 100px 24px; background: var(--bg2); }
+    .crypto-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .crypto-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .crypto-box {
+      background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(0,229,255,0.08));
+      border: 1px solid rgba(108,99,255,0.35);
+      border-radius: 24px;
+      padding: 32px;
+      backdrop-filter: blur(16px);
+      text-align: center;
+    }
+    .crypto-box-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+    .crypto-rate {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .crypto-rate-label { color: var(--muted); font-size: 15px; margin-top: 6px; }
+    .crypto-calc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .crypto-calc-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin-bottom: 16px; font-size: 16px; }
+    .calc-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; }
+    .calc-row:last-child { border-bottom: none; }
+    .calc-row span:last-child { color: var(--green); font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+    .crypto-rules { list-style: none; margin-top: 20px; }
+    .crypto-rules li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 15px; display: flex; gap: 10px; }
+    .crypto-rules li span:first-child { color: var(--cyan); flex-shrink: 0; }
+
+    /* ─── TRINARY ─── */
+    #trinary { padding: 100px 24px; background: var(--bg); }
+    .trinary-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .trinary-tree {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px;
+      backdrop-filter: blur(16px);
+    }
+    .tree-node {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      border: 1px solid transparent;
+    }
+    .tree-node.you {
+      background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(0,229,255,0.1));
+      border-color: rgba(108,99,255,0.5);
+    }
+    .tree-node.lvl1 {
+      background: rgba(16,185,129,0.1);
+      border-color: rgba(16,185,129,0.3);
+      margin-left: 24px;
+    }
+    .tree-node.lvl2 {
+      background: rgba(167,139,250,0.08);
+      border-color: rgba(167,139,250,0.25);
+      margin-left: 48px;
+    }
+    .tree-connector {
+      width: 2px;
+      height: 16px;
+      background: linear-gradient(to bottom, rgba(108,99,255,0.5), rgba(108,99,255,0.1));
+      margin-left: 36px;
+    }
+    .node-icon { font-size: 24px; flex-shrink: 0; }
+    .node-info { flex: 1; }
+    .node-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; }
+    .node-reward { font-size: 13px; margin-top: 2px; }
+    .node-reward.green { color: var(--green); }
+    .node-reward.lavender { color: var(--lavender); }
+    .tree-levels {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .level-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .level-dot.active { background: rgba(108,99,255,0.2); border-color: var(--indigo); color: var(--white); }
+    .level-dot.exit { background: rgba(16,185,129,0.2); border-color: var(--green); color: var(--green); }
+    .trinary-facts { display: flex; flex-direction: column; gap: 20px; }
+    .fact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .fact-card:hover { border-color: rgba(108,99,255,0.5); transform: translateX(5px); }
+    .fact-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--indigo), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .fact-card p { color: var(--muted); font-size: 15px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .what-inner { grid-template-columns: 1fr; gap: 48px; }
+      .what-visual { height: 280px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-ai, .bento-vr, .bento-avat, .bento-tools { grid-column: span 1; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.featured { transform: none; }
+      .price-card.featured:hover { transform: translateY(-5px); }
+      .crypto-inner { grid-template-columns: 1fr; gap: 40px; }
+      .trinary-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 500px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .what-modules { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">AVATARS</div>
+    <ul class="nav-links">
+      <li><a href="#what">О платформе</a></li>
+      <li><a href="#ai-tools">Кабинет</a></li>
+      <li><a href="#pricing">Тарифы</a></li>
+      <li><a href="#cryptobox">Криптобокс</a></li>
+      <li><a href="#trinary">Тринар</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('steps').scrollIntoView({behavior:'smooth'})">Войти в экосистему</button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="aurora"></div>
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge"><span></span> Цифровая экосистема будущего</div>
+      <h1 class="hero-title">
+        Твой <span class="grad">цифровой двойник</span><br>уже ждёт тебя
+      </h1>
+      <p class="hero-sub">
+        AVATARS — экосистема, где нейросети, цифровые аватары и VR
+        становятся понятными и доступными для каждого
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('steps').scrollIntoView({behavior:'smooth'})">Создать аватара</button>
+        <button class="btn-secondary" onclick="document.getElementById('what').scrollIntoView({behavior:'smooth'})">Узнать подробнее</button>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Прокрутить</span>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-label fade-up">Почему сейчас</div>
+      <h2 class="section-title fade-up">Цифровой мир меняется.<br>Вопрос — ты в нём?</h2>
+      <p class="section-sub fade-up">Не нужно быть программистом. Нужно просто решить — изучить это сейчас, пока это интересно, или позже, когда станет обязательным.</p>
+      <div class="problem-grid">
+        <div class="problem-card fade-up">
+          <span class="problem-icon">🤖</span>
+          <h3>ИИ уже везде</h3>
+          <p>Нейросети помогают писать, считать, общаться. Те, кто умеет ими пользоваться, работают быстрее и эффективнее всех остальных.</p>
+        </div>
+        <div class="problem-card fade-up">
+          <span class="problem-icon">🌐</span>
+          <h3>Цифровое присутствие — новая реальность</h3>
+          <p>У компаний появляются виртуальные офисы, цифровые сотрудники и AI-помощники. Это не фантастика — это уже происходит.</p>
+        </div>
+        <div class="problem-card fade-up">
+          <span class="problem-icon">🚀</span>
+          <h3>Первые получают больше</h3>
+          <p>В любой технологической волне выигрывают те, кто пришёл раньше. VR, аватары и AI — это новая волна. Она уже началась.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- WHAT IS -->
+  <section id="what">
+    <div class="container">
+      <div class="what-inner">
+        <div class="what-text">
+          <div class="section-label fade-up">Что такое AVATARS</div>
+          <h2 class="section-title fade-up">Не просто платформа.<br>Это экосистема.</h2>
+          <p class="section-sub fade-up">
+            Представь: у тебя есть цифровая версия себя. Она может общаться, представлять тебя, работать онлайн. AVATARS — это компания, которая строит инструменты для такого цифрового присутствия.
+          </p>
+          <p class="section-sub fade-up" style="margin-top: -40px;">
+            Всё в одном месте — нейросети, аватары, VR и цифровые инструменты — связаны между собой и работают вместе.
+          </p>
+          <div class="what-modules fade-up">
+            <div class="what-module"><span class="what-module-icon">🧠</span><span>Нейросети & AI</span></div>
+            <div class="what-module"><span class="what-module-icon">👤</span><span>Цифровые аватары</span></div>
+            <div class="what-module"><span class="what-module-icon">🥽</span><span>VR / AR</span></div>
+            <div class="what-module"><span class="what-module-icon">🛠️</span><span>Цифровые инструменты</span></div>
+          </div>
+        </div>
+        <div class="what-visual fade-up">
+          <div class="blob-ring"></div>
+          <div class="blob"></div>
+          <div class="blob-text">AVATARS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- STEPS -->
+  <section id="steps">
+    <div class="container">
+      <div class="section-label fade-up" style="text-align:center">Как начать</div>
+      <h2 class="section-title fade-up" style="text-align:center">Три шага до экосистемы</h2>
+      <p class="section-sub fade-up" style="text-align:center;margin:0 auto 64px">Не нужно разбираться в технологиях. Просто следуй шагам.</p>
+      <div class="steps-grid">
+        <div class="step-card fade-up">
+          <div class="step-num">1</div>
+          <h3>Зарегистрируйся</h3>
+          <p>Создай профиль за 2 минуты. Никаких технических знаний не нужно — только имя и email.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num">2</div>
+          <h3>Выбери направление</h3>
+          <p>AI-инструменты, цифровой аватар или VR-пространство — найди то, что интересно именно тебе.</p>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num">3</div>
+          <h3>Начни бесплатно</h3>
+          <p>Первые инструменты доступны без оплаты. Попробуй, разберись, почувствуй — а потом реши.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:48px">
+        <button class="btn-primary">Начать прямо сейчас</button>
+        <p class="cta-note" style="margin-top:12px">Бесплатно · Без карты · Без обязательств</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- DIRECTIONS -->
+  <section id="directions">
+    <div class="container">
+      <div class="section-label fade-up">Направления</div>
+      <h2 class="section-title fade-up">Что входит в экосистему</h2>
+      <p class="section-sub fade-up">Выбери своё направление — или используй все четыре.</p>
+      <div class="bento-grid" style="margin-top:48px">
+        <div class="bento-card bento-ai fade-up">
+          <span class="bento-icon">🧠</span>
+          <h3>Нейросети & AI</h3>
+          <p>Умные инструменты, которые помогают писать тексты, создавать контент, отвечать на вопросы и автоматизировать задачи. Без кода и технических знаний.</p>
+          <span class="bento-tag">Доступно сейчас</span>
+        </div>
+        <div class="bento-card bento-vr fade-up">
+          <span class="bento-icon">🥽</span>
+          <h3>VR / AR</h3>
+          <p>Виртуальные пространства для работы, общения и презентаций. Войди в 3D-мир прямо из браузера.</p>
+          <span class="bento-tag">Бета-доступ</span>
+        </div>
+        <div class="bento-card bento-avat fade-up">
+          <span class="bento-icon">👤</span>
+          <h3>Цифровые аватары</h3>
+          <p>Создай свою цифровую копию. Используй её для представления в сети, деловых встреч и цифрового присутствия.</p>
+          <span class="bento-tag">В разработке</span>
+        </div>
+        <div class="bento-card bento-tools fade-up">
+          <span class="bento-icon">🛠️</span>
+          <h3>Цифровые инструменты</h3>
+          <p>Сайты, приложения, AI-агенты и автоматизация. Всё что нужно для цифровой жизни и бизнеса — в одном месте, без технических барьеров.</p>
+          <span class="bento-tag">Доступно сейчас</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- AI TOOLS -->
+  <section id="ai-tools">
+    <div class="container">
+      <div class="section-label fade-up">Личный кабинет</div>
+      <h2 class="section-title fade-up">9 AI-инструментов<br>в одном кабинете</h2>
+      <p class="section-sub fade-up">Доступны сразу после регистрации. Без скачиваний и технических знаний.</p>
+      <div class="tools-grid">
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">📸</span>
+          <h4>AI Фотограф</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">🎵</span>
+          <h4>Генератор песен</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">💊</span>
+          <h4>Чат по здоровью</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">💬</span>
+          <h4>Универсальный чат</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">⚖️</span>
+          <h4>Юридическая консультация</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">🧠</span>
+          <h4>Психологический чат</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">👤</span>
+          <h4>AI Аватар Студия</h4>
+        </div>
+        <div class="tool-card fade-up">
+          <span class="tool-emoji">🌀</span>
+          <h4>AI Телепорт</h4>
+        </div>
+        <div class="tool-card fade-up" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.06)">
+          <span class="tool-emoji">🎮</span>
+          <h4>Игра P2E<br><small style="color:var(--green);font-size:12px">Скоро</small></h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card fade-up">
+          <div class="stat-num" data-target="500">0</div>
+          <div class="stat-label">Участников экосистемы</div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-num" data-target="12">0</div>
+          <div class="stat-label">Стран присутствия</div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-num" data-target="4">0</div>
+          <div class="stat-label">Направления платформы</div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-num" data-target="100">0</div>
+          <div class="stat-label">% бесплатный старт</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- UNIQUE -->
+  <section id="unique">
+    <div class="container">
+      <div class="section-label fade-up">Почему AVATARS</div>
+      <h2 class="section-title fade-up">Чем мы отличаемся</h2>
+      <p class="section-sub fade-up">Мы не продаём отдельные инструменты. Мы строим систему.</p>
+      <div class="unique-grid" style="margin-top:48px">
+        <div class="unique-card fade-up">
+          <span class="unique-icon">🔗</span>
+          <h3>Всё связано</h3>
+          <p>Аватар, AI, VR и инструменты работают вместе. Не нужно собирать платформу по частям.</p>
+        </div>
+        <div class="unique-card fade-up">
+          <span class="unique-icon">🚪</span>
+          <h3>Вход для новичков</h3>
+          <p>Нет технических требований. Есть только желание попробовать — этого достаточно.</p>
+        </div>
+        <div class="unique-card fade-up">
+          <span class="unique-icon">🛡️</span>
+          <h3>Честность и прозрачность</h3>
+          <p>Никаких скрытых условий. Бесплатный старт — без карты, без ловушек, без мелкого шрифта.</p>
+        </div>
+        <div class="unique-card fade-up">
+          <span class="unique-icon">🤝</span>
+          <h3>Поддержка на каждом шаге</h3>
+          <p>Живое сообщество и наставники. Можно задать любой вопрос — и получить нормальный ответ.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-label fade-up" style="text-align:center">Тарифы</div>
+      <h2 class="section-title fade-up" style="text-align:center">Выбери свой уровень входа</h2>
+      <p class="section-sub fade-up" style="text-align:center;margin:0 auto 64px">Каждый тариф открывает полный доступ к кабинету и Тринар-системе</p>
+      <div class="pricing-grid">
+
+        <!-- JUNIOR -->
+        <div class="price-card fade-up">
+          <div class="price-name">Джуниор</div>
+          <div class="price-amount"><sup>$</sup>10</div>
+          <div class="price-desc">Идеальный старт — попробуй без риска</div>
+          <ul class="price-features">
+            <li>Доступ к личному кабинету</li>
+            <li>9 AI-инструментов</li>
+            <li>Криптобокс — 0.3% в сутки</li>
+            <li>Тринар-система (10 уровней)</li>
+            <li>Поддержка сообщества</li>
+            <li class="muted-feat">Повышенный % криптобокса</li>
+            <li class="muted-feat">Приоритетная поддержка</li>
+          </ul>
+          <button class="btn-price btn-price-outline">Начать за $10</button>
+        </div>
+
+        <!-- LITE -->
+        <div class="price-card featured fade-up">
+          <div class="price-badge">Популярный</div>
+          <div class="price-name">Лайт</div>
+          <div class="price-amount"><sup>$</sup>100</div>
+          <div class="price-desc">Оптимальный баланс возможностей и дохода</div>
+          <ul class="price-features">
+            <li>Доступ к личному кабинету</li>
+            <li>9 AI-инструментов</li>
+            <li>Криптобокс — 0.3% в сутки</li>
+            <li>Тринар-система (10 уровней)</li>
+            <li>Поддержка сообщества</li>
+            <li>Ранний доступ к игре P2E</li>
+            <li class="muted-feat">Повышенный % криптобокса</li>
+          </ul>
+          <button class="btn-price btn-price-filled">Начать за $100</button>
+        </div>
+
+        <!-- PRO -->
+        <div class="price-card fade-up">
+          <div class="price-name">Про</div>
+          <div class="price-amount"><sup>$</sup>1000</div>
+          <div class="price-desc">Максимальный доход и все возможности</div>
+          <ul class="price-features">
+            <li>Доступ к личному кабинету</li>
+            <li>9 AI-инструментов</li>
+            <li>Криптобокс — <strong style="color:var(--cyan)">1% в сутки</strong> 🔥</li>
+            <li>Тринар-система (10 уровней)</li>
+            <li>Приоритетная поддержка</li>
+            <li>Ранний доступ к игре P2E</li>
+            <li>VIP-сообщество</li>
+          </ul>
+          <button class="btn-price btn-price-outline">Начать за $1000</button>
+        </div>
+
+      </div>
+      <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:32px">
+        Все тарифы включают бессрочный доступ · Выводить доход можно с первого дня
+      </p>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- CRYPTOBOX -->
+  <section id="cryptobox">
+    <div class="container">
+      <div class="section-label fade-up">Пассивный доход</div>
+      <h2 class="section-title fade-up">Криптобокс — деньги<br>работают каждый день</h2>
+      <div class="crypto-inner" style="margin-top:48px">
+        <div class="crypto-visual fade-up">
+          <div class="crypto-box">
+            <span class="crypto-box-icon">📦</span>
+            <div class="crypto-rate">0.3% — 1%</div>
+            <div class="crypto-rate-label">начисляется каждые 24 часа</div>
+          </div>
+          <div class="crypto-calc">
+            <div class="crypto-calc-title">Пример расчёта — $500 в Криптобоксе</div>
+            <div class="calc-row"><span>В сутки (Джуниор/Лайт)</span><span>+$1.50</span></div>
+            <div class="calc-row"><span>В месяц (Джуниор/Лайт)</span><span>+$45</span></div>
+            <div class="calc-row"><span>В сутки (Про)</span><span>+$5.00</span></div>
+            <div class="calc-row"><span>В месяц (Про)</span><span>+$150</span></div>
+          </div>
+        </div>
+        <div class="fade-up">
+          <p style="color:var(--muted);font-size:17px;margin-bottom:32px">
+            Вложи любую сумму от $500 в Криптобокс — и каждый день получай процент.
+            Основная сумма остаётся у тебя, выводишь только доход.
+          </p>
+          <ul class="crypto-rules">
+            <li><span>💰</span><span>Минимальная сумма входа — $500. Максимума нет.</span></li>
+            <li><span>📈</span><span>0.3% в сутки на тарифах Джуниор и Лайт.</span></li>
+            <li><span>🚀</span><span>1% в сутки на тарифе Про — в 3 раза больше.</span></li>
+            <li><span>💸</span><span>Выводить можно проценты в любое время.</span></li>
+            <li><span>🔒</span><span>Основная сумма в безопасности — выводится отдельно.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- TRINARY -->
+  <section id="trinary">
+    <div class="container">
+      <div class="section-label fade-up">Партнёрская программа</div>
+      <h2 class="section-title fade-up">Система Тринар —<br>математика на твоей стороне</h2>
+      <p class="section-sub fade-up">Пригласи партнёров — и система возвращает тебе деньги. Это не реклама, это алгоритм.</p>
+      <div class="trinary-inner" style="margin-top:48px">
+        <div class="trinary-tree fade-up">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Как работает схема</div>
+          <div class="tree-node you">
+            <span class="node-icon">👑</span>
+            <div class="node-info">
+              <div class="node-title">Ты</div>
+              <div class="node-reward lavender">Приглашаешь 3 партнёров</div>
+            </div>
+          </div>
+          <div class="tree-connector"></div>
+          <div class="tree-node lvl1">
+            <span class="node-icon">👤</span>
+            <div class="node-info">
+              <div class="node-title">1-й партнёр</div>
+              <div class="node-reward green">Ты получаешь 100% суммы его входа</div>
+            </div>
+          </div>
+          <div class="tree-connector" style="margin-left:60px"></div>
+          <div class="tree-node lvl2">
+            <span class="node-icon">👤</span>
+            <div class="node-info">
+              <div class="node-title">2-й партнёр и далее</div>
+              <div class="node-reward lavender">Ты зарабатываешь 50% от вложенной суммы</div>
+            </div>
+          </div>
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06)">
+            <div style="font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600">Уровни системы:</div>
+            <div class="tree-levels">
+              <div class="level-dot active">1</div>
+              <div class="level-dot active">2</div>
+              <div class="level-dot active">3</div>
+              <div class="level-dot active">4</div>
+              <div class="level-dot exit" title="Можно выйти">5↑</div>
+              <div class="level-dot">6</div>
+              <div class="level-dot">7</div>
+              <div class="level-dot">8</div>
+              <div class="level-dot">9</div>
+              <div class="level-dot">10</div>
+              <span style="font-size:13px;color:var(--green);margin-left:4px">← выход после 4-го</span>
+            </div>
+          </div>
+        </div>
+        <div class="trinary-facts fade-up">
+          <div class="fact-card">
+            <div class="fact-num">100%</div>
+            <p>С первого приглашённого партнёра возвращается вся сумма его входа — деньги окупаются сразу.</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-num">50%</div>
+            <p>Со второго и следующих партнёров ты зарабатываешь 50% от суммы, которую они вложили в систему.</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-num">10</div>
+            <p>Уровней в системе. После 4-го уровня ты можешь выйти — деньги уже отработали своё.</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-num">3</div>
+            <p>Тринар — от слова «три». Каждый участник приглашает трёх. Математика работает сама.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-label fade-up" style="text-align:center">Отзывы</div>
+      <h2 class="section-title fade-up" style="text-align:center;margin-bottom:56px">Люди уже внутри экосистемы</h2>
+    </div>
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marquee">
+        <!-- карточки дублируются для бесконечного скролла -->
+        <div class="testi-card"><p class="testi-text">Я всегда думала, что нейросети — это для молодых и технарей. Попробовала AVATARS — и за неделю уже делаю то, на что раньше уходили часы.</p><div class="testi-author"><div class="testi-avatar">Т</div><div><div class="testi-name">Татьяна, 51 год</div><div class="testi-role">Бухгалтер, Москва</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Наконец-то платформа, где объясняют нормально. Не "нейросеть это модель LLM", а просто — вот инструмент, вот как им пользоваться.</p><div class="testi-author"><div class="testi-avatar">А</div><div><div class="testi-name">Андрей, 38 лет</div><div class="testi-role">Владелец малого бизнеса</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Зашёл из любопытства — остался, потому что это реально работает. AI-инструменты сэкономили мне несколько часов в неделю уже в первый месяц.</p><div class="testi-author"><div class="testi-avatar">М</div><div><div class="testi-name">Михаил, 29 лет</div><div class="testi-role">Маркетолог, удалёнка</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Я следила за темой VR и метавселенной пару лет. AVATARS — первый проект, где это не просто красивые слайды, а реально можно пощупать.</p><div class="testi-author"><div class="testi-avatar">Е</div><div><div class="testi-name">Екатерина, 34 года</div><div class="testi-role">UX-дизайнер</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Начал с бесплатного доступа, через три недели подключил команду. Теперь AI-помощник закрывает задачи, на которые мы тратили деньги на фрилансеров.</p><div class="testi-author"><div class="testi-avatar">Н</div><div><div class="testi-name">Никита, 42 года</div><div class="testi-role">CEO, digital-агентство</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Объясняют сложное простым языком. Никакого снобизма "это не для вас". Взяли меня — человека с нулевыми знаниями — и довели до первого результата.</p><div class="testi-author"><div class="testi-avatar">О</div><div><div class="testi-name">Ольга, 56 лет</div><div class="testi-role">Преподаватель, Санкт-Петербург</div></div></div></div>
+        <!-- дублирование для бесконечности -->
+        <div class="testi-card"><p class="testi-text">Я всегда думала, что нейросети — это для молодых и технарей. Попробовала AVATARS — и за неделю уже делаю то, на что раньше уходили часы.</p><div class="testi-author"><div class="testi-avatar">Т</div><div><div class="testi-name">Татьяна, 51 год</div><div class="testi-role">Бухгалтер, Москва</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Наконец-то платформа, где объясняют нормально. Не "нейросеть это модель LLM", а просто — вот инструмент, вот как им пользоваться.</p><div class="testi-author"><div class="testi-avatar">А</div><div><div class="testi-name">Андрей, 38 лет</div><div class="testi-role">Владелец малого бизнеса</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Зашёл из любопытства — остался, потому что это реально работает. AI-инструменты сэкономили мне несколько часов в неделю уже в первый месяц.</p><div class="testi-author"><div class="testi-avatar">М</div><div><div class="testi-name">Михаил, 29 лет</div><div class="testi-role">Маркетолог, удалёнка</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Я следила за темой VR и метавселенной пару лет. AVATARS — первый проект, где это не просто красивые слайды, а реально можно пощупать.</p><div class="testi-author"><div class="testi-avatar">Е</div><div><div class="testi-name">Екатерина, 34 года</div><div class="testi-role">UX-дизайнер</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Начал с бесплатного доступа, через три недели подключил команду. Теперь AI-помощник закрывает задачи, на которые мы тратили деньги на фрилансеров.</p><div class="testi-author"><div class="testi-avatar">Н</div><div><div class="testi-name">Никита, 42 года</div><div class="testi-role">CEO, digital-агентство</div></div></div></div>
+        <div class="testi-card"><p class="testi-text">Объясняют сложное простым языком. Никакого снобизма "это не для вас". Взяли меня — человека с нулевыми знаниями — и довели до первого результата.</p><div class="testi-author"><div class="testi-avatar">О</div><div><div class="testi-name">Ольга, 56 лет</div><div class="testi-role">Преподаватель, Санкт-Петербург</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="neon-divider"></div>
+
+  <!-- FINAL CTA -->
+  <section id="cta-final">
+    <div class="aurora"></div>
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <div class="section-label fade-up" style="text-align:center">Готов?</div>
+      <h2 class="section-title fade-up">Цифровое будущее<br>строится сейчас. Ты с нами?</h2>
+      <p class="section-sub fade-up">Первый шаг занимает 2 минуты. Никаких технических знаний не нужно.</p>
+      <button class="btn-primary fade-up" style="font-size:18px;padding:18px 48px">Войти в AVATARS</button>
+      <p class="cta-note fade-up">Бесплатно · Без карты · Без обязательств · Поддержка на каждом шаге</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">AVATARS</div>
+      <div class="footer-links">
+        <a href="#what">О платформе</a>
+        <a href="#directions">Направления</a>
+        <a href="#steps">Как начать</a>
+        <a href="#unique">Почему мы</a>
+      </div>
+      <a href="https://t.me/Natali_Ivahnenko" class="footer-tg" target="_blank">
+        ✈️ Telegram
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── PARTICLES ─── */
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [], mouse = { x: -999, y: -999 };
+    const COLORS = ['#6C63FF', '#00E5FF', '#A78BFA'];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 110; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.55,
+        vy: (Math.random() - 0.5) * 0.55,
+        size: Math.random() * 2.2 + 0.8,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)]
+      });
+    }
+
+    canvas.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    canvas.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+
+    function animParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        const dx = mouse.x - p.x, dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 130) {
+          p.vx -= dx / dist * 0.06;
+          p.vy -= dy / dist * 0.06;
+        }
+        p.vx *= 0.995; p.vy *= 0.995;
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 140) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(108,99,255,${(1 - d / 140) * 0.45})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animParticles);
+    }
+    animParticles();
+
+    /* ─── INTERSECTION OBSERVER (fade-up) ─── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    /* ─── COUNTERS ─── */
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = +el.dataset.target;
+        const suffix = el.dataset.suffix || '';
+        let start = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= target) { el.textContent = target + suffix; clearInterval(timer); return; }
+          el.textContent = Math.floor(start) + suffix;
+        }, 28);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+      const t = +el.dataset.target;
+      el.dataset.suffix = t === 100 ? '%' : t === 4 ? '' : '+';
+      counterObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
