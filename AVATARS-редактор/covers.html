@@ -144,12 +144,32 @@
   /* базовые */
   .c { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 
-  /* фоны */
-  .c-bg-warm { background: linear-gradient(160deg, #2C1810 0%, #1a0f08 50%, #0d0705 100%); }
-  .c-bg-beige { background: linear-gradient(160deg, #3D2B1F, #1C1208); }
-  .c-bg-dark { background: linear-gradient(160deg, #0A0E27, #050818); }
-  .c-bg-green { background: linear-gradient(160deg, #0a1f12, #050d08); }
-  .c-bg-blue { background: linear-gradient(160deg, #0c1a2e, #060d1a); }
+  /* фоны — градиент поверх фото */
+  .c-bg-warm {
+    background:
+      linear-gradient(160deg, rgba(44,24,16,0.80), rgba(10,7,5,0.86)),
+      url('brand.png') center top / cover no-repeat;
+  }
+  .c-bg-beige {
+    background:
+      linear-gradient(160deg, rgba(30,20,10,0.82), rgba(15,10,5,0.88)),
+      url('brand.png') center top / cover no-repeat;
+  }
+  .c-bg-dark {
+    background:
+      linear-gradient(160deg, rgba(10,14,39,0.85), rgba(5,8,24,0.90)),
+      url('brand.png') center top / cover no-repeat;
+  }
+  .c-bg-green {
+    background:
+      linear-gradient(160deg, rgba(5,25,14,0.82), rgba(3,10,6,0.88)),
+      url('maldives.png') center / cover no-repeat;
+  }
+  .c-bg-blue {
+    background:
+      linear-gradient(160deg, rgba(12,26,46,0.82), rgba(6,13,26,0.88)),
+      url('maldives.png') center / cover no-repeat;
+  }
 
   /* декор */
   .c-glow {
@@ -237,9 +257,10 @@
   .c-cta.cyan { background: #06B6D4; }
 
   /* падинг */
-  .cp { padding: 8% 8% 15%; display: flex; flex-direction: column; justify-content: flex-end; }
-  .cp-center { padding: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  .cp-top { padding: 15% 8% 8%; display: flex; flex-direction: column; justify-content: flex-start; }
+  .cp { padding: 8% 8% 15%; display: flex; flex-direction: column; justify-content: flex-end; position: relative; z-index: 1; }
+  .cp-center { padding: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 1; }
+  .cp-top { padding: 15% 8% 8%; display: flex; flex-direction: column; justify-content: flex-start; position: relative; z-index: 1; }
+  .c-line-top, .c-glow, .c-handle, .c-num { z-index: 2; }
 </style>
 </head>
 <body>
