@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наталья Ивахненко — Жизнь после 50 только начинается</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF8F5;
+    --bg2: #F2EDE6;
+    --text: #2C2416;
+    --muted: #8C7B6B;
+    --accent: #B8860B;
+    --accent2: #8B5E3C;
+    --green: #4A7C59;
+    --border: rgba(44,36,22,0.1);
+    --shadow: 0 8px 32px rgba(44,36,22,0.1);
+    --card: #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5rem;
+    background: rgba(250,248,245,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 5rem 4rem;
+    gap: 5rem;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+    height: 100%;
+    background: var(--bg2);
+    z-index: 0;
+    border-radius: 0 0 0 8rem;
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(184,134,11,0.08);
+    border: 1px solid rgba(184,134,11,0.2);
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-title strong { font-weight: 600; }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 460px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+    font-weight: 300;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .btn-main {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--bg);
+    background: var(--text);
+    padding: 0.9rem 2.2rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(44,36,22,0.2); }
+  .btn-ghost {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    padding: 0.9rem 2.2rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--text); }
+
+  .hero-photo-wrap {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 1rem 4rem 1rem 4rem;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(44,36,22,0.15);
+  }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .hero-quote {
+    position: absolute;
+    bottom: -1.5rem;
+    left: -2rem;
+    background: var(--card);
+    border-radius: 0.8rem;
+    padding: 1.2rem 1.5rem;
+    box-shadow: var(--shadow);
+    max-width: 220px;
+    border-left: 3px solid var(--accent);
+  }
+  .hero-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .hero-quote span {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ── ОБЩЕЕ ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ── О СЕБЕ ── */
+  #about {
+    background: var(--bg2);
+    padding: 8rem 5rem;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-visual { position: relative; }
+  .about-img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(44,36,22,0.12);
+  }
+  .about-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .about-stat {
+    position: absolute;
+    background: var(--card);
+    border-radius: 0.8rem;
+    padding: 1rem 1.3rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .about-stat.s1 { bottom: 2rem; right: -2rem; }
+  .about-stat.s2 { top: 2rem; right: -1rem; }
+  .about-stat .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .about-stat .lbl {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+  .about-text {}
+  .about-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .about-values {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .val-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--accent2);
+    background: rgba(139,94,60,0.08);
+    border: 1px solid rgba(139,94,60,0.15);
+    padding: 0.35rem 0.9rem;
+    border-radius: 2rem;
+  }
+
+  /* ── НАПРАВЛЕНИЯ ── */
+  #directions {
+    background: var(--bg);
+    padding: 8rem 5rem;
+  }
+  .dir-header { text-align: center; margin-bottom: 4rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .dir-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .dir-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 3rem 2.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .dir-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .dir-card.gold::before { background: linear-gradient(90deg, var(--accent), #D4A017); }
+  .dir-card.brown::before { background: linear-gradient(90deg, var(--accent2), #A0522D); }
+  .dir-card.green::before { background: linear-gradient(90deg, var(--green), #2E8B57); }
+  .dir-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(44,36,22,0.12); }
+  .dir-card:hover::before { transform: scaleX(1); }
+  .dir-img {
+    width: 100%;
+    height: 180px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .dir-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .dir-card:hover .dir-img img { transform: scale(1.05); }
+  .dir-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+  .dir-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .dir-card.gold .dir-label { color: var(--accent); }
+  .dir-card.brown .dir-label { color: var(--accent2); }
+  .dir-card.green .dir-label { color: var(--green); }
+  .dir-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .dir-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .dir-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .dir-card.gold .dir-link { color: var(--accent); }
+  .dir-card.brown .dir-link { color: var(--accent2); }
+  .dir-card.green .dir-link { color: var(--green); }
+  .dir-link::after { content: ' →'; }
+
+  /* ── МОЙ ПУТЬ ── */
+  #journey {
+    background: var(--bg2);
+    padding: 8rem 5rem;
+  }
+  .journey-inner { max-width: 1200px; margin: 0 auto; }
+  .journey-header { margin-bottom: 4rem; }
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .tl-item {
+    background: var(--card);
+    border-radius: 1rem;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 4px 20px rgba(44,36,22,0.07);
+    position: relative;
+    border-left: 3px solid var(--border);
+    transition: border-color 0.3s;
+  }
+  .tl-item:hover { border-left-color: var(--accent); }
+  .tl-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: rgba(184,134,11,0.2);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .tl-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+  .tl-item.featured {
+    background: var(--text);
+    border-left-color: var(--accent);
+  }
+  .tl-item.featured .tl-year { color: rgba(184,134,11,0.4); }
+  .tl-item.featured .tl-title { color: white; }
+  .tl-item.featured .tl-desc { color: rgba(255,255,255,0.6); }
+
+  /* ── INSTAGRAM ── */
+  #instagram {
+    background: var(--bg);
+    padding: 8rem 5rem;
+  }
+  .ig-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .ig-text {}
+  .ig-topics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .ig-topic {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--card);
+    border-radius: 0.6rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(44,36,22,0.05);
+  }
+  .ig-topic-icon { font-size: 1.3rem; }
+  .ig-topic-text { font-size: 0.9rem; color: var(--text); font-weight: 400; }
+  .ig-topic-text strong { font-weight: 600; }
+  .ig-cta-wrap {
+    background: var(--text);
+    border-radius: 1.5rem;
+    padding: 3.5rem;
+    text-align: center;
+    color: white;
+  }
+  .ig-cta-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1.2rem;
+    border: 3px solid rgba(255,255,255,0.2);
+  }
+  .ig-cta-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .ig-cta-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .ig-cta-handle {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.2rem;
+  }
+  .ig-cta-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .btn-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+    background: white;
+    padding: 0.9rem 2rem;
+    border-radius: 0.4rem;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-ig:hover { opacity: 0.9; transform: translateY(-2px); }
+
+  /* ── КОНТАКТ ── */
+  #contact {
+    background: var(--bg2);
+    padding: 8rem 5rem;
+    text-align: center;
+  }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .contact-title em { font-style: italic; color: var(--accent); }
+  .contact-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .contact-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-tg {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.82rem; font-weight: 600;
+    color: white; background: #2AABEE;
+    padding: 0.9rem 2rem; border-radius: 0.4rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-tg:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(42,171,238,0.35); }
+  .btn-wa {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.82rem; font-weight: 600;
+    color: white; background: #25D366;
+    padding: 0.9rem 2rem; border-radius: 0.4rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37,211,102,0.35); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.4);
+    padding: 2.5rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+  }
+  .footer-copy { font-size: 0.7rem; text-align: center; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    #hero::before { display: none; }
+    .hero-photo-wrap { max-width: 340px; margin: 0 auto; }
+    #about, #directions, #journey, #instagram, #contact { padding: 5rem 1.5rem; }
+    .about-grid, .ig-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .dir-grid { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    .about-stat.s1, .about-stat.s2 { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Наталья Ивахненко</a>
+  <ul class="nav-links">
+    <li><a href="#about">О себе</a></li>
+    <li><a href="#directions">Направления</a></li>
+    <li><a href="#journey">Мой путь</a></li>
+    <li><a href="#instagram">Instagram</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">My Journey. My Story.</div>
+    <h1 class="hero-title">
+      Жизнь после 50<br>
+      только <em>начинается</em>
+    </h1>
+    <p class="hero-sub">Я делаю сайты с помощью ИИ, путешествую по миру с MWR Life и показываю — новая жизнь возможна в любом возрасте. Честно, без розовых очков.</p>
+    <div class="hero-buttons">
+      <a href="#about" class="btn-main">Узнать больше</a>
+      <a href="#contact" class="btn-ghost">Написать мне</a>
+    </div>
+  </div>
+  <div class="hero-photo-wrap">
+    <div class="hero-photo">
+      <img src="личный бренд.png" alt="Наталья Ивахненко">
+    </div>
+    <div class="hero-quote">
+      <p>«Я не боюсь нового мира — я его изучаю»</p>
+      <span>Наталья Ивахненко</span>
+    </div>
+  </div>
+</section>
+
+<!-- О СЕБЕ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual fade-up">
+      <div class="about-img">
+        <img src="путешествие.png" alt="Наталья в путешествии">
+      </div>
+      <div class="about-stat s1">
+        <span class="num">50+</span>
+        <div class="lbl">Возраст силы</div>
+      </div>
+      <div class="about-stat s2">
+        <span class="num">1 год</span>
+        <div class="lbl">В MWR Life</div>
+      </div>
+    </div>
+    <div class="about-text fade-up">
+      <div class="section-label">О себе</div>
+      <h2 class="section-title">Кто я и<br><em>о чём</em> мой путь</h2>
+      <p>Меня зовут Наталья. Мне 55 лет, и именно сейчас в моей жизни происходит самое интересное.</p>
+      <p>Я <strong>осваиваю нейросети</strong> и создаю сайты с помощью ИИ — то, о чём раньше не могла и подумать. Я <strong>путешествую</strong> — через год в MWR Life бронирую первое бесплатное путешествие на <strong>Тибет</strong>. Я веду Instagram и показываю свой путь — честно, без фильтров.</p>
+      <p>Раньше я боялась нового мира больше, чем старости. Теперь я знаю: страх — это просто незнакомость. И с этим можно работать.</p>
+      <div class="about-values">
+        <span class="val-tag">Нейросети</span>
+        <span class="val-tag">Путешествия</span>
+        <span class="val-tag">Перемены</span>
+        <span class="val-tag">MWR Life</span>
+        <span class="val-tag">Жизнь после 50</span>
+        <span class="val-tag">Честность</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- НАПРАВЛЕНИЯ -->
+<section id="directions">
+  <div class="dir-header fade-up">
+    <div class="section-label">Чем занимаюсь</div>
+    <h2 class="section-title">Три направления<br><em>моей жизни</em></h2>
+  </div>
+  <div class="dir-grid">
+    <div class="dir-card gold fade-up">
+      <div class="dir-img">
+        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" alt="Нейросети и ИИ">
+      </div>
+      <div class="dir-label">Нейросети и сайты</div>
+      <div class="dir-title">Создаю сайты с помощью ИИ</div>
+      <p class="dir-desc">Осваиваю нейросети и создаю современные сайты. Показываю, что технологии доступны каждому — даже тем, кто раньше считал себя «не технарём».</p>
+      <a href="#contact" class="dir-link">Узнать подробнее</a>
+    </div>
+    <div class="dir-card brown fade-up" style="transition-delay:0.1s">
+      <div class="dir-img">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80" alt="Путешествия">
+      </div>
+      <div class="dir-label">Путешествия · MWR Life</div>
+      <div class="dir-title">Путешествуй выгодно и зарабатывай</div>
+      <p class="dir-desc">Год в MWR Life — и первое путешествие на Тибет бесплатно. Помогаю другим открыть мир через Travel Advantage™ и построить свой бизнес на путешествиях.</p>
+      <a href="mwr-life.html" class="dir-link">Узнать о MWR Life</a>
+    </div>
+    <div class="dir-card green fade-up" style="transition-delay:0.2s">
+      <div class="dir-img">
+        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&q=80" alt="Блог">
+      </div>
+      <div class="dir-label">Мой Instagram</div>
+      <div class="dir-title">Показываю путь без идеальной картинки</div>
+      <p class="dir-desc">Веду Instagram @nataliya_v_puti — рассказываю про нейросети, путешествия и жизнь после 50. Честно, с ошибками, с победами. Именно так, как оно есть.</p>
+      <a href="https://www.instagram.com/nataliya_v_puti" target="_blank" class="dir-link">Подписаться</a>
+    </div>
+  </div>
+</section>
+
+<!-- МОЙ ПУТЬ -->
+<section id="journey">
+  <div class="journey-inner">
+    <div class="journey-header fade-up">
+      <div class="section-label">Хронология</div>
+      <h2 class="section-title">Мой путь —<br><em>год за годом</em></h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item fade-up">
+        <div class="tl-year">2024</div>
+        <div class="tl-title">Первый шаг в MWR Life</div>
+        <p class="tl-desc">Решилась попробовать. Заплатила первый взнос, не зная что будет дальше. Боялась — и сделала.</p>
+      </div>
+      <div class="tl-item fade-up" style="transition-delay:0.1s">
+        <div class="tl-year">2024</div>
+        <div class="tl-title">Начала изучать нейросети</div>
+        <p class="tl-desc">Открыла для себя мир ИИ. Первые сайты, первые эксперименты. Поняла — это не страшно, это интересно.</p>
+      </div>
+      <div class="tl-item fade-up" style="transition-delay:0.15s">
+        <div class="tl-year">2025</div>
+        <div class="tl-title">Завела Instagram</div>
+        <p class="tl-desc">Начала показывать свой путь публично. Честно, без фильтров. @nataliya_v_puti — жизнь после 50 без розовых очков.</p>
+      </div>
+      <div class="tl-item featured fade-up" style="transition-delay:0.2s">
+        <div class="tl-year">2025</div>
+        <div class="tl-title">🏔️ Тибет — первое путешествие</div>
+        <p class="tl-desc">Год взносов в MWR Life — и компания удваивает баллы. Бронирую Тибет через Laif Experience™. Бесплатно.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section id="instagram">
+  <div class="ig-inner">
+    <div class="ig-text fade-up">
+      <div class="section-label">Instagram</div>
+      <h2 class="section-title">Подписывайся —<br><em>буду честной</em></h2>
+      <p style="color:var(--muted);font-size:1rem;line-height:1.8;font-weight:300;margin-bottom:1rem;">В Instagram я показываю свой путь таким, какой он есть. Без идеальных картинок, без обещаний лёгкого успеха.</p>
+      <div class="ig-topics">
+        <div class="ig-topic">
+          <span class="ig-topic-icon">🤖</span>
+          <span class="ig-topic-text"><strong>Нейросети</strong> — как я осваиваю ИИ и что из этого выходит</span>
+        </div>
+        <div class="ig-topic">
+          <span class="ig-topic-icon">✈️</span>
+          <span class="ig-topic-text"><strong>Путешествия</strong> — мой путь в MWR Life и Тибет впереди</span>
+        </div>
+        <div class="ig-topic">
+          <span class="ig-topic-icon">🌱</span>
+          <span class="ig-topic-text"><strong>Перемены</strong> — как меняться после 50 и не бояться</span>
+        </div>
+        <div class="ig-topic">
+          <span class="ig-topic-icon">💬</span>
+          <span class="ig-topic-text"><strong>Честно</strong> — про ошибки, страхи и маленькие победы</span>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up" style="transition-delay:0.1s">
+      <div class="ig-cta-wrap">
+        <div class="ig-cta-avatar">
+          <img src="личный%20бренд.png" alt="Наталья">
+        </div>
+        <div class="ig-cta-name">Наталья Ивахненко</div>
+        <div class="ig-cta-handle">@nataliya_v_puti</div>
+        <p class="ig-cta-desc">Жизнь после 50 только начинается. Нейросети · Перемены · Путешествия · Показываю путь без идеальной картинки</p>
+        <a href="https://www.instagram.com/nataliya_v_puti" target="_blank" class="btn-ig">
+          📸 Подписаться в Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КОНТАКТ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label fade-up">Написать мне</div>
+    <h2 class="contact-title fade-up">Давай<br><em>поговорим</em></h2>
+    <p class="contact-sub fade-up">Есть вопросы про нейросети, MWR Life или просто хочешь поговорить о переменах — пиши. Отвечаю всем.</p>
+    <div class="contact-buttons fade-up">
+      <a href="https://t.me/Natali_Ivahnenko" target="_blank" class="btn-tg">✈ Telegram</a>
+      <a href="https://wa.me/79113179436" target="_blank" class="btn-wa">💬 WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Наталья Ивахненко</div>
+  <div class="footer-copy">© 2026 · Жизнь после 50 только начинается</div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/nataliya_v_puti" target="_blank">Instagram</a>
+    <a href="mwr-life.html">MWR Life</a>
+    <a href="https://t.me/Natali_Ivahnenko" target="_blank">Telegram</a>
+  </div>
+</footer>
+
+<script>
+// Nav shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow =
+    window.scrollY > 60 ? '0 4px 20px rgba(44,36,22,0.08)' : 'none';
+});
+
+// Fade-up
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

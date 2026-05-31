@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Карусели — MWR Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0E27;
+    --indigo: #6366F1;
+    --cyan: #06B6D4;
+    --green: #10B981;
+    --gold: #F59E0B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111;
+    font-family: 'Space Mono', monospace;
+    color: white;
+    min-height: 100vh;
+  }
+
+  /* ── CONTROL PANEL ── */
+  .panel {
+    background: #1a1a2e;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .panel-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .tab-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tab-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0.2rem;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: white;
+  }
+  .tab-btn:hover:not(.active) {
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+  .hint {
+    margin-left: auto;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+
+  /* ── GRID OF SLIDES ── */
+  .slides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .slide-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .slide-num {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding-left: 0.2rem;
+  }
+  .slide {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .slide:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .fullscreen-btn {
+    display: block;
+    width: 100%;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .fullscreen-btn:hover {
+    color: var(--cyan);
+    border-color: var(--cyan);
+    background: rgba(6,182,212,0.05);
+  }
+
+  /* ── FULLSCREEN OVERLAY ── */
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  #overlay.show { display: flex; }
+  #overlay-slide {
+    width: min(90vw, 90vh);
+    height: min(90vw, 90vh);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .overlay-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .ov-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .ov-prev, .ov-next {
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .ov-prev:hover, .ov-next:hover { background: rgba(255,255,255,0.15); }
+  .ov-close {
+    background: rgba(239,68,68,0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,0.3);
+  }
+  .ov-close:hover { background: rgba(239,68,68,0.3); }
+  .ov-counter {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+  .ov-hint {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE INNER STYLES
+  ══════════════════════════════════ */
+
+  /* === ОБЩИЕ === */
+  .s { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .s-bg-dark { background: #0A0E27; }
+  .s-bg-darker { background: #070a1c; }
+  .s-bg-indigo { background: linear-gradient(135deg, #1e1b4b, #0A0E27); }
+  .s-bg-cyan { background: linear-gradient(135deg, #0c2a33, #0A0E27); }
+  .s-bg-gold { background: linear-gradient(135deg, #2a1f0a, #0A0E27); }
+  .s-bg-green { background: linear-gradient(135deg, #0a1f16, #0A0E27); }
+
+  /* декоративные элементы */
+  .s-deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .s-line-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .s-line-top.indigo { background: linear-gradient(90deg, transparent, var(--indigo), transparent); }
+  .s-line-top.cyan { background: linear-gradient(90deg, transparent, var(--cyan), transparent); }
+  .s-line-top.gold { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .s-line-top.green { background: linear-gradient(90deg, transparent, var(--green), transparent); }
+
+  .s-num {
+    position: absolute;
+    top: 1.2em;
+    right: 1.2em;
+    font-size: 0.5em;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.2);
+  }
+  .s-brand {
+    position: absolute;
+    bottom: 1em;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.45em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+  .s-tag {
+    display: inline-block;
+    font-size: 0.5em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4em 1em;
+    border-radius: 2em;
+    margin-bottom: 1em;
+  }
+  .s-tag.cyan { color: var(--cyan); border: 1px solid rgba(6,182,212,0.3); }
+  .s-tag.gold { color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
+  .s-tag.green { color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+  .s-tag.indigo { color: var(--indigo); border: 1px solid rgba(99,102,241,0.3); }
+
+  /* текст */
+  .s-eyebrow {
+    font-size: 0.5em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8em;
+  }
+  .s-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 0.4em;
+  }
+  .s-h1.xl { font-size: 2em; }
+  .s-h1.lg { font-size: 1.6em; }
+  .s-h1.md { font-size: 1.3em; }
+  .s-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.7);
+  }
+  .s-body.lg { font-size: 0.9em; }
+  .s-body.md { font-size: 0.75em; }
+  .s-accent { color: var(--cyan); }
+  .s-accent-gold { color: var(--gold); }
+  .s-accent-green { color: var(--green); }
+  .s-accent-indigo { color: var(--indigo); }
+
+  .s-cta {
+    display: inline-block;
+    font-size: 0.5em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.8em 2em;
+    border-radius: 0.2em;
+    font-weight: 700;
+    margin-top: 0.5em;
+  }
+  .s-cta.cyan { background: linear-gradient(135deg, var(--cyan), var(--indigo)); color: white; }
+  .s-cta.gold { background: linear-gradient(135deg, var(--gold), #d97706); color: #0A0E27; }
+
+  .s-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 4em;
+    line-height: 1;
+    color: white;
+  }
+  .s-divider {
+    width: 3em;
+    height: 1px;
+    background: var(--cyan);
+    margin: 0.8em 0;
+  }
+  .s-list { list-style: none; }
+  .s-list li {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75em;
+    color: rgba(255,255,255,0.8);
+    padding: 0.4em 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .s-list li::before { content: '→'; color: var(--cyan); font-family: monospace; font-size: 0.8em; }
+
+  .s-emoji { font-size: 2em; margin-bottom: 0.3em; display: block; }
+
+  .s-vs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.5em;
+    align-items: center;
+    font-size: 0.7em;
+    width: 100%;
+  }
+  .s-vs-col { display: flex; flex-direction: column; gap: 0.3em; }
+  .s-vs-sep { font-family: 'Space Mono', monospace; color: rgba(255,255,255,0.2); font-size: 0.8em; text-align: center; }
+
+  .s-box {
+    border-radius: 0.4em;
+    padding: 0.8em 1em;
+  }
+  .s-box.bad { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); }
+  .s-box.good { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+  .s-box-label { font-size: 0.55em; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.3em; }
+  .s-box-val { font-family: 'Cormorant Garamond', serif; font-size: 1.2em; font-weight: 600; }
+  .s-box.bad .s-box-val { color: #ef4444; }
+  .s-box.good .s-box-val { color: var(--green); }
+
+  .s-arrow { font-family: 'Cormorant Garamond', serif; font-size: 1.5em; color: rgba(255,255,255,0.3); text-align:center; }
+
+  /* padding helper */
+  .sp { padding: 8% 8% 12%; }
+  .sp-center { padding: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+
+  /* carousel nav dots */
+  .s-dots {
+    position: absolute;
+    bottom: 1.8em;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.3em;
+  }
+  .s-dot {
+    width: 0.35em;
+    height: 0.35em;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+  .s-dot.active { background: var(--cyan); width: 0.8em; border-radius: 0.2em; }
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <div class="panel-title">MWR Карусели</div>
+  <div class="tab-btns">
+    <button class="tab-btn active" onclick="showCarousel(0)">1 · Боль → Решение</button>
+    <button class="tab-btn" onclick="showCarousel(1)">2 · 120 USDT</button>
+    <button class="tab-btn" onclick="showCarousel(2)">3 · Безоплатка</button>
+    <button class="tab-btn" onclick="showCarousel(3)">4 · Мой путь</button>
+    <button class="tab-btn" style="border-color:rgba(245,158,11,0.4);color:#F59E0B;" onclick="showCarousel(4)">⭐ Год → Тибет</button>
+  </div>
+  <div class="hint">Нажми на слайд → полный экран → скриншот</div>
+</div>
+
+<div class="slides-grid" id="grid"></div>
+
+<!-- FULLSCREEN OVERLAY -->
+<div id="overlay">
+  <div id="overlay-slide"></div>
+  <div class="overlay-controls">
+    <button class="ov-btn ov-prev" onclick="ovNav(-1)">← Назад</button>
+    <span class="ov-counter" id="ov-counter"></span>
+    <button class="ov-btn ov-next" onclick="ovNav(1)">Вперёд →</button>
+    <button class="ov-btn ov-close" onclick="closeOverlay()">✕ Закрыть</button>
+  </div>
+  <div class="ov-hint">Нажми PrintScreen или сделай скриншот для сохранения</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// ДАННЫЕ КАРУСЕЛЕЙ
+// ══════════════════════════════════════════════════════
+
+const carousels = [
+
+// ── КАРУСЕЛЬ 1: БОЛЬ → РЕШЕНИЕ ──
+[
+  // слайд 1 — заголовок
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top cyan"></div>
+    <div class="s-deco-circle" style="width:60%;height:60%;top:-20%;right:-20%;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent);"></div>
+    <div class="s-tag cyan">История</div>
+    <div class="s-h1 xl" style="font-style:italic;">«Я устала<br>платить<br><span class="s-accent">полную цену</span>»</div>
+    <div style="margin-top:0.8em;font-family:'Cormorant Garamond',serif;font-size:0.7em;color:rgba(255,255,255,0.45);">листай →</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+    <div class="s-dots"><div class="s-dot active"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div></div>
+  </div>`,
+
+  // слайд 2
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top cyan"></div>
+    <div class="s-num">02/06</div>
+    <div class="s-eyebrow" style="color:rgba(255,255,255,0.35);">Раньше я делала так:</div>
+    <ul class="s-list" style="margin-top:0.5em;">
+      <li>Booking — «выгодная» цена</li>
+      <li>Airbnb — ещё переплата</li>
+      <li>Авиасейлс — «скидка» 10%</li>
+      <li>Итог: отпуск за 2 000$+</li>
+    </ul>
+    <div style="margin-top:1.2em;font-family:'Cormorant Garamond',serif;font-size:0.85em;color:rgba(255,255,255,0.5);font-style:italic;">И казалось, что это нормально...</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 3
+  `<div class="s s-bg-cyan sp-center">
+    <div class="s-line-top cyan"></div>
+    <div class="s-num">03/06</div>
+    <div class="s-emoji">💡</div>
+    <div class="s-eyebrow" style="color:var(--cyan);">Потом я узнала</div>
+    <div class="s-h1 lg">Travel<br><span class="s-accent">Advantage™</span></div>
+    <div class="s-divider" style="margin:0.8em auto;"></div>
+    <div class="s-body lg">Членство в закрытом тревел-клубе с ценами, которых нет в открытом доступе</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 4 — сравнение
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top green"></div>
+    <div class="s-num">04/06</div>
+    <div class="s-eyebrow" style="color:var(--green);">Тот же отель. Та же дата.</div>
+    <div class="s-vs" style="margin:1em 0;">
+      <div class="s-vs-col">
+        <div class="s-box bad">
+          <div class="s-box-label">Booking</div>
+          <div class="s-box-val">€320</div>
+        </div>
+      </div>
+      <div class="s-arrow">→</div>
+      <div class="s-vs-col">
+        <div class="s-box good">
+          <div class="s-box-label">MWR Life</div>
+          <div class="s-box-val">€160</div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:0.8em;color:rgba(255,255,255,0.6);text-align:center;margin-top:0.5em;">Экономия <span style="color:var(--green);font-weight:600;">€160</span> с одного отеля</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 5
+  `<div class="s s-bg-indigo sp-center">
+    <div class="s-line-top indigo"></div>
+    <div class="s-num">05/06</div>
+    <div class="s-h1 md" style="margin-bottom:0.8em;">Это не скидочный сайт.<br>Это <span class="s-accent">членство</span><br>в клубе.</div>
+    <div class="s-divider" style="margin:0 auto;"></div>
+    <div class="s-body md" style="margin-top:0.8em;max-width:80%;text-align:center;">Разница в том, что скидки получают ВСЕ члены клуба — автоматически, на каждую поездку</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 6 — CTA
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top gold"></div>
+    <div class="s-deco-circle" style="width:70%;height:70%;top:15%;left:-20%;background:radial-gradient(circle,rgba(245,158,11,0.06),transparent);"></div>
+    <div class="s-tag gold">Действие</div>
+    <div class="s-h1 lg" style="margin-bottom:0.6em;">Хочешь<br><span class="s-accent-gold">так же?</span></div>
+    <div class="s-body md" style="margin-bottom:1.2em;max-width:75%;">Расскажу как стать членом клуба и путешествовать выгодно</div>
+    <div class="s-cta gold">Ссылка в профиле</div>
+    <div style="margin-top:1em;font-size:0.45em;letter-spacing:0.15em;color:rgba(255,255,255,0.3);">@Natali_Ivahnenko</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+],
+
+// ── КАРУСЕЛЬ 2: 120 USDT ──
+[
+  // слайд 1
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top gold"></div>
+    <div class="s-deco-circle" style="width:80%;height:80%;top:10%;left:10%;background:radial-gradient(circle,rgba(245,158,11,0.07),transparent);"></div>
+    <div class="s-tag gold">Лайфхак</div>
+    <div class="s-h1 xl" style="font-style:italic;">Компания<br><span class="s-accent-gold">удваивает</span><br>мои деньги</div>
+    <div style="margin-top:0.8em;font-family:'Cormorant Garamond',serif;font-size:0.7em;color:rgba(255,255,255,0.4);">и это не крипта · листай →</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+    <div class="s-dots"><div class="s-dot active"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div></div>
+  </div>`,
+
+  // слайд 2
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top gold"></div>
+    <div class="s-num">02/05</div>
+    <div class="s-eyebrow" style="color:rgba(255,255,255,0.35);">Как это работает</div>
+    <div class="s-big-num" style="color:var(--gold);">120</div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.55em;letter-spacing:0.15em;color:rgba(255,255,255,0.4);margin-bottom:1em;">USDT В ГОД = 10$/МЕС</div>
+    <div class="s-body lg">Это мой взнос за членство в MWR Life — примерно как Netflix, только вместо сериалов — путешествия</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 3
+  `<div class="s s-bg-gold sp-center">
+    <div class="s-line-top gold"></div>
+    <div class="s-num">03/05</div>
+    <div class="s-emoji">✖️2️⃣</div>
+    <div class="s-eyebrow" style="color:var(--gold);">Магия компании</div>
+    <div class="s-h1 lg">MWR Life<br><span class="s-accent-gold">удваивает</span><br>мой взнос</div>
+    <div class="s-divider" style="background:var(--gold);margin:0.8em auto;"></div>
+    <div class="s-body md" style="max-width:80%;text-align:center;">Каждый месяц начисляются баллы, которые к концу года превращаются в 240 USDT на путешествие</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 4
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top green"></div>
+    <div class="s-num">04/05</div>
+    <div class="s-eyebrow" style="color:var(--green);">Итог через год</div>
+    <div style="display:flex;flex-direction:column;gap:0.6em;margin:0.8em 0;">
+      <div style="display:flex;align-items:center;gap:0.8em;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.5em;color:rgba(255,255,255,0.4);width:3em;">Вложил</div>
+        <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.1em;color:rgba(255,255,255,0.6);">120 USDT</div>
+      </div>
+      <div style="text-align:center;font-size:1.2em;">⬇</div>
+      <div style="display:flex;align-items:center;gap:0.8em;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.5em;color:var(--green);width:3em;">Итого</div>
+        <div style="flex:1;height:1px;background:rgba(16,185,129,0.3);"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-weight:600;color:var(--green);">240 USDT</div>
+      </div>
+    </div>
+    <div style="margin-top:0.6em;font-family:'Cormorant Garamond',serif;font-size:0.85em;color:rgba(255,255,255,0.5);font-style:italic;">Тур для всей семьи или с друзьями — по программе Laif Experience™</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 5 — CTA
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top gold"></div>
+    <div class="s-tag gold">Готова рассказать</div>
+    <div class="s-h1 lg" style="margin-bottom:0.6em;">10$ в месяц —<br>отпуск<br><span class="s-accent-gold">в подарок</span></div>
+    <div class="s-body md" style="margin-bottom:1.2em;max-width:80%;">Пиши в директ или по ссылке в профиле — объясню всё без воды</div>
+    <div class="s-cta gold">Написать Наталье</div>
+    <div style="margin-top:0.8em;font-size:0.45em;letter-spacing:0.15em;color:rgba(255,255,255,0.3);">@Natali_Ivahnenko</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+],
+
+// ── КАРУСЕЛЬ 3: БЕЗОПЛАТКА ──
+[
+  // слайд 1
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top green"></div>
+    <div class="s-deco-circle" style="width:70%;height:70%;bottom:-10%;right:-10%;background:radial-gradient(circle,rgba(16,185,129,0.08),transparent);"></div>
+    <div class="s-tag green">Секрет</div>
+    <div class="s-h1 xl" style="font-style:italic;"><span class="s-accent-green">3 человека</span><br>— и я езжу<br>бесплатно</div>
+    <div style="margin-top:0.8em;font-family:'Cormorant Garamond',serif;font-size:0.7em;color:rgba(255,255,255,0.4);">это математика · листай →</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+    <div class="s-dots"><div class="s-dot active"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div></div>
+  </div>`,
+
+  // слайд 2
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top green"></div>
+    <div class="s-num">02/05</div>
+    <div class="s-emoji">🤔</div>
+    <div class="s-eyebrow" style="color:rgba(255,255,255,0.35);">Звучит нереально?</div>
+    <div class="s-h1 md">В MWR Life есть<br>понятие<br><span class="s-accent-green">«безоплатка»</span></div>
+    <div class="s-divider"></div>
+    <div class="s-body lg" style="margin-top:0.5em;">Когда твои партнёры сами закрывают твой взнос — ты путешествуешь, а компания платит</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 3
+  `<div class="s s-bg-green sp-center">
+    <div class="s-line-top green"></div>
+    <div class="s-num">03/05</div>
+    <div class="s-eyebrow" style="color:var(--green);">Формула простая</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:0.5em;width:85%;">
+      <div style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:0.4em;padding:0.6em 1.5em;font-family:'Cormorant Garamond',serif;font-size:1em;width:100%;text-align:center;">3 активных партнёра</div>
+      <div style="font-size:1.2em;">⬇</div>
+      <div style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:0.4em;padding:0.6em 1.5em;font-family:'Cormorant Garamond',serif;font-size:1em;width:100%;text-align:center;">Компания закрывает взнос</div>
+      <div style="font-size:1.2em;">⬇</div>
+      <div style="background:rgba(16,185,129,0.25);border:1px solid var(--green);border-radius:0.4em;padding:0.8em 1.5em;font-family:'Cormorant Garamond',serif;font-size:1.2em;font-weight:600;width:100%;text-align:center;color:var(--green);">Ты в безоплатке ✓</div>
+    </div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 4
+  `<div class="s s-bg-dark sp-center">
+    <div class="s-line-top green"></div>
+    <div class="s-num">04/05</div>
+    <div class="s-eyebrow" style="color:var(--green);">И это ещё не всё</div>
+    <div style="margin:0.5em 0 1em;">
+      <div class="s-big-num"><span style="color:var(--green);">$4</span></div>
+      <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.1em;color:rgba(255,255,255,0.4);">КАЖДЫЙ МЕСЯЦ</div>
+    </div>
+    <div class="s-body lg" style="max-width:80%;text-align:center;">Когда выходишь в безоплатку — компания сама начинает платить тебе $4 в месяц. Пассивно.</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 5 — CTA
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top green"></div>
+    <div class="s-tag green">Хочешь так?</div>
+    <div class="s-h1 lg" style="margin-bottom:0.6em;">Я покажу<br>как найти<br><span class="s-accent-green">3 человек</span></div>
+    <div class="s-body md" style="margin-bottom:1.2em;max-width:80%;">Это проще, чем кажется — потому что путешествия нужны всем</div>
+    <div class="s-cta cyan">Написать в Telegram</div>
+    <div style="margin-top:0.8em;font-size:0.45em;letter-spacing:0.15em;color:rgba(255,255,255,0.3);">@Natali_Ivahnenko</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+],
+
+// ── КАРУСЕЛЬ 4: МОЙ ПУТЬ ──
+[
+  // слайд 1
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top indigo"></div>
+    <div class="s-deco-circle" style="width:80%;height:80%;top:-20%;left:-20%;background:radial-gradient(circle,rgba(99,102,241,0.08),transparent);"></div>
+    <div class="s-tag indigo">Честно</div>
+    <div class="s-h1 xl" style="font-style:italic;">«Месяц назад<br>я ничего не<br><span class="s-accent-indigo">знала</span>»</div>
+    <div style="margin-top:0.8em;font-family:'Cormorant Garamond',serif;font-size:0.7em;color:rgba(255,255,255,0.4);">мой путь в MWR Life · листай →</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+    <div class="s-dots"><div class="s-dot active"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div></div>
+  </div>`,
+
+  // слайд 2
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top indigo"></div>
+    <div class="s-num">02/06</div>
+    <div class="s-emoji">😒</div>
+    <div class="s-eyebrow" style="color:rgba(255,255,255,0.35);">Моя первая реакция</div>
+    <div class="s-h1 md" style="font-style:italic;">«Очередной MLM»</div>
+    <div class="s-divider" style="background:var(--indigo);"></div>
+    <div class="s-body lg" style="margin-top:0.5em;">Я видела много похожих предложений и сразу хотела отказаться. Знакомо?</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 3
+  `<div class="s s-bg-indigo sp-center">
+    <div class="s-line-top cyan"></div>
+    <div class="s-num">03/06</div>
+    <div class="s-eyebrow" style="color:var(--cyan);">Но вот что меня зацепило</div>
+    <div class="s-h1 lg" style="margin-bottom:0.8em;">Здесь продают<br><span class="s-accent">путешествия</span></div>
+    <div class="s-body md" style="max-width:85%;">А их хотят все. Это не БАД, не страховка и не обучающий курс. Это то, что люди и так покупают каждый год.</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 4
+  `<div class="s s-bg-dark sp">
+    <div class="s-line-top indigo"></div>
+    <div class="s-num">04/06</div>
+    <div class="s-eyebrow" style="color:rgba(255,255,255,0.35);">Что я сделала</div>
+    <ul class="s-list" style="margin-top:0.5em;">
+      <li>Зарегистрировалась и посмотрела платформу</li>
+      <li>Проверила цены на реальные отели</li>
+      <li>Сравнила с Booking — разница была</li>
+      <li>Поговорила с действующими партнёрами</li>
+      <li>Решила попробовать честно</li>
+    </ul>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 5
+  `<div class="s s-bg-dark sp-center">
+    <div class="s-line-top cyan"></div>
+    <div class="s-num">05/06</div>
+    <div class="s-emoji">📱</div>
+    <div class="s-eyebrow" style="color:var(--cyan);">Что я делаю сейчас</div>
+    <div class="s-h1 md" style="margin-bottom:0.6em;">Показываю этот путь <span class="s-accent">честно</span></div>
+    <div class="s-body md" style="max-width:85%;">Без обещаний миллионов. Без давления. Просто рассказываю что вижу — и даю вам решать самим.</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+
+  // слайд 6 — CTA
+  `<div class="s s-bg-darker sp-center">
+    <div class="s-line-top indigo"></div>
+    <div class="s-tag indigo">Подписывайся</div>
+    <div class="s-h1 lg" style="margin-bottom:0.6em;">Буду рассказывать<br><span class="s-accent-indigo">всё как есть</span></div>
+    <div class="s-body md" style="margin-bottom:1.2em;max-width:80%;">Подписывайся — я показываю путь в MWR Life без розовых очков</div>
+    <div class="s-cta cyan">Подписаться</div>
+    <div style="margin-top:0.8em;font-size:0.45em;letter-spacing:0.15em;color:rgba(255,255,255,0.3);">@Natali_Ivahnenko</div>
+    <div class="s-brand">@Natali_Ivahnenko · MWR Life</div>
+  </div>`,
+],
+
+// ── КАРУСЕЛЬ 5: ГОД → ТИБЕТ ──
+[
+  // слайд 1 — заголовок
+  `<div class="s sp-center" style="background:linear-gradient(160deg,#1a1200,#0A0E27);">
+    <div class="s-line-top gold"></div>
+    <div class="s-deco-circle" style="width:90%;height:90%;top:5%;left:5%;background:radial-gradient(circle at 40% 40%,rgba(245,158,11,0.12),transparent 65%);"></div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,158,11,0.6);margin-bottom:0.8em;">Годовщина</div>
+    <div class="s-h1" style="font-size:1.9em;font-style:italic;line-height:1.1;margin-bottom:0.5em;">Год назад<br>я сделала<br><span class="s-accent-gold">первый шаг</span></div>
+    <div style="margin-top:0.6em;font-family:'Cormorant Garamond',serif;font-size:0.75em;color:rgba(255,255,255,0.4);">сегодня я знаю — куда он привёл · листай →</div>
+    <div class="s-brand">@nataliya_v_puti</div>
+    <div class="s-dots"><div class="s-dot active"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div><div class="s-dot"></div></div>
+  </div>`,
+
+  // слайд 2 — страх
+  `<div class="s sp" style="background:#0A0E27;">
+    <div class="s-line-top" style="background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);"></div>
+    <div class="s-num" style="color:rgba(255,255,255,0.2);">02/07</div>
+    <div style="margin-top:0.5em;">
+      <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1em;">Год назад</div>
+      <div class="s-h1 md" style="font-style:italic;line-height:1.3;">Я боялась<br>нового мира<br><span style="color:rgba(255,255,255,0.4);">больше,<br>чем старости</span></div>
+    </div>
+    <div style="margin-top:1.2em;width:2em;height:1px;background:rgba(255,255,255,0.2);"></div>
+    <div class="s-body md" style="margin-top:0.8em;color:rgba(255,255,255,0.45);">Нейросети, новый бизнес, Instagram — всё это казалось чужим и непонятным</div>
+    <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 3 — решение
+  `<div class="s sp-center" style="background:linear-gradient(160deg,#0d1230,#0A0E27);">
+    <div class="s-line-top indigo"></div>
+    <div class="s-num" style="color:rgba(255,255,255,0.2);">03/07</div>
+    <div class="s-emoji">🚪</div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.2em;text-transform:uppercase;color:var(--indigo);margin-bottom:0.8em;">Но я всё равно вошла</div>
+    <div class="s-h1 md" style="max-width:85%;text-align:center;line-height:1.3;">Заплатила первый взнос.<br>Не зная что будет дальше.</div>
+    <div style="margin:1em auto;width:2em;height:1px;background:var(--indigo);"></div>
+    <div class="s-body md" style="max-width:80%;text-align:center;color:rgba(255,255,255,0.5);">Это и был тот самый шаг в новый мир, которого я так боялась</div>
+    <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 4 — путь
+  `<div class="s sp" style="background:#0A0E27;">
+    <div class="s-line-top cyan"></div>
+    <div class="s-num" style="color:rgba(255,255,255,0.2);">04/07</div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:1em;">12 месяцев</div>
+    <ul class="s-list">
+      <li>Платила взнос — каждый месяц</li>
+      <li>Училась — нейросети, сайты, контент</li>
+      <li>Вела Instagram — показывала путь честно</li>
+      <li>Боялась — и делала всё равно</li>
+      <li>Накапливала баллы в MWR Life</li>
+    </ul>
+    <div style="margin-top:1.2em;font-family:'Cormorant Garamond',serif;font-size:0.85em;font-style:italic;color:rgba(255,255,255,0.4);">Ни о чём не жалею</div>
+    <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 5 — Тибет reveal
+  `<div class="s sp-center" style="background:linear-gradient(160deg,#1a1200,#0c0a00,#0A0E27);">
+    <div class="s-line-top gold"></div>
+    <div class="s-deco-circle" style="width:100%;height:100%;top:0;left:0;background:radial-gradient(circle at 50% 40%,rgba(245,158,11,0.1),transparent 60%);"></div>
+    <div class="s-num" style="color:rgba(245,158,11,0.3);">05/07</div>
+    <div style="font-size:2.5em;margin-bottom:0.2em;">🏔️</div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,158,11,0.7);margin-bottom:0.5em;">Сегодня я бронирую</div>
+    <div class="s-h1" style="font-size:2.2em;color:var(--gold);letter-spacing:0.05em;">ТИБЕТ</div>
+    <div style="margin:0.6em 0;font-family:'Cormorant Garamond',serif;font-size:0.8em;color:rgba(255,255,255,0.5);">через программу Laif Experience™</div>
+    <div style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:0.4em;padding:0.6em 1.5em;margin-top:0.5em;">
+      <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);">стоимость для меня</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.6em;font-weight:600;color:var(--green);">0 ₽ · БЕСПЛАТНО</div>
+    </div>
+    <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 6 — как это работает
+  `<div class="s sp" style="background:#0A0E27;">
+    <div class="s-line-top green"></div>
+    <div class="s-num" style="color:rgba(255,255,255,0.2);">06/07</div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:0.8em;">Как это работает</div>
+    <div style="display:flex;flex-direction:column;gap:0.5em;">
+      <div style="display:flex;align-items:center;gap:0.8em;">
+        <div style="width:1.8em;height:1.8em;border-radius:50%;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.55em;color:var(--green);flex-shrink:0;">1</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.85em;color:rgba(255,255,255,0.75);">Плачу членский взнос каждый месяц</div>
+      </div>
+      <div style="margin-left:0.9em;width:1px;height:0.8em;background:rgba(16,185,129,0.2);"></div>
+      <div style="display:flex;align-items:center;gap:0.8em;">
+        <div style="width:1.8em;height:1.8em;border-radius:50%;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.55em;color:var(--green);flex-shrink:0;">2</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.85em;color:rgba(255,255,255,0.75);">MWR Life удваивает и накапливает баллы</div>
+      </div>
+      <div style="margin-left:0.9em;width:1px;height:0.8em;background:rgba(16,185,129,0.2);"></div>
+      <div style="display:flex;align-items:center;gap:0.8em;">
+        <div style="width:1.8em;height:1.8em;border-radius:50%;background:rgba(16,185,129,0.25);border:1px solid var(--green);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.55em;color:var(--green);flex-shrink:0;">3</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.85em;color:var(--green);font-weight:600;">Выбираю путешествие — и еду бесплатно</div>
+      </div>
+    </div>
+    <div style="margin-top:1.2em;font-family:'Cormorant Garamond',serif;font-size:0.8em;font-style:italic;color:rgba(255,255,255,0.4);">Это называется Laif Experience™</div>
+    <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 7 — CTA
+  `<div class="s sp-center" style="background:linear-gradient(160deg,#1a1200,#0A0E27);">
+    <div class="s-line-top gold"></div>
+    <div class="s-deco-circle" style="width:80%;height:80%;bottom:-20%;right:-20%;background:radial-gradient(circle,rgba(245,158,11,0.08),transparent);"></div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.5em;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,158,11,0.6);margin-bottom:1em;">Год — это только начало</div>
+    <div class="s-h1 lg" style="font-style:italic;margin-bottom:0.6em;">Хочешь<br>знать<br><span class="s-accent-gold">как?</span></div>
+    <div class="s-body md" style="margin-bottom:1.2em;max-width:80%;">Пиши в директ — расскажу всё про MWR Life и Laif Experience без прикрас</div>
+    <div class="s-cta gold">Написать Наталье</div>
+    <div style="margin-top:0.8em;font-size:0.45em;letter-spacing:0.15em;color:rgba(255,255,255,0.3);">@nataliya_v_puti · Telegram: @Natali_Ivahnenko</div>
+    <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+],
+
+]; // end carousels
+
+// ══════════════════════════════════════════════════════
+// ЛОГИКА
+// ══════════════════════════════════════════════════════
+
+let currentCarousel = 0;
+let overlayIndex = 0;
+
+function showCarousel(idx) {
+  currentCarousel = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  carousels[idx].forEach((html, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'slide-wrap';
+    const num = document.createElement('div');
+    num.className = 'slide-num';
+    num.textContent = `Слайд ${i + 1} из ${carousels[idx].length}`;
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.innerHTML = html;
+    slide.onclick = () => openOverlay(i);
+    const btn = document.createElement('button');
+    btn.className = 'fullscreen-btn';
+    btn.textContent = '⛶ Открыть на весь экран';
+    btn.onclick = () => openOverlay(i);
+    wrap.append(num, slide, btn);
+    grid.appendChild(wrap);
+  });
+}
+
+function openOverlay(idx) {
+  overlayIndex = idx;
+  renderOverlay();
+  document.getElementById('overlay').classList.add('show');
+}
+
+function renderOverlay() {
+  const slides = carousels[currentCarousel];
+  document.getElementById('overlay-slide').innerHTML = slides[overlayIndex];
+  document.getElementById('ov-counter').textContent = `${overlayIndex + 1} / ${slides.length}`;
+}
+
+function ovNav(dir) {
+  const len = carousels[currentCarousel].length;
+  overlayIndex = (overlayIndex + dir + len) % len;
+  renderOverlay();
+}
+
+function closeOverlay() {
+  document.getElementById('overlay').classList.remove('show');
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('overlay').classList.contains('show')) return;
+  if (e.key === 'ArrowRight') ovNav(1);
+  if (e.key === 'ArrowLeft') ovNav(-1);
+  if (e.key === 'Escape') closeOverlay();
+});
+
+showCarousel(0);
+</script>
+</body>
+</html>
