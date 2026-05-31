@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обложки для Reels — @nataliya_v_puti</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    padding: 2rem;
+  }
+
+  .panel {
+    background: #222;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    margin: -2rem -2rem 2rem;
+  }
+  .panel-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #F59E0B;
+    white-space: nowrap;
+  }
+  .tab-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tab-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0.2rem;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { background: #F59E0B; border-color: #F59E0B; color: #1a1a1a; }
+  .tab-btn:hover:not(.active) { border-color: #F59E0B; color: #F59E0B; }
+  .hint { margin-left: auto; font-size: 0.55rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.25); text-transform: uppercase; }
+
+  /* сетка обложек */
+  .covers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .cover-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .cover-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* сама обложка — пропорция 9:16 */
+  .cover {
+    width: 100%;
+    aspect-ratio: 9/16;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .cover:hover { transform: scale(1.02); }
+
+  .fullscreen-btn {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .fullscreen-btn:hover { color: #F59E0B; border-color: #F59E0B; }
+
+  /* OVERLAY */
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  #overlay.show { display: flex; }
+  #overlay-cover {
+    height: min(88vh, 88vw * 9/16);
+    width: auto;
+    aspect-ratio: 9/16;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .ov-controls { display: flex; gap: 1rem; align-items: center; }
+  .ov-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    border: none;
+  }
+  .ov-nav { background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.15); }
+  .ov-nav:hover { background: rgba(255,255,255,0.15); }
+  .ov-close { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+  .ov-counter { font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+  .ov-hint { font-size: 0.5rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.15); text-transform: uppercase; }
+
+  /* ══════════════════════
+     СТИЛИ ОБЛОЖЕК
+  ══════════════════════ */
+
+  /* базовые */
+  .c { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+
+  /* фоны */
+  .c-bg-warm { background: linear-gradient(160deg, #2C1810 0%, #1a0f08 50%, #0d0705 100%); }
+  .c-bg-beige { background: linear-gradient(160deg, #3D2B1F, #1C1208); }
+  .c-bg-dark { background: linear-gradient(160deg, #0A0E27, #050818); }
+  .c-bg-green { background: linear-gradient(160deg, #0a1f12, #050d08); }
+  .c-bg-blue { background: linear-gradient(160deg, #0c1a2e, #060d1a); }
+
+  /* декор */
+  .c-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .c-line-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .c-handle {
+    position: absolute;
+    bottom: 1em;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.38em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+  .c-num {
+    position: absolute;
+    top: 0.8em; right: 0.8em;
+    font-size: 0.38em;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.15);
+  }
+
+  /* типографика */
+  .c-tag {
+    display: inline-block;
+    font-size: 0.38em;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.35em 1em;
+    border-radius: 2em;
+    margin-bottom: 0.6em;
+  }
+  .c-tag.gold { color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+  .c-tag.cyan { color: #06B6D4; border: 1px solid rgba(6,182,212,0.3); background: rgba(6,182,212,0.08); }
+  .c-tag.green { color: #10B981; border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+  .c-tag.white { color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15); }
+
+  .c-h1 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 0.3em;
+  }
+  .c-h1.xl { font-size: 1.5em; }
+  .c-h1.lg { font-size: 1.2em; }
+  .c-h1.md { font-size: 1em; }
+  .c-h1 em { font-style: italic; }
+  .c-h1 .gold { color: #FCD34D; }
+  .c-h1 .cyan { color: #67E8F9; }
+  .c-h1 .green { color: #6EE7B7; }
+
+  .c-sub {
+    font-size: 0.42em;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    font-weight: 400;
+    max-width: 85%;
+  }
+  .c-divider { width: 2em; height: 1px; margin: 0.6em 0; }
+  .c-divider.gold { background: #F59E0B; }
+  .c-divider.cyan { background: #06B6D4; }
+  .c-divider.green { background: #10B981; }
+
+  .c-cta {
+    display: inline-block;
+    font-size: 0.38em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.6em 1.5em;
+    border-radius: 0.2em;
+    margin-top: 0.8em;
+    color: #1a1a1a;
+  }
+  .c-cta.gold { background: #F59E0B; }
+  .c-cta.cyan { background: #06B6D4; }
+
+  /* падинг */
+  .cp { padding: 8% 8% 15%; display: flex; flex-direction: column; justify-content: flex-end; }
+  .cp-center { padding: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .cp-top { padding: 15% 8% 8%; display: flex; flex-direction: column; justify-content: flex-start; }
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <div class="panel-title">Обложки Reels</div>
+  <div class="tab-btns">
+    <button class="tab-btn active" onclick="showSet(0)">Личный путь</button>
+    <button class="tab-btn" onclick="showSet(1)">MWR Life</button>
+    <button class="tab-btn" onclick="showSet(2)">Нейросети</button>
+  </div>
+  <div class="hint">Нажми → полный экран → скриншот</div>
+</div>
+
+<div class="covers-grid" id="grid"></div>
+
+<!-- OVERLAY -->
+<div id="overlay">
+  <div id="overlay-cover"></div>
+  <div class="ov-controls">
+    <button class="ov-btn ov-nav" onclick="ovNav(-1)">← Назад</button>
+    <span class="ov-counter" id="ov-counter"></span>
+    <button class="ov-btn ov-nav" onclick="ovNav(1)">Вперёд →</button>
+    <button class="ov-btn ov-close" onclick="closeOverlay()">✕ Закрыть</button>
+  </div>
+  <div class="ov-hint">Сделай скриншот → используй как обложку Reels</div>
+</div>
+
+<script>
+const sets = [
+
+// ── ЛИЧНЫЙ ПУТЬ ──
+[
+  `<div class="c c-bg-warm cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#F59E0B,transparent);"></div>
+    <div class="c-glow" style="width:80%;height:50%;top:0;right:-20%;background:radial-gradient(circle,rgba(245,158,11,0.1),transparent 70%);"></div>
+    <div class="c-tag gold">Мой путь</div>
+    <div class="c-h1 xl">Жизнь<br>после 50<br><em class="gold">только<br>начинается</em></div>
+    <div class="c-divider gold"></div>
+    <div class="c-sub">@nataliya_v_puti</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-beige cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);"></div>
+    <div class="c-tag white">Честно</div>
+    <div class="c-h1 xl">Я боялась<br>нового мира<br><em style="color:rgba(255,255,255,0.4);">больше,<br>чем старости</em></div>
+    <div class="c-divider" style="background:rgba(255,255,255,0.2);"></div>
+    <div class="c-sub">Рилс о страхе и переменах</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-warm cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#F59E0B,transparent);"></div>
+    <div class="c-tag gold">Годовщина</div>
+    <div class="c-h1 xl">Год<br>прошёл.<br><em class="gold">Что<br>изменилось?</em></div>
+    <div class="c-divider gold"></div>
+    <div class="c-sub">Честный разбор</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-beige cp-center">
+    <div class="c-glow" style="width:100%;height:100%;top:0;left:0;background:radial-gradient(circle at 50% 40%,rgba(245,158,11,0.08),transparent 60%);"></div>
+    <div class="c-tag gold">Перемены</div>
+    <div class="c-h1 lg" style="text-align:center;">Ни о чём<br>не жалею</div>
+    <div class="c-divider gold" style="margin:0.6em auto;"></div>
+    <div class="c-sub" style="text-align:center;">Благодарю каждый урок</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-dark cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#6366F1,transparent);"></div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">Вопрос</div>
+    <div class="c-h1 xl">А что,<br>если всё<br><em style="color:#A5B4FC;">получится?</em></div>
+    <div class="c-divider" style="background:#6366F1;"></div>
+    <div class="c-sub">Смотри до конца</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-warm cp-center">
+    <div class="c-glow" style="width:120%;height:60%;bottom:-10%;left:-10%;background:radial-gradient(circle,rgba(245,158,11,0.1),transparent 60%);"></div>
+    <div style="font-size:2em;margin-bottom:0.3em;">🏔️</div>
+    <div class="c-tag gold">Тибет</div>
+    <div class="c-h1 lg" style="text-align:center;">Моё первое<br>путешествие<br><em class="gold">бесплатно</em></div>
+    <div class="c-divider gold" style="margin:0.6em auto;"></div>
+    <div class="c-sub" style="text-align:center;">Год в MWR Life</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+],
+
+// ── MWR LIFE ──
+[
+  `<div class="c c-bg-blue cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#06B6D4,transparent);"></div>
+    <div class="c-glow" style="width:70%;height:50%;top:0;right:-10%;background:radial-gradient(circle,rgba(6,182,212,0.1),transparent 70%);"></div>
+    <div class="c-tag cyan">MWR Life</div>
+    <div class="c-h1 xl">Путешествуй.<br>Зарабатывай.<br><em class="gold">Живи.</em></div>
+    <div class="c-divider cyan"></div>
+    <div class="c-sub">Travel Advantage™</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-blue cp-center">
+    <div class="c-tag cyan">Лайфхак</div>
+    <div class="c-h1 lg" style="text-align:center;">Компания<br>удваивает<br><em class="gold">мои деньги</em></div>
+    <div class="c-divider cyan" style="margin:0.6em auto;"></div>
+    <div class="c-sub" style="text-align:center;">120 USDT в месяц → путешествие бесплатно</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-green cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#10B981,transparent);"></div>
+    <div class="c-tag green">Секрет</div>
+    <div class="c-h1 xl">3 человека —<br>и я езжу<br><em class="green">бесплатно</em></div>
+    <div class="c-divider green"></div>
+    <div class="c-sub">Безоплатка в MWR Life</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-blue cp-center">
+    <div class="c-glow" style="width:100%;height:80%;top:10%;left:0;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 60%);"></div>
+    <div style="font-size:2em;margin-bottom:0.2em;">🇬🇷🇹🇭🇮🇹🇯🇵</div>
+    <div class="c-tag cyan">Travel</div>
+    <div class="c-h1 lg" style="text-align:center;">Весь мир —<br><em class="cyan">по цене члена<br>клуба</em></div>
+    <div class="c-divider cyan" style="margin:0.6em auto;"></div>
+    <div class="c-sub" style="text-align:center;">Скидки до 70%</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+],
+
+// ── НЕЙРОСЕТИ ──
+[
+  `<div class="c c-bg-dark cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#818CF8,transparent);"></div>
+    <div class="c-glow" style="width:80%;height:60%;top:-10%;right:-20%;background:radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%);"></div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">Нейросети</div>
+    <div class="c-h1 xl">Я попросила<br>ИИ сделать<br><em style="color:#A5B4FC;">мне сайт</em></div>
+    <div class="c-divider" style="background:#6366F1;"></div>
+    <div class="c-sub">Вот что вышло</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-dark cp-center">
+    <div class="c-glow" style="width:100%;height:100%;top:0;left:0;background:radial-gradient(circle at 50% 40%,rgba(99,102,241,0.1),transparent 60%);"></div>
+    <div style="font-size:2em;margin-bottom:0.3em;">🤖</div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">ИИ</div>
+    <div class="c-h1 lg" style="text-align:center;">Мне 55.<br>Я делаю сайты<br><em style="color:#A5B4FC;">с нейросетью</em></div>
+    <div class="c-divider" style="background:#6366F1;margin:0.6em auto;"></div>
+    <div class="c-sub" style="text-align:center;">И тебя научу</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+
+  `<div class="c c-bg-dark cp">
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#818CF8,transparent);"></div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">Страх</div>
+    <div class="c-h1 xl">Технологии<br>пугают?<br><em style="color:#A5B4FC;">Меня тоже<br>пугали</em></div>
+    <div class="c-divider" style="background:#6366F1;"></div>
+    <div class="c-sub">Смотри что стало</div>
+    <div class="c-handle">nataliya_v_puti</div>
+  </div>`,
+],
+
+];
+
+let currentSet = 0;
+let overlayIdx = 0;
+
+function showSet(idx) {
+  currentSet = idx;
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  sets[idx].forEach((html, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'cover-wrap';
+    const lbl = document.createElement('div');
+    lbl.className = 'cover-label';
+    lbl.textContent = `Обложка ${i + 1}`;
+    const cover = document.createElement('div');
+    cover.className = 'cover';
+    cover.innerHTML = html;
+    cover.onclick = () => openOverlay(i);
+    const btn = document.createElement('button');
+    btn.className = 'fullscreen-btn';
+    btn.textContent = '⛶ Полный экран';
+    btn.onclick = () => openOverlay(i);
+    wrap.append(lbl, cover, btn);
+    grid.appendChild(wrap);
+  });
+}
+
+function openOverlay(idx) {
+  overlayIdx = idx;
+  renderOverlay();
+  document.getElementById('overlay').classList.add('show');
+}
+
+function renderOverlay() {
+  const covers = sets[currentSet];
+  document.getElementById('overlay-cover').innerHTML = covers[overlayIdx];
+  document.getElementById('ov-counter').textContent = `${overlayIdx + 1} / ${covers.length}`;
+}
+
+function ovNav(dir) {
+  const len = sets[currentSet].length;
+  overlayIdx = (overlayIdx + dir + len) % len;
+  renderOverlay();
+}
+
+function closeOverlay() {
+  document.getElementById('overlay').classList.remove('show');
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('overlay').classList.contains('show')) return;
+  if (e.key === 'ArrowRight') ovNav(1);
+  if (e.key === 'ArrowLeft') ovNav(-1);
+  if (e.key === 'Escape') closeOverlay();
+});
+
+showSet(0);
+</script>
+</body>
+</html>
