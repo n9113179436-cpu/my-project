@@ -81,6 +81,7 @@
     cursor: pointer;
     transition: transform 0.2s;
     border: 1px solid rgba(255,255,255,0.06);
+    container-type: inline-size;
   }
   .cover:hover { transform: scale(1.02); }
 
@@ -142,7 +143,7 @@
   ══════════════════════ */
 
   /* базовые */
-  .c { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .c { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; font-size: max(12px, 8cqi); }
 
   /* фоны — многослойные градиенты */
   .c-bg-warm {
@@ -236,12 +237,12 @@
   .c-h1 {
     font-family: 'Playfair Display', serif;
     color: white;
-    line-height: 1.1;
-    margin-bottom: 0.3em;
+    line-height: 1.08;
+    margin-bottom: 0.25em;
   }
-  .c-h1.xl { font-size: 1.5em; }
-  .c-h1.lg { font-size: 1.2em; }
-  .c-h1.md { font-size: 1em; }
+  .c-h1.xl { font-size: 2.1em; }
+  .c-h1.lg { font-size: 1.7em; }
+  .c-h1.md { font-size: 1.3em; }
   .c-h1 em { font-style: italic; }
   .c-h1 .gold { color: #FCD34D; }
   .c-h1 .cyan { color: #67E8F9; }
@@ -315,6 +316,7 @@ const sets = [
     <div class="c-line-left" style="background:linear-gradient(180deg,#F59E0B,rgba(245,158,11,0.2),transparent);"></div>
     <div class="c-corner tl" style="border-color:rgba(245,158,11,0.4);"></div>
     <div class="c-corner br" style="border-color:rgba(245,158,11,0.2);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(245,158,11,0.07);pointer-events:none;user-select:none;">01</div>
     <div class="c-tag gold">Мой путь</div>
     <div class="c-h1 xl">Жизнь<br>после 50<br><em class="gold">только<br>начинается</em></div>
     <div class="c-divider gold"></div>
@@ -325,6 +327,7 @@ const sets = [
   `<div class="c c-bg-beige cp">
     <div class="c-line-top" style="background:linear-gradient(90deg,transparent,rgba(253,210,120,0.5),transparent);"></div>
     <div class="c-corner tl" style="border-color:rgba(253,210,120,0.3);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(253,210,120,0.06);pointer-events:none;user-select:none;">02</div>
     <div class="c-tag white">Честно</div>
     <div class="c-h1 xl">Я боялась<br>нового мира<br><em style="color:rgba(253,200,100,0.6);">больше,<br>чем старости</em></div>
     <div class="c-divider" style="background:rgba(253,210,120,0.4);"></div>
@@ -335,6 +338,7 @@ const sets = [
   `<div class="c c-bg-warm cp">
     <div class="c-line-top" style="background:linear-gradient(90deg,#F59E0B,rgba(245,158,11,0.3),transparent);"></div>
     <div class="c-line-left" style="background:linear-gradient(180deg,rgba(245,158,11,0.6),transparent);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(245,158,11,0.07);pointer-events:none;user-select:none;">03</div>
     <div class="c-tag gold">Годовщина</div>
     <div class="c-h1 xl">Год<br>прошёл.<br><em class="gold">Что<br>изменилось?</em></div>
     <div class="c-divider gold"></div>
@@ -355,6 +359,7 @@ const sets = [
   `<div class="c c-bg-dark cp">
     <div class="c-line-top" style="background:linear-gradient(90deg,#818CF8,rgba(129,140,248,0.3),transparent);"></div>
     <div class="c-corner tl" style="border-color:rgba(129,140,248,0.4);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(99,102,241,0.1);pointer-events:none;user-select:none;">05</div>
     <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">Вопрос</div>
     <div class="c-h1 xl">А что,<br>если всё<br><em style="color:#A5B4FC;">получится?</em></div>
     <div class="c-divider" style="background:#6366F1;"></div>
@@ -380,6 +385,7 @@ const sets = [
     <div class="c-line-top" style="background:linear-gradient(90deg,#06B6D4,rgba(6,182,212,0.3),transparent);"></div>
     <div class="c-line-left" style="background:linear-gradient(180deg,#06B6D4,rgba(6,182,212,0.2),transparent);"></div>
     <div class="c-corner br" style="border-color:rgba(6,182,212,0.3);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(6,182,212,0.08);pointer-events:none;user-select:none;">01</div>
     <div class="c-tag cyan">MWR Life</div>
     <div class="c-h1 xl">Путешествуй.<br>Зарабатывай.<br><em class="gold">Живи.</em></div>
     <div class="c-divider cyan"></div>
@@ -400,6 +406,7 @@ const sets = [
   `<div class="c c-bg-green cp">
     <div class="c-line-top" style="background:linear-gradient(90deg,#10B981,rgba(16,185,129,0.3),transparent);"></div>
     <div class="c-line-left" style="background:linear-gradient(180deg,#10B981,rgba(16,185,129,0.2),transparent);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(16,185,129,0.08);pointer-events:none;user-select:none;">03</div>
     <div class="c-tag green">Секрет</div>
     <div class="c-h1 xl">3 человека —<br>и я езжу<br><em class="green">бесплатно</em></div>
     <div class="c-divider green"></div>
@@ -425,6 +432,7 @@ const sets = [
     <div class="c-line-top" style="background:linear-gradient(90deg,#818CF8,rgba(129,140,248,0.3),transparent);"></div>
     <div class="c-line-left" style="background:linear-gradient(180deg,#818CF8,rgba(129,140,248,0.2),transparent);"></div>
     <div class="c-corner br" style="border-color:rgba(129,140,248,0.3);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(99,102,241,0.1);pointer-events:none;user-select:none;">01</div>
     <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">Нейросети</div>
     <div class="c-h1 xl">Я попросила<br>ИИ сделать<br><em style="color:#A5B4FC;">мне сайт</em></div>
     <div class="c-divider" style="background:#6366F1;"></div>
@@ -446,6 +454,7 @@ const sets = [
   `<div class="c c-bg-dark cp">
     <div class="c-line-top" style="background:linear-gradient(90deg,#818CF8,rgba(129,140,248,0.3),transparent);"></div>
     <div class="c-corner tl" style="border-color:rgba(129,140,248,0.4);"></div>
+    <div style="position:absolute;top:-0.05em;right:0.1em;font-size:7em;font-weight:900;font-family:'Playfair Display',serif;line-height:1;color:rgba(99,102,241,0.1);pointer-events:none;user-select:none;">03</div>
     <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">Страх</div>
     <div class="c-h1 xl">Технологии<br>пугают?<br><em style="color:#A5B4FC;">Меня тоже<br>пугали</em></div>
     <div class="c-divider" style="background:#6366F1;"></div>
