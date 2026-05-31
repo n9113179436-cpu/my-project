@@ -144,31 +144,36 @@
   /* базовые */
   .c { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 
-  /* фоны — градиент поверх фото */
+  /* фоны — многослойные градиенты */
   .c-bg-warm {
     background:
-      linear-gradient(160deg, rgba(44,24,16,0.80), rgba(10,7,5,0.86)),
-      url('brand.png') center top / cover no-repeat;
+      radial-gradient(ellipse 90% 55% at 85% 8%, rgba(245,158,11,0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 40% at 10% 90%, rgba(200,60,10,0.14) 0%, transparent 55%),
+      linear-gradient(155deg, #1e0e06 0%, #2c1409 45%, #130804 100%);
   }
   .c-bg-beige {
     background:
-      linear-gradient(160deg, rgba(30,20,10,0.82), rgba(15,10,5,0.88)),
-      url('brand.png') center top / cover no-repeat;
+      radial-gradient(ellipse 80% 50% at 50% 15%, rgba(253,210,120,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(180,100,20,0.1) 0%, transparent 50%),
+      linear-gradient(155deg, #1c1208 0%, #271a0a 50%, #160e06 100%);
   }
   .c-bg-dark {
     background:
-      linear-gradient(160deg, rgba(10,14,39,0.85), rgba(5,8,24,0.90)),
-      url('brand.png') center top / cover no-repeat;
+      radial-gradient(ellipse 80% 55% at 15% 15%, rgba(99,102,241,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 85% 85%, rgba(139,92,246,0.1) 0%, transparent 50%),
+      linear-gradient(155deg, #08091e 0%, #0d1030 50%, #060718 100%);
   }
   .c-bg-green {
     background:
-      linear-gradient(160deg, rgba(5,25,14,0.82), rgba(3,10,6,0.88)),
-      url('maldives.png') center / cover no-repeat;
+      radial-gradient(ellipse 80% 55% at 20% 20%, rgba(16,185,129,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 40% at 80% 80%, rgba(5,150,100,0.1) 0%, transparent 50%),
+      linear-gradient(155deg, #04100a 0%, #071508 50%, #030d07 100%);
   }
   .c-bg-blue {
     background:
-      linear-gradient(160deg, rgba(12,26,46,0.82), rgba(6,13,26,0.88)),
-      url('maldives.png') center / cover no-repeat;
+      radial-gradient(ellipse 80% 55% at 80% 10%, rgba(6,182,212,0.20) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 40% at 15% 85%, rgba(59,130,246,0.12) 0%, transparent 50%),
+      linear-gradient(155deg, #050d1c 0%, #081424 50%, #040a16 100%);
   }
 
   /* декор */
@@ -182,6 +187,18 @@
     top: 0; left: 0; right: 0;
     height: 3px;
   }
+  .c-line-left {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 3px;
+  }
+  .c-corner {
+    position: absolute;
+    width: 3em; height: 3em;
+    pointer-events: none;
+  }
+  .c-corner.tl { top: 0.8em; left: 0.8em; border-top: 1px solid; border-left: 1px solid; }
+  .c-corner.br { bottom: 2.5em; right: 0.8em; border-bottom: 1px solid; border-right: 1px solid; }
   .c-handle {
     position: absolute;
     bottom: 1em;
@@ -190,7 +207,7 @@
     font-size: 0.38em;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.22);
   }
   .c-num {
     position: absolute;
@@ -295,8 +312,9 @@ const sets = [
 // ── ЛИЧНЫЙ ПУТЬ ──
 [
   `<div class="c c-bg-warm cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#F59E0B,transparent);"></div>
-    <div class="c-glow" style="width:80%;height:50%;top:0;right:-20%;background:radial-gradient(circle,rgba(245,158,11,0.1),transparent 70%);"></div>
+    <div class="c-line-left" style="background:linear-gradient(180deg,#F59E0B,rgba(245,158,11,0.2),transparent);"></div>
+    <div class="c-corner tl" style="border-color:rgba(245,158,11,0.4);"></div>
+    <div class="c-corner br" style="border-color:rgba(245,158,11,0.2);"></div>
     <div class="c-tag gold">Мой путь</div>
     <div class="c-h1 xl">Жизнь<br>после 50<br><em class="gold">только<br>начинается</em></div>
     <div class="c-divider gold"></div>
@@ -305,35 +323,39 @@ const sets = [
   </div>`,
 
   `<div class="c c-bg-beige cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);"></div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,rgba(253,210,120,0.5),transparent);"></div>
+    <div class="c-corner tl" style="border-color:rgba(253,210,120,0.3);"></div>
     <div class="c-tag white">Честно</div>
-    <div class="c-h1 xl">Я боялась<br>нового мира<br><em style="color:rgba(255,255,255,0.4);">больше,<br>чем старости</em></div>
-    <div class="c-divider" style="background:rgba(255,255,255,0.2);"></div>
+    <div class="c-h1 xl">Я боялась<br>нового мира<br><em style="color:rgba(253,200,100,0.6);">больше,<br>чем старости</em></div>
+    <div class="c-divider" style="background:rgba(253,210,120,0.4);"></div>
     <div class="c-sub">Рилс о страхе и переменах</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-warm cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#F59E0B,transparent);"></div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,#F59E0B,rgba(245,158,11,0.3),transparent);"></div>
+    <div class="c-line-left" style="background:linear-gradient(180deg,rgba(245,158,11,0.6),transparent);"></div>
     <div class="c-tag gold">Годовщина</div>
     <div class="c-h1 xl">Год<br>прошёл.<br><em class="gold">Что<br>изменилось?</em></div>
     <div class="c-divider gold"></div>
-    <div class="c-sub">Честный разбор</div>
+    <div class="c-sub">Честный разбор — смотри</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-beige cp-center">
-    <div class="c-glow" style="width:100%;height:100%;top:0;left:0;background:radial-gradient(circle at 50% 40%,rgba(245,158,11,0.08),transparent 60%);"></div>
+    <div class="c-corner tl" style="border-color:rgba(245,158,11,0.35);width:4em;height:4em;"></div>
+    <div class="c-corner br" style="border-color:rgba(245,158,11,0.35);width:4em;height:4em;"></div>
     <div class="c-tag gold">Перемены</div>
-    <div class="c-h1 lg" style="text-align:center;">Ни о чём<br>не жалею</div>
+    <div class="c-h1 xl" style="text-align:center;">Ни о чём<br><em class="gold">не жалею</em></div>
     <div class="c-divider gold" style="margin:0.6em auto;"></div>
     <div class="c-sub" style="text-align:center;">Благодарю каждый урок</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-dark cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#6366F1,transparent);"></div>
-    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">Вопрос</div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,#818CF8,rgba(129,140,248,0.3),transparent);"></div>
+    <div class="c-corner tl" style="border-color:rgba(129,140,248,0.4);"></div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">Вопрос</div>
     <div class="c-h1 xl">А что,<br>если всё<br><em style="color:#A5B4FC;">получится?</em></div>
     <div class="c-divider" style="background:#6366F1;"></div>
     <div class="c-sub">Смотри до конца</div>
@@ -341,10 +363,11 @@ const sets = [
   </div>`,
 
   `<div class="c c-bg-warm cp-center">
-    <div class="c-glow" style="width:120%;height:60%;bottom:-10%;left:-10%;background:radial-gradient(circle,rgba(245,158,11,0.1),transparent 60%);"></div>
-    <div style="font-size:2em;margin-bottom:0.3em;">🏔️</div>
+    <div class="c-corner tl" style="border-color:rgba(245,158,11,0.4);width:4em;height:4em;"></div>
+    <div class="c-corner br" style="border-color:rgba(245,158,11,0.4);width:4em;height:4em;"></div>
+    <div style="font-size:2.2em;margin-bottom:0.2em;">🏔️</div>
     <div class="c-tag gold">Тибет</div>
-    <div class="c-h1 lg" style="text-align:center;">Моё первое<br>путешествие<br><em class="gold">бесплатно</em></div>
+    <div class="c-h1 xl" style="text-align:center;">Моё первое<br>путешествие<br><em class="gold">бесплатно</em></div>
     <div class="c-divider gold" style="margin:0.6em auto;"></div>
     <div class="c-sub" style="text-align:center;">Год в MWR Life</div>
     <div class="c-handle">nataliya_v_puti</div>
@@ -354,25 +377,29 @@ const sets = [
 // ── MWR LIFE ──
 [
   `<div class="c c-bg-blue cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#06B6D4,transparent);"></div>
-    <div class="c-glow" style="width:70%;height:50%;top:0;right:-10%;background:radial-gradient(circle,rgba(6,182,212,0.1),transparent 70%);"></div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,#06B6D4,rgba(6,182,212,0.3),transparent);"></div>
+    <div class="c-line-left" style="background:linear-gradient(180deg,#06B6D4,rgba(6,182,212,0.2),transparent);"></div>
+    <div class="c-corner br" style="border-color:rgba(6,182,212,0.3);"></div>
     <div class="c-tag cyan">MWR Life</div>
     <div class="c-h1 xl">Путешествуй.<br>Зарабатывай.<br><em class="gold">Живи.</em></div>
     <div class="c-divider cyan"></div>
-    <div class="c-sub">Travel Advantage™</div>
+    <div class="c-sub">Travel Advantage™ · since 2013</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-blue cp-center">
+    <div class="c-corner tl" style="border-color:rgba(6,182,212,0.4);width:4em;height:4em;"></div>
+    <div class="c-corner br" style="border-color:rgba(6,182,212,0.4);width:4em;height:4em;"></div>
     <div class="c-tag cyan">Лайфхак</div>
-    <div class="c-h1 lg" style="text-align:center;">Компания<br>удваивает<br><em class="gold">мои деньги</em></div>
+    <div class="c-h1 xl" style="text-align:center;">Компания<br>удваивает<br><em class="gold">мои деньги</em></div>
     <div class="c-divider cyan" style="margin:0.6em auto;"></div>
-    <div class="c-sub" style="text-align:center;">120 USDT в месяц → путешествие бесплатно</div>
+    <div class="c-sub" style="text-align:center;">120 USDT → 240 USDT на путешествие</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-green cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#10B981,transparent);"></div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,#10B981,rgba(16,185,129,0.3),transparent);"></div>
+    <div class="c-line-left" style="background:linear-gradient(180deg,#10B981,rgba(16,185,129,0.2),transparent);"></div>
     <div class="c-tag green">Секрет</div>
     <div class="c-h1 xl">3 человека —<br>и я езжу<br><em class="green">бесплатно</em></div>
     <div class="c-divider green"></div>
@@ -381,10 +408,11 @@ const sets = [
   </div>`,
 
   `<div class="c c-bg-blue cp-center">
-    <div class="c-glow" style="width:100%;height:80%;top:10%;left:0;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 60%);"></div>
-    <div style="font-size:2em;margin-bottom:0.2em;">🇬🇷🇹🇭🇮🇹🇯🇵</div>
+    <div class="c-corner tl" style="border-color:rgba(6,182,212,0.35);width:5em;height:5em;"></div>
+    <div class="c-corner br" style="border-color:rgba(6,182,212,0.35);width:5em;height:5em;"></div>
+    <div style="font-size:2em;margin-bottom:0.3em;letter-spacing:0.1em;">🇬🇷 🇹🇭 🇮🇹 🇯🇵</div>
     <div class="c-tag cyan">Travel</div>
-    <div class="c-h1 lg" style="text-align:center;">Весь мир —<br><em class="cyan">по цене члена<br>клуба</em></div>
+    <div class="c-h1 xl" style="text-align:center;">Весь мир —<br><em class="cyan">по цене<br>клуба</em></div>
     <div class="c-divider cyan" style="margin:0.6em auto;"></div>
     <div class="c-sub" style="text-align:center;">Скидки до 70%</div>
     <div class="c-handle">nataliya_v_puti</div>
@@ -394,28 +422,31 @@ const sets = [
 // ── НЕЙРОСЕТИ ──
 [
   `<div class="c c-bg-dark cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#818CF8,transparent);"></div>
-    <div class="c-glow" style="width:80%;height:60%;top:-10%;right:-20%;background:radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%);"></div>
-    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">Нейросети</div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,#818CF8,rgba(129,140,248,0.3),transparent);"></div>
+    <div class="c-line-left" style="background:linear-gradient(180deg,#818CF8,rgba(129,140,248,0.2),transparent);"></div>
+    <div class="c-corner br" style="border-color:rgba(129,140,248,0.3);"></div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">Нейросети</div>
     <div class="c-h1 xl">Я попросила<br>ИИ сделать<br><em style="color:#A5B4FC;">мне сайт</em></div>
     <div class="c-divider" style="background:#6366F1;"></div>
-    <div class="c-sub">Вот что вышло</div>
+    <div class="c-sub">Вот что вышло за 1 день</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-dark cp-center">
-    <div class="c-glow" style="width:100%;height:100%;top:0;left:0;background:radial-gradient(circle at 50% 40%,rgba(99,102,241,0.1),transparent 60%);"></div>
-    <div style="font-size:2em;margin-bottom:0.3em;">🤖</div>
-    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">ИИ</div>
-    <div class="c-h1 lg" style="text-align:center;">Мне 55.<br>Я делаю сайты<br><em style="color:#A5B4FC;">с нейросетью</em></div>
+    <div class="c-corner tl" style="border-color:rgba(129,140,248,0.4);width:4em;height:4em;"></div>
+    <div class="c-corner br" style="border-color:rgba(129,140,248,0.4);width:4em;height:4em;"></div>
+    <div style="font-size:2.2em;margin-bottom:0.2em;">🤖</div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">ИИ</div>
+    <div class="c-h1 xl" style="text-align:center;">Мне 55.<br>Я делаю сайты<br><em style="color:#A5B4FC;">с нейросетью</em></div>
     <div class="c-divider" style="background:#6366F1;margin:0.6em auto;"></div>
     <div class="c-sub" style="text-align:center;">И тебя научу</div>
     <div class="c-handle">nataliya_v_puti</div>
   </div>`,
 
   `<div class="c c-bg-dark cp">
-    <div class="c-line-top" style="background:linear-gradient(90deg,transparent,#818CF8,transparent);"></div>
-    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.3);background:rgba(99,102,241,0.08);">Страх</div>
+    <div class="c-line-top" style="background:linear-gradient(90deg,#818CF8,rgba(129,140,248,0.3),transparent);"></div>
+    <div class="c-corner tl" style="border-color:rgba(129,140,248,0.4);"></div>
+    <div class="c-tag" style="color:#A5B4FC;border:1px solid rgba(165,180,252,0.35);background:rgba(99,102,241,0.1);">Страх</div>
     <div class="c-h1 xl">Технологии<br>пугают?<br><em style="color:#A5B4FC;">Меня тоже<br>пугали</em></div>
     <div class="c-divider" style="background:#6366F1;"></div>
     <div class="c-sub">Смотри что стало</div>
