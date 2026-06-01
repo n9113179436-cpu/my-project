@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>После 50 жизнь только начинается — гайд Натальи Ивахненко</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #FAF8F3;
+    font-family: 'Inter', sans-serif;
+    color: #2C2416;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ОБЛОЖКА */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1a0f06, #2d1a0a, #1a0f06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 80% 10%, rgba(245,158,11,0.15), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(180,60,10,0.1), transparent 50%);
+  }
+  .cover-tag {
+    position: relative;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #F59E0B;
+    border: 1px solid rgba(245,158,11,0.3);
+    padding: 0.4em 1.2em;
+    border-radius: 2em;
+    margin-bottom: 2rem;
+  }
+  .cover-title {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 8vw, 3.5rem);
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .cover-title em { font-style: italic; color: #FCD34D; }
+  .cover-sub {
+    position: relative;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    max-width: 380px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .cover-author {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .cover-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.8);
+  }
+  .cover-handle {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+  .cover-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.3;
+    animation: bounce 2s infinite;
+  }
+  .cover-scroll span { font-size: 0.55rem; letter-spacing: 0.15em; color: white; text-transform: uppercase; }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* СЕКЦИИ */
+  .section {
+    padding: 5rem 2rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .section-num {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #F59E0B;
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    color: #1A0F06;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: #B8860B; }
+  .section-text {
+    font-size: 1rem;
+    color: #4A3828;
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+  .section-text strong { color: #1A0F06; font-weight: 600; }
+
+  /* ЦИТАТА */
+  .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #B8860B;
+    border-left: 3px solid #F59E0B;
+    padding: 0.8rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(245,158,11,0.05);
+    border-radius: 0 0.5rem 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  /* СПИСОК */
+  .fear-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .fear-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: white;
+    border: 1px solid rgba(44,36,22,0.08);
+    border-radius: 0.75rem;
+    padding: 1rem 1.2rem;
+  }
+  .fear-icon { font-size: 1.3rem; flex-shrink: 0; line-height: 1.4; }
+  .fear-text { font-size: 0.95rem; color: #3A2A18; line-height: 1.6; }
+  .fear-text strong { display: block; font-weight: 600; color: #1A0F06; margin-bottom: 0.2rem; }
+
+  /* ВЫВОДЫ */
+  .conclusions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+  }
+  .conclusion-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .conclusion-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: rgba(245,158,11,0.25);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.5rem;
+  }
+  .conclusion-body {}
+  .conclusion-title {
+    font-weight: 600;
+    color: #1A0F06;
+    margin-bottom: 0.2rem;
+  }
+  .conclusion-text { font-size: 0.9rem; color: #5A4030; font-weight: 300; line-height: 1.6; }
+
+  /* РАЗДЕЛИТЕЛЬ */
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(44,36,22,0.12), transparent);
+    margin: 0;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(160deg, #1a0f06, #2d1a0a);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(245,158,11,0.08), transparent);
+  }
+  .cta-tag {
+    position: relative;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #F59E0B;
+    margin-bottom: 1.2rem;
+  }
+  .cta-title {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .cta-title em { font-style: italic; color: #FCD34D; }
+  .cta-text {
+    position: relative;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    max-width: 360px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .cta-btn {
+    position: relative;
+    display: inline-block;
+    background: #F59E0B;
+    color: #1a0f06;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9em 2.5em;
+    border-radius: 0.3em;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: #FCD34D; }
+  .cta-handle {
+    position: relative;
+    margin-top: 1.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+  }
+
+  /* СВЕТЛЫЕ СЕКЦИИ */
+  .section-light { background: white; }
+  .section-warm { background: #FDF6ED; }
+</style>
+</head>
+<body>
+
+<!-- ОБЛОЖКА -->
+<div class="cover">
+  <div class="cover-tag">Бесплатный гайд</div>
+  <h1 class="cover-title">После 50<br><em>жизнь только<br>начинается</em></h1>
+  <p class="cover-sub">Личный опыт: как перестать бояться, начать учиться новому и открыть мир путешествий</p>
+  <div class="cover-author">
+    <div class="cover-name">Наталья Ивахненко</div>
+    <div class="cover-handle">@nataliya_v_puti</div>
+  </div>
+  <div class="cover-scroll">
+    <span>Листай</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+</div>
+
+<!-- РАЗДЕЛ 1 -->
+<div class="section-warm">
+  <div class="section">
+    <div class="section-num">01 · Что изменилось</div>
+    <h2 class="section-title">Что изменилось<br><em>после 50?</em></h2>
+    <p class="section-text">Я работаю на железной дороге с 2004 года. В 2021 году вышла на пенсию — и вместо того чтобы «готовиться к старости», почувствовала что-то совсем другое.</p>
+    <p class="section-text"><strong>Появилось время думать о себе.</strong> Не о работе, не об обязательствах — о том, чего я на самом деле хочу. И оказалось, что хочу я очень многого.</p>
+    <p class="section-text">Хочу путешествовать. Хочу учиться новому. Хочу показывать другим, что жизнь после 50 — это не финал, а новая глава.</p>
+    <div class="quote">«После 50 я наконец перестала жить для галочки и начала жить для себя.»</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- РАЗДЕЛ 2 -->
+<div class="section-light">
+  <div class="section">
+    <div class="section-num">02 · Страхи</div>
+    <h2 class="section-title"><em>Страхи,</em><br>которые мешают</h2>
+    <p class="section-text">Я знаю эти страхи изнутри. Каждый из них я проживала сама.</p>
+    <ul class="fear-list">
+      <li>
+        <span class="fear-icon">😟</span>
+        <div class="fear-text">
+          <strong>«Поздно начинать»</strong>
+          Самая большая ложь, которую мы говорим себе. Я начала осваивать нейросети в 54 года — и сделала несколько сайтов.
+        </div>
+      </li>
+      <li>
+        <span class="fear-icon">💸</span>
+        <div class="fear-text">
+          <strong>«Нет денег на путешествия»</strong>
+          Я тоже так думала. Пока не нашла способ накапливать баллы и сократить расходы на поездки.
+        </div>
+      </li>
+      <li>
+        <span class="fear-icon">🤯</span>
+        <div class="fear-text">
+          <strong>«Технологии — не для меня»</strong>
+          Я боялась нового мира больше, чем старости. Сегодня я делаю сайты с помощью ИИ.
+        </div>
+      </li>
+      <li>
+        <span class="fear-icon">👀</span>
+        <div class="fear-text">
+          <strong>«Что скажут люди»</strong>
+          Пусть говорят. Пока они говорят — я лечу в Тибет.
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- РАЗДЕЛ 3 -->
+<div class="section-warm">
+  <div class="section">
+    <div class="section-num">03 · Учиться</div>
+    <h2 class="section-title">Почему не поздно<br><em>учиться?</em></h2>
+    <p class="section-text">Потому что сегодня учиться проще, чем когда-либо. Нейросети делают сложное — простым. ИИ объясняет, помогает, создаёт.</p>
+    <p class="section-text"><strong>Вам не нужно быть программистом.</strong> Вам не нужно быть молодым. Вам нужно только желание попробовать.</p>
+    <p class="section-text">Этот гайд создан с помощью нейросети. Сайт, который ты сейчас читаешь — тоже. Мне 55 лет, и я сделала это сама.</p>
+    <div class="quote">«Мозг не имеет возраста. Он любит новые задачи в любом возрасте.»</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- РАЗДЕЛ 4 -->
+<div class="section-light">
+  <div class="section">
+    <div class="section-num">04 · Нейросети</div>
+    <h2 class="section-title">Как я пришла<br><em>в нейросети?</em></h2>
+    <p class="section-text">Случайно. Услышала про ИИ, решила попробовать — и не смогла остановиться.</p>
+    <p class="section-text">Первый запрос в ChatGPT. Первый сайт за один день. Первая карусель для Instagram. Потом ещё один сайт. И ещё.</p>
+    <p class="section-text"><strong>Я поняла главное:</strong> нейросеть — это не страшный робот из фильмов. Это инструмент, который умножает твои возможности. Ты говоришь — она делает.</p>
+    <p class="section-text">Сегодня у меня три сайта, карусели для Instagram, шаблоны обложек для Reels. Всё — с нуля, с помощью ИИ, без технического образования.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- РАЗДЕЛ 5 -->
+<div class="section-warm">
+  <div class="section">
+    <div class="section-num">05 · Путешествия</div>
+    <h2 class="section-title">Как начать<br><em>путешествовать?</em></h2>
+    <p class="section-text">Год назад я вступила в клуб путешествий MWR Life. Честно — не была уверена, что это для меня.</p>
+    <p class="section-text">Каждый месяц платила членский взнос. Компания удваивала его баллами лояльности. Баллы накапливались.</p>
+    <p class="section-text"><strong>Сегодня я бронирую Тибет.</strong> Моё первое путешествие за границу — за счёт накопленных баллов. То, что казалось невозможным год назад, стало реальностью.</p>
+    <div class="quote">«Первый шаг — самый трудный. Всё остальное — уже движение вперёд.»</div>
+    <p class="section-text">Если ты хочешь путешествовать, но не знаешь с чего начать — напиши мне. Расскажу как это работает именно для тебя.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- РАЗДЕЛ 6 — ВЫВОДЫ -->
+<div class="section-light">
+  <div class="section">
+    <div class="section-num">06 · Выводы</div>
+    <h2 class="section-title">5 моих<br><em>выводов</em></h2>
+    <div class="conclusions">
+      <div class="conclusion-item">
+        <div class="conclusion-num">01</div>
+        <div class="conclusion-body">
+          <div class="conclusion-title">Возраст — это не приговор</div>
+          <div class="conclusion-text">50+ — это опыт, мудрость и наконец-то время на себя. Это ресурс, а не ограничение.</div>
+        </div>
+      </div>
+      <div class="conclusion-item">
+        <div class="conclusion-num">02</div>
+        <div class="conclusion-body">
+          <div class="conclusion-title">Страх проходит, когда начинаешь</div>
+          <div class="conclusion-text">Я боялась технологий, пока не попробовала. Боялась путешествий, пока не шагнула. Страх живёт только до первого шага.</div>
+        </div>
+      </div>
+      <div class="conclusion-item">
+        <div class="conclusion-num">03</div>
+        <div class="conclusion-body">
+          <div class="conclusion-title">Учиться никогда не поздно</div>
+          <div class="conclusion-text">Особенно сейчас — когда ИИ делает обучение доступным для каждого, независимо от возраста и образования.</div>
+        </div>
+      </div>
+      <div class="conclusion-item">
+        <div class="conclusion-num">04</div>
+        <div class="conclusion-body">
+          <div class="conclusion-title">Мечты требуют действий</div>
+          <div class="conclusion-text">Тибет не прилетел ко мне сам. Я сделала шаг, потом ещё один. Год спустя — мечта становится поездкой.</div>
+        </div>
+      </div>
+      <div class="conclusion-item">
+        <div class="conclusion-num">05</div>
+        <div class="conclusion-body">
+          <div class="conclusion-title">Жизнь после 50 — только начинается</div>
+          <div class="conclusion-text">Это не красивые слова. Это то, что я проживаю каждый день. И хочу показать тебе то же самое.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-tag">Следующий шаг</div>
+  <h2 class="cta-title">Хочешь так же?<br><em>Давай поговорим</em></h2>
+  <p class="cta-text">Напиши мне в Telegram или Instagram — расскажу про путешествия, нейросети и жизнь после 50 без розовых очков</p>
+  <a href="https://t.me/Natali_Ivahnenko" class="cta-btn">Написать в Telegram</a>
+  <div class="cta-handle">@nataliya_v_puti · @Natali_Ivahnenko</div>
+</div>
+
+</body>
+</html>
