@@ -1017,8 +1017,8 @@ const carouselPhotos = [
   'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80', // 2: 120 USDT — вид из иллюминатора
   'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&q=80', // 3: Безоплатка — Мальдивы
   'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', // 4: Мой путь — горная тропа
-  'https://images.unsplash.com/photo-1527254557219-c86f21d4f09e?w=800&q=80', // 5: Год → Тибет — горы/храм
-  null, // 6: уже имеет индивидуальные фото
+  'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80', // 5: Год → Тибет — заснеженные горы
+  'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800&q=80', // 6: Боль → Тибет — закатный пляж
 ];
 
 function applyPhoto(container, idx) {
@@ -1026,7 +1026,7 @@ function applyPhoto(container, idx) {
   if (!photo) return;
   const s = container.querySelector('.s');
   if (s) {
-    s.style.cssText += `;background-image:linear-gradient(rgba(4,7,18,0.68),rgba(4,7,18,0.68)),url('${photo}');background-size:cover;background-position:center;`;
+    s.style.cssText += `;background-image:linear-gradient(rgba(4,7,18,0.48),rgba(4,7,18,0.52)),url('${photo}');background-size:cover;background-position:center;`;
   }
 }
 
