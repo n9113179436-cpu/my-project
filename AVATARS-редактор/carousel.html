@@ -466,7 +466,7 @@
     <button class="tab-btn" onclick="showCarousel(2)">3 · Безоплатка</button>
     <button class="tab-btn" onclick="showCarousel(3)">4 · Мой путь</button>
     <button class="tab-btn" style="border-color:rgba(245,158,11,0.4);color:#F59E0B;" onclick="showCarousel(4)">⭐ Год → Тибет</button>
-    <button class="tab-btn" style="border-color:rgba(26,140,128,0.5);color:#1A8C80;" onclick="showCarousel(5)">🌊 Не переплачивай</button>
+    <button class="tab-btn" style="border-color:rgba(26,140,128,0.5);color:#1A8C80;" onclick="showCarousel(5)">✈ Боль → Тибет</button>
   </div>
   <div class="hint">Нажми на слайд → полный экран → скриншот</div>
 </div>
@@ -895,128 +895,113 @@ const carousels = [
   </div>`,
 ],
 
-// ── КАРУСЕЛЬ 6: КАК Я ПЕРЕСТАЛА ПЕРЕПЛАЧИВАТЬ ──
+// ── КАРУСЕЛЬ 6: БОЛЬ → ТИБЕТ ──
 [
-  // слайд 1 — заголовок
+  // слайд 1 — боль
   `<div class="s" style="font-size:max(12px,4.5cqi);">
     <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,245,225,0.35),rgba(255,228,185,0.65),rgba(255,215,160,0.75));z-index:1;"></div>
-    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.65);backdrop-filter:blur(6px);border-radius:2em;padding:0.25em 0.8em;font-size:0.42em;color:#3A8C7A;letter-spacing:0.06em;z-index:3;white-space:nowrap;">1/6</div>
-    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 1.8em 1.5em;">
-      <div style="font-size:1.3em;margin-bottom:0.2em;color:#2A7A6C;">✈</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:1.85em;color:#1A4A42;line-height:1.1;margin-bottom:0.35em;">Как я<br>перестала<br><em style="color:#2A8C7C;">переплачивать</em><br>за путешествия</div>
-      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.4em auto;"></div>
-      <div style="font-size:0.5em;color:#3A6A60;max-width:78%;line-height:1.6;">И открыла для себя мир, который раньше казался недоступным</div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,245,225,0.38),rgba(255,228,185,0.6),rgba(255,215,160,0.7));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">Боль</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">♡</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Плачу много,</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">а получаю мало</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:80%;line-height:1.65;opacity:0.9;">Хочу путешествовать чаще, но цены на отели и поездки съедают весь бюджет</div>
     </div>
-    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.38em;letter-spacing:0.22em;color:rgba(26,74,66,0.4);z-index:3;">@NATALIYA_V_PUTI</div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
   </div>`,
 
-  // слайд 2 — проблема
-  `<div class="s" style="font-size:max(12px,4.5cqi);background:linear-gradient(145deg,#EAF7F5,#D2EDE9,#E5F6F3);">
-    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.72);border-radius:2em;padding:0.25em 0.8em;font-size:0.42em;color:#3A8C7A;letter-spacing:0.06em;z-index:3;white-space:nowrap;">2/6</div>
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:2.8em 1.8em 1.5em;">
-      <div style="font-size:0.48em;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#2A8C7C;margin-bottom:1em;">Раньше я делала так:</div>
-      <div style="display:flex;flex-direction:column;gap:0.7em;">
-        <div style="display:flex;align-items:center;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:0.5em;background:rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:center;font-size:0.9em;flex-shrink:0;">🏨</div>
-          <div style="font-size:0.52em;color:#1A4A42;">Booking — «выгодная» цена</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:0.5em;background:rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:center;font-size:0.9em;flex-shrink:0;">🏠</div>
-          <div style="font-size:0.52em;color:#1A4A42;">Airbnb — ещё переплата</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:0.5em;background:rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:center;font-size:0.9em;flex-shrink:0;">✈️</div>
-          <div style="font-size:0.52em;color:#1A4A42;">Авиасейлс — «скидка» 10%</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:0.5em;background:rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:center;font-size:0.9em;flex-shrink:0;">💳</div>
-          <div style="font-size:0.52em;color:#1A4A42;">Итог: отпуск за 2 000$+</div>
-        </div>
-      </div>
-      <div style="margin-top:1.2em;font-family:'Cormorant Garamond',serif;font-size:0.72em;font-style:italic;color:#2A8C7C;">И казалось, что это нормально...</div>
-    </div>
-    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.38em;letter-spacing:0.22em;color:rgba(26,74,66,0.32);">@NATALIYA_V_PUTI</div>
-  </div>`,
-
-  // слайд 3 — открытие
+  // слайд 2 — решение
   `<div class="s" style="font-size:max(12px,4.5cqi);">
-    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(225,248,248,0.5),rgba(195,238,238,0.65),rgba(205,238,240,0.72));z-index:1;"></div>
-    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.65);backdrop-filter:blur(6px);border-radius:2em;padding:0.25em 0.8em;font-size:0.42em;color:#3A8C7A;letter-spacing:0.06em;z-index:3;white-space:nowrap;">3/6</div>
-    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 1.8em 1.5em;">
-      <div style="font-size:0.44em;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#2A8C7C;margin-bottom:0.5em;">Потом я узнала</div>
-      <div style="font-size:1.7em;margin-bottom:0.15em;">💡</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:2em;color:#1A4A42;line-height:1.1;margin-bottom:0.3em;">Travel<br>Advantage™</div>
-      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.4em auto;"></div>
-      <div style="font-size:0.48em;color:#1A4A42;max-width:82%;line-height:1.65;">Членство в закрытом тревел-клубе с ценами, которых нет в открытом доступе</div>
+    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(220,242,245,0.42),rgba(195,235,238,0.62),rgba(200,235,240,0.7));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">Решение</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">✈</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Есть умный</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">способ путешествовать</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:82%;line-height:1.65;opacity:0.9;">Клубные цены на отели, перелёты, круизы и многое другое — без переплат</div>
     </div>
-    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.38em;letter-spacing:0.22em;color:rgba(26,74,66,0.4);z-index:3;">@NATALIYA_V_PUTI</div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
   </div>`,
 
-  // слайд 4 — сравнение цен
-  `<div class="s" style="font-size:max(12px,4.5cqi);background:linear-gradient(145deg,#FEF5E7,#FDEACC,#FEF0DA);">
-    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.72);border-radius:2em;padding:0.25em 0.8em;font-size:0.42em;color:#3A8C7A;letter-spacing:0.06em;z-index:3;white-space:nowrap;">4/6</div>
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5em 1.8em 1.5em;text-align:center;">
-      <div style="font-size:0.44em;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#2A8C7C;margin-bottom:1em;">Тот же отель. Та же дата.</div>
-      <div style="display:flex;align-items:center;gap:0.6em;width:88%;">
-        <div style="flex:1;background:rgba(255,255,255,0.85);border:1px solid rgba(200,150,80,0.3);border-radius:0.7em;padding:0.7em 0.5em;">
-          <div style="font-size:0.42em;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#C4885A;margin-bottom:0.3em;">Booking</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.65em;color:#8A5A3A;font-weight:600;">€320</div>
-        </div>
-        <div style="font-size:1.1em;color:#3A8C7C;">→</div>
-        <div style="flex:1;background:rgba(42,140,122,0.12);border:1px solid rgba(42,140,122,0.4);border-radius:0.7em;padding:0.7em 0.5em;">
-          <div style="font-size:0.42em;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#2A8C7C;margin-bottom:0.3em;">MWR Life</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.65em;color:#1A6A5C;font-weight:600;">€160</div>
-        </div>
-      </div>
-      <div style="margin-top:1em;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:0.95em;font-style:italic;color:#2A8C7C;">Экономия €160</div>
-        <div style="font-size:0.46em;color:#5A7A72;margin-top:0.2em;">с одного отеля</div>
-      </div>
-    </div>
-    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.38em;letter-spacing:0.22em;color:rgba(26,74,66,0.32);">@NATALIYA_V_PUTI</div>
-  </div>`,
-
-  // слайд 5 — не скидочный сайт
+  // слайд 3 — 120 USDT
   `<div class="s" style="font-size:max(12px,4.5cqi);">
-    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,248,232,0.78),rgba(255,240,215,0.85),rgba(255,235,205,0.9));z-index:1;"></div>
-    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.65);backdrop-filter:blur(6px);border-radius:2em;padding:0.25em 0.8em;font-size:0.42em;color:#3A8C7A;letter-spacing:0.06em;z-index:3;white-space:nowrap;">5/6</div>
-    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:center;padding:2.8em 1.8em 1.5em;">
-      <div style="font-size:0.48em;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#2A8C7C;margin-bottom:0.15em;">Это не скидочный сайт.</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:1.2em;font-style:italic;color:#1A4A42;margin-bottom:0.9em;">Это членство в клубе.</div>
-      <div style="display:flex;flex-direction:column;gap:0.7em;">
-        <div style="display:flex;align-items:flex-start;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:50%;background:rgba(42,140,122,0.15);display:flex;align-items:center;justify-content:center;font-size:0.82em;flex-shrink:0;color:#2A8C7C;font-weight:700;">%</div>
-          <div style="font-size:0.5em;color:#1A4A42;line-height:1.55;padding-top:0.35em;">Скидки на отели, перелёты, круизы, авто и не только</div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:50%;background:rgba(42,140,122,0.15);display:flex;align-items:center;justify-content:center;font-size:0.82em;flex-shrink:0;color:#2A8C7C;font-weight:700;">✓</div>
-          <div style="font-size:0.5em;color:#1A4A42;line-height:1.55;padding-top:0.35em;">Цены ниже, чем у всех публичных сервисов</div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:0.75em;">
-          <div style="width:2.3em;height:2.3em;border-radius:50%;background:rgba(42,140,122,0.15);display:flex;align-items:center;justify-content:center;font-size:0.82em;flex-shrink:0;color:#2A8C7C;">♡</div>
-          <div style="font-size:0.5em;color:#1A4A42;line-height:1.55;padding-top:0.35em;">Больше путешествий — меньше затрат</div>
-        </div>
-      </div>
+    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(230,245,252,0.45),rgba(210,238,250,0.62),rgba(200,232,248,0.72));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">120 USDT</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">💳</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Всего 120 USDT</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">в месяц</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:82%;line-height:1.65;opacity:0.9;">Это ваш взнос в клуб, который открывает доступ к клубным ценам и бонусам</div>
     </div>
-    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.38em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
   </div>`,
 
-  // слайд 6 — CTA
+  // слайд 4 — безоплатка
+  `<div class="s" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(220,248,250,0.42),rgba(195,240,244,0.6),rgba(190,235,242,0.7));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">Безоплатка</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">🎁</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Безоплатка</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">для старта</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:82%;line-height:1.65;opacity:0.9;">3 партнёра — и компания закрывает ваш членский взнос. А баллы лояльности продолжают копиться.</div>
+    </div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
+  </div>`,
+
+  // слайд 5 — мой путь
+  `<div class="s" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,245,225,0.38),rgba(255,232,185,0.58),rgba(255,220,165,0.68));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">Мой путь</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">⛵</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Мой путь</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">к свободе</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:80%;line-height:1.65;opacity:0.9;">Я нашла способ путешествовать чаще, тратить меньше и жить ярче</div>
+    </div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
+  </div>`,
+
+  // слайд 6 — год тибет
+  `<div class="s" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1527254557219-c86f21d4f09e?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(225,238,248,0.42),rgba(205,228,242,0.6),rgba(195,222,240,0.7));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">Год — Тибет</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">⛰</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Год — Тибет</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">мечты сбываются</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:80%;line-height:1.65;opacity:0.9;">Путешествуй. Исследуй. Открывай мир. Живи полной жизнью.</div>
+    </div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
+  </div>`,
+
+  // слайд 7 — не переплачивай
   `<div class="s" style="font-size:max(12px,4.5cqi);">
     <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800&q=80') center/cover no-repeat;z-index:0;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(220,242,248,0.48),rgba(200,238,244,0.62),rgba(195,232,240,0.72));z-index:1;"></div>
-    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.65);backdrop-filter:blur(6px);border-radius:2em;padding:0.25em 0.8em;font-size:0.42em;color:#3A8C7A;letter-spacing:0.06em;z-index:3;white-space:nowrap;">6/6</div>
-    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 1.8em 1.5em;">
-      <div style="font-size:1.5em;color:#3A8C7C;margin-bottom:0.2em;">♡</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:2em;color:#1A4A42;line-height:1.15;margin-bottom:0.4em;">Хочешь<br><em style="color:#2A8C7C;">так же?</em></div>
-      <div style="font-size:0.5em;color:#1A4A42;max-width:80%;line-height:1.65;margin-bottom:1em;">Расскажу, как стать членом клуба и путешествовать выгодно</div>
-      <div style="background:#2A8C7C;color:white;font-size:0.48em;font-weight:600;letter-spacing:0.08em;padding:0.75em 2em;border-radius:0.4em;display:inline-flex;align-items:center;gap:0.5em;">Напиши мне ✈</div>
-      <div style="margin-top:0.7em;font-size:0.38em;color:rgba(26,74,66,0.45);">@nataliya_v_puti · @Natali_Ivahnenko</div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,242,218,0.42),rgba(255,228,180,0.6),rgba(255,215,155,0.7));z-index:1;"></div>
+    <div style="position:absolute;top:0.8em;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.58);backdrop-filter:blur(6px);border-radius:2em;padding:0.28em 1em;font-size:0.4em;color:#2A7A6C;letter-spacing:0.14em;text-transform:uppercase;z-index:3;white-space:nowrap;">Не переплачивай</div>
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5em 2em 1.5em;">
+      <div style="font-size:1.4em;margin-bottom:0.25em;opacity:0.7;">✈</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.7em;font-weight:700;color:#1A4A42;line-height:1.05;text-transform:uppercase;letter-spacing:0.02em;">Не переплачивай</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5em;font-style:italic;color:#2A8C7C;line-height:1.1;margin-bottom:0.3em;">путешествуй выгодно</div>
+      <div style="width:2.5em;height:1px;background:#2A8C7C;margin:0.3em auto 0.5em;opacity:0.6;"></div>
+      <div style="font-size:0.48em;color:#1A4A42;max-width:80%;line-height:1.65;opacity:0.9;">Умные путешественники выбирают клубные цены</div>
+      <div style="margin-top:1em;background:#2A8C7C;color:white;font-size:0.46em;font-weight:600;letter-spacing:0.08em;padding:0.7em 2em;border-radius:0.4em;">Напиши мне ✈</div>
+      <div style="margin-top:0.5em;font-size:0.36em;color:rgba(26,74,66,0.5);">@nataliya_v_puti · @Natali_Ivahnenko</div>
     </div>
-    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.38em;letter-spacing:0.22em;color:rgba(26,74,66,0.38);z-index:3;">@NATALIYA_V_PUTI</div>
+    <div style="position:absolute;bottom:0.7em;left:0;right:0;text-align:center;font-size:0.36em;letter-spacing:0.22em;color:rgba(26,74,66,0.36);z-index:3;">@NATALIYA_V_PUTI</div>
   </div>`,
 ],
 
