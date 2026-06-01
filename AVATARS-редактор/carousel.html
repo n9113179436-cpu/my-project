@@ -366,6 +366,94 @@
     background: rgba(255,255,255,0.2);
   }
   .s-dot.active { background: var(--cyan); width: 0.8em; border-radius: 0.2em; }
+
+  /* === КАРУСЕЛЬ 6: ПУТЕШЕСТВИЯ — СВЕТЛАЯ ТЕМА === */
+  .s-bg-dawn    { background: linear-gradient(155deg, #FEF0E8 0%, #FAD8B8 40%, #E0EFF8 100%); }
+  .s-bg-sand    { background: linear-gradient(145deg, #FFF8F0, #FDE8CC, #FFF3E8); }
+  .s-bg-sea     { background: linear-gradient(145deg, #E0F7F4, #B8EAE4, #D0F3EE); }
+  .s-bg-sky     { background: linear-gradient(155deg, #E8F5FE, #C4DFF5, #D8EEFB); }
+  .s-bg-palm    { background: linear-gradient(145deg, #EEF8EE, #CCE9CC, #E4F4E4); }
+  .s-bg-sunset  { background: linear-gradient(155deg, #FFF0E0, #FFCF99, #FFE4C0); }
+
+  .st { color: #1A3A30; }
+  .st-muted { color: #5A7A70; font-size: 0.55em; line-height: 1.6; }
+  .st-tag {
+    display: inline-block;
+    font-size: 0.42em;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.4em 1em;
+    border-radius: 2em;
+    margin-bottom: 0.8em;
+    border: 1px solid;
+  }
+  .st-tag.teal  { color: #1A8C80; border-color: rgba(26,140,128,0.3); background: rgba(26,140,128,0.08); }
+  .st-tag.warm  { color: #B06020; border-color: rgba(176,96,32,0.3); background: rgba(176,96,32,0.08); }
+  .st-tag.sky   { color: #1A6A9A; border-color: rgba(26,106,154,0.3); background: rgba(26,106,154,0.08); }
+  .st-tag.green { color: #2A7A40; border-color: rgba(42,122,64,0.3); background: rgba(42,122,64,0.08); }
+  .st-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    color: #1A3A30;
+    line-height: 1.1;
+    margin-bottom: 0.3em;
+  }
+  .st-h1.xl { font-size: 1.8em; }
+  .st-h1.lg { font-size: 1.5em; }
+  .st-h1.md { font-size: 1.2em; }
+  .st-h1 em { font-style: italic; color: #1A8C80; }
+  .st-h1 .warm { color: #B06020; }
+  .st-divider { width: 2.5em; height: 2px; margin: 0.5em 0; border-radius: 1px; }
+  .st-divider.teal   { background: #1A8C80; }
+  .st-divider.warm   { background: #B06020; }
+  .st-divider.sky    { background: #1A6A9A; }
+  .st-list { list-style: none; display: flex; flex-direction: column; gap: 0.5em; }
+  .st-list li {
+    font-size: 0.52em;
+    color: #3A5A50;
+    padding-left: 1.2em;
+    position: relative;
+    line-height: 1.5;
+  }
+  .st-list li::before { content: '—'; position: absolute; left: 0; color: #1A8C80; }
+  .st-stat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0.2em 0;
+  }
+  .st-stat.teal { color: #1A8C80; }
+  .st-stat.warm { color: #B06020; }
+  .st-cta {
+    display: inline-block;
+    font-size: 0.45em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.7em 2em;
+    border-radius: 0.3em;
+    margin-top: 0.8em;
+    color: white;
+    background: #1A8C80;
+  }
+  .st-brand {
+    position: absolute;
+    bottom: 1em;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 0.4em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(26,58,48,0.3);
+  }
+  .st-wave {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 30%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -378,6 +466,7 @@
     <button class="tab-btn" onclick="showCarousel(2)">3 · Безоплатка</button>
     <button class="tab-btn" onclick="showCarousel(3)">4 · Мой путь</button>
     <button class="tab-btn" style="border-color:rgba(245,158,11,0.4);color:#F59E0B;" onclick="showCarousel(4)">⭐ Год → Тибет</button>
+    <button class="tab-btn" style="border-color:rgba(26,140,128,0.5);color:#1A8C80;" onclick="showCarousel(5)">🌊 Не переплачивай</button>
   </div>
   <div class="hint">Нажми на слайд → полный экран → скриншот</div>
 </div>
@@ -803,6 +892,90 @@ const carousels = [
     <div class="s-cta gold">Написать Наталье</div>
     <div style="margin-top:0.8em;font-size:0.45em;letter-spacing:0.15em;color:rgba(255,255,255,0.3);">@nataliya_v_puti · Telegram: @Natali_Ivahnenko</div>
     <div class="s-brand">@nataliya_v_puti</div>
+  </div>`,
+],
+
+,
+
+// ── КАРУСЕЛЬ 6: КАК Я ПЕРЕСТАЛА ПЕРЕПЛАЧИВАТЬ ──
+[
+  // слайд 1 — заголовок
+  `<div class="s sp-center s-bg-dawn" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#1A8C80,transparent);"></div>
+    <div style="position:absolute;top:8%;right:8%;font-size:3.5em;opacity:0.12;pointer-events:none;">✈️</div>
+    <div class="st-tag teal">Жизнь после 50</div>
+    <div class="st-h1 xl" style="text-align:center;">Как я<br>перестала<br><em>переплачивать</em><br>за путешествия</div>
+    <div class="st-divider teal" style="margin:0.6em auto;"></div>
+    <div class="st-muted" style="text-align:center;max-width:80%;">И открыла для себя мир, который раньше казался недоступным</div>
+    <div class="st-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 2 — проблема
+  `<div class="s sp s-bg-sand" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;bottom:0;right:0;width:60%;height:60%;background:radial-gradient(circle at 80% 80%,rgba(176,96,32,0.08),transparent);pointer-events:none;"></div>
+    <div class="st-tag warm">Узнаёшь себя?</div>
+    <div class="st-h1 lg">Хочется<br>в путешествие,<br><em style="color:#B06020;">но...</em></div>
+    <div class="st-divider warm" style="margin:0.6em 0;"></div>
+    <ul class="st-list">
+      <li>Отели дорожают каждый год</li>
+      <li>Бюджет уходит быстрее, чем хочется</li>
+      <li>Мечту откладываешь на потом</li>
+      <li>Думаешь — "это не для нас"</li>
+    </ul>
+    <div class="st-muted" style="margin-top:0.8em;">Я думала так же. До недавнего времени.</div>
+    <div class="st-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 3 — что узнала
+  `<div class="s sp-center s-bg-sea" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#1A8C80,transparent);"></div>
+    <div style="position:absolute;bottom:5%;left:0;right:0;font-size:4em;opacity:0.08;text-align:center;pointer-events:none;">🌊</div>
+    <div class="st-tag teal">Открытие</div>
+    <div class="st-h1 lg" style="text-align:center;">Я нашла клуб,<br>где путешествовать<br><em>выгодно</em></div>
+    <div class="st-divider teal" style="margin:0.6em auto;"></div>
+    <div class="st-muted" style="text-align:center;max-width:85%;">MWR Life — Travel Advantage™<br>Скидки на отели, круизы и туры<br>для членов клуба по всему миру</div>
+    <div class="st-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 4 — пример экономии
+  `<div class="s sp s-bg-sky" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;top:8%;right:8%;font-size:3em;opacity:0.1;pointer-events:none;">🏔️</div>
+    <div class="st-tag sky">Реальный пример</div>
+    <div class="st-h1 md">Мой первый год<br>в клубе — и я лечу<br><em style="color:#1A6A9A;">на Тибет</em></div>
+    <div class="st-divider sky" style="margin:0.5em 0;"></div>
+    <div class="st-muted">120 USDT в месяц — взнос в клуб</div>
+    <div class="st-stat teal">× 2</div>
+    <div class="st-muted" style="margin-bottom:0.3em;">Компания удваивает каждый взнос баллами</div>
+    <div class="st-muted" style="color:#1A6A9A;font-weight:600;font-size:0.58em;">= путешествие без личных затрат на поездку</div>
+    <div class="st-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 5 — почему работает
+  `<div class="s sp s-bg-palm" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;bottom:0;right:-5%;font-size:5em;opacity:0.1;pointer-events:none;">🌴</div>
+    <div class="st-tag green">Почему это работает</div>
+    <div class="st-h1 lg">Клуб<br>путешественников<br><em style="color:#2A7A40;">с 2013 года</em></div>
+    <div class="st-divider" style="background:#2A7A40;margin:0.5em 0;"></div>
+    <ul class="st-list" style="margin-top:0.3em;">
+      <li>3+ миллиона участников по всему миру</li>
+      <li>Оптовые цены на отели и туры</li>
+      <li>Накапливаешь баллы — тратишь на поездки</li>
+      <li>Можно выйти в безоплатку — не платить взнос</li>
+    </ul>
+    <div class="st-brand">@nataliya_v_puti</div>
+  </div>`,
+
+  // слайд 6 — призыв
+  `<div class="s sp-center s-bg-sunset" style="font-size:max(12px,4.5cqi);">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#B06020,transparent);"></div>
+    <div style="position:absolute;bottom:12%;left:0;right:0;font-size:3.5em;opacity:0.1;text-align:center;pointer-events:none;">🌅</div>
+    <div class="st-tag warm">А что если...</div>
+    <div class="st-h1 xl" style="text-align:center;">Твоё следующее<br>путешествие<br><em style="color:#B06020;">может быть<br>дешевле</em></div>
+    <div class="st-divider warm" style="margin:0.6em auto;"></div>
+    <div class="st-muted" style="text-align:center;max-width:80%;">Напиши мне — расскажу как это работает именно для тебя</div>
+    <div class="st-cta">Написать Наталье</div>
+    <div style="margin-top:0.6em;font-size:0.38em;letter-spacing:0.15em;color:rgba(26,58,48,0.4);text-align:center;">@nataliya_v_puti · Telegram: @Natali_Ivahnenko</div>
+    <div class="st-brand">@nataliya_v_puti</div>
   </div>`,
 ],
 
