@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 нейросетей для людей 40+ — гайд Натальи Ивахненко</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #F7F8FC;
+    font-family: 'Inter', sans-serif;
+    color: #1A1F3A;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ОБЛОЖКА */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(155deg, #080C22 0%, #0F1535 50%, #080C22 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 15%, rgba(99,102,241,0.18), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(6,182,212,0.12), transparent 50%);
+  }
+  .cover-tag {
+    position: relative;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #06B6D4;
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 0.4em 1.2em;
+    border-radius: 2em;
+    margin-bottom: 2rem;
+  }
+  .cover-title {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 8vw, 3.6rem);
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .cover-title em { font-style: italic; color: #67E8F9; }
+  .cover-title .accent { color: #A5B4FC; }
+  .cover-sub {
+    position: relative;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 400px;
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .cover-author {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .cover-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(255,255,255,0.75); }
+  .cover-handle { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.25); text-transform: uppercase; }
+  .cover-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.25;
+    animation: bounce 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .cover-scroll span { font-size: 0.5rem; letter-spacing: 0.15em; color: white; text-transform: uppercase; }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* ВСТУПЛЕНИЕ */
+  .intro {
+    background: white;
+    padding: 4rem 2rem;
+  }
+  .intro-inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .intro-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #6366F1;
+    margin-bottom: 0.8rem;
+  }
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 5vw, 2.2rem);
+    color: #0A0E27;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+  .intro-title em { font-style: italic; color: #6366F1; }
+  .intro-text { font-size: 0.95rem; color: #4A5070; line-height: 1.85; font-weight: 300; margin-bottom: 1rem; }
+  .intro-text strong { color: #0A0E27; font-weight: 600; }
+
+  /* ИНСТРУМЕНТЫ — СЕТКА */
+  .tools-section {
+    padding: 4rem 2rem;
+    background: #F7F8FC;
+  }
+  .tools-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+  .tools-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #6366F1;
+    margin-bottom: 0.6rem;
+  }
+  .tools-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    color: #0A0E27;
+    line-height: 1.2;
+  }
+  .tools-title em { font-style: italic; color: #06B6D4; }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* КАРТОЧКА ИНСТРУМЕНТА */
+  .tool-card {
+    background: white;
+    border: 1px solid rgba(99,102,241,0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .tool-card:hover { box-shadow: 0 8px 32px rgba(99,102,241,0.1); transform: translateY(-2px); }
+  .tool-header { display: flex; align-items: center; gap: 1rem; }
+  .tool-emoji { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+  .tool-meta {}
+  .tool-name { font-weight: 700; font-size: 1rem; color: #0A0E27; }
+  .tool-site { font-size: 0.72rem; color: #6366F1; letter-spacing: 0.05em; }
+  .tool-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .badge {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25em 0.7em;
+    border-radius: 2em;
+    border: 1px solid;
+  }
+  .badge-free { color: #10B981; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+  .badge-paid { color: #F59E0B; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+  .badge-easy { color: #6366F1; border-color: rgba(99,102,241,0.3); background: rgba(99,102,241,0.08); }
+  .badge-medium { color: #8B5CF6; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.08); }
+  .tool-desc { font-size: 0.88rem; color: #4A5070; line-height: 1.7; font-weight: 300; }
+  .tool-desc strong { color: #0A0E27; font-weight: 600; }
+  .tool-tip {
+    background: rgba(99,102,241,0.05);
+    border-left: 2px solid #6366F1;
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.82rem;
+    color: #3730A3;
+    line-height: 1.55;
+  }
+  .tool-tip::before { content: '💡 '; }
+
+  /* ИТОГ */
+  .summary-section {
+    background: white;
+    padding: 4rem 2rem;
+  }
+  .summary-inner { max-width: 640px; margin: 0 auto; }
+  .summary-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #6366F1;
+    margin-bottom: 0.8rem;
+  }
+  .summary-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 5vw, 2.2rem);
+    color: #0A0E27;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .summary-title em { font-style: italic; color: #6366F1; }
+  .summary-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .summary-list li {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+    color: #3A4060;
+    line-height: 1.6;
+  }
+  .summary-list li::before { content: '→'; color: #6366F1; font-weight: 700; flex-shrink: 0; }
+  .summary-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #6366F1;
+    border-left: 3px solid #6366F1;
+    padding: 0.8rem 1.5rem;
+    background: rgba(99,102,241,0.04);
+    border-radius: 0 0.5rem 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(155deg, #080C22, #0F1535);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(99,102,241,0.1), transparent);
+  }
+  .cta-label { position: relative; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #06B6D4; margin-bottom: 1.2rem; }
+  .cta-title {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .cta-title em { font-style: italic; color: #67E8F9; }
+  .cta-text { position: relative; font-size: 0.95rem; color: rgba(255,255,255,0.5); max-width: 380px; margin: 0 auto 2rem; font-weight: 300; line-height: 1.7; }
+  .cta-btn {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(135deg, #6366F1, #4F46E5);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9em 2.5em;
+    border-radius: 0.3em;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .cta-btn:hover { opacity: 0.85; }
+  .cta-handle { position: relative; margin-top: 1.5rem; font-size: 0.62rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.2); text-transform: uppercase; }
+
+  @media (max-width: 640px) {
+    .tools-grid { grid-template-columns: 1fr; }
+    .tools-section, .intro, .summary-section { padding: 3rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ОБЛОЖКА -->
+<div class="cover">
+  <div class="cover-tag">Бесплатный гайд</div>
+  <h1 class="cover-title"><span class="accent">10 нейросетей</span><br>для людей <em>40+</em><br>простым языком</h1>
+  <p class="cover-sub">Без технического образования. Без сложных слов. Только практическая польза — что скачать, как использовать и зачем.</p>
+  <div class="cover-author">
+    <div class="cover-name">Наталья Ивахненко</div>
+    <div class="cover-handle">@nataliya_v_puti</div>
+  </div>
+  <div class="cover-scroll">
+    <span>Листай</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+</div>
+
+<!-- ВСТУПЛЕНИЕ -->
+<div class="intro">
+  <div class="intro-inner">
+    <div class="intro-label">Почему этот гайд</div>
+    <h2 class="intro-title">Я сама начинала<br><em>с нуля в 54 года</em></h2>
+    <p class="intro-text">Когда я впервые услышала слово «нейросеть» — решила, что это точно не для меня. Сложно, непонятно, молодёжное.</p>
+    <p class="intro-text">Попробовала — и не смогла остановиться. <strong>За год с помощью ИИ я создала несколько сайтов, карусели для Instagram и этот гайд.</strong></p>
+    <p class="intro-text">Здесь — 10 инструментов, которые реально меняют жизнь. Простым языком, с конкретными советами для тех, кому 40+.</p>
+  </div>
+</div>
+
+<!-- ИНСТРУМЕНТЫ -->
+<div class="tools-section">
+  <div class="tools-header">
+    <div class="tools-label">Инструменты</div>
+    <h2 class="tools-title">10 нейросетей,<br>которые <em>стоит попробовать</em></h2>
+  </div>
+  <div class="tools-grid">
+
+    <!-- 1 ChatGPT -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🤖</div>
+        <div class="tool-meta">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-site">chat.openai.com</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        Самый известный ИИ-помощник. <strong>Отвечает на любые вопросы, пишет тексты, объясняет сложное простыми словами.</strong> Работает как умный собеседник — спрашиваешь, он отвечает.
+      </div>
+      <div class="tool-tip">Попроси: «Напиши пост для Instagram про путешествия простым языком» — и получи готовый текст за 10 секунд.</div>
+    </div>
+
+    <!-- 2 Claude -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🧠</div>
+        <div class="tool-meta">
+          <div class="tool-name">Claude</div>
+          <div class="tool-site">claude.ai</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        ИИ от Anthropic — очень умный и честный помощник. <strong>Хорошо пишет тексты, помогает разобраться в документах, создаёт сайты.</strong> С его помощью создан этот гайд.
+      </div>
+      <div class="tool-tip">Отлично подходит для длинных текстов — написать историю, описание, статью или личный гайд.</div>
+    </div>
+
+    <!-- 3 Canva -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🎨</div>
+        <div class="tool-meta">
+          <div class="tool-name">Canva</div>
+          <div class="tool-site">canva.com</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        Онлайн-редактор дизайна с ИИ. <strong>Создаёт красивые посты, обложки, презентации и карусели для Instagram</strong> — без навыков дизайна. Тысячи готовых шаблонов.
+      </div>
+      <div class="tool-tip">Выбери шаблон поста → замени текст и фото → готово. Весь процесс — 5 минут.</div>
+    </div>
+
+    <!-- 4 Leonardo AI -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🖼️</div>
+        <div class="tool-meta">
+          <div class="tool-name">Leonardo AI</div>
+          <div class="tool-site">leonardo.ai</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-medium">Средне</span>
+      </div>
+      <div class="tool-desc">
+        Генератор изображений — <strong>создаёт картинки по текстовому описанию.</strong> Напишешь «закат на море с пальмами» — получишь красивое фото, которого не существует в реальности.
+      </div>
+      <div class="tool-tip">Используй для фонов обложек, иллюстраций к постам и уникальных изображений для Instagram.</div>
+    </div>
+
+    <!-- 5 Suno -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🎵</div>
+        <div class="tool-meta">
+          <div class="tool-name">Suno</div>
+          <div class="tool-site">suno.com</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        <strong>Создаёт музыку и песни по описанию.</strong> Напишешь «лёгкая музыка для летнего путешествия» — получишь готовый трек с вокалом. Магия в одном нажатии.
+      </div>
+      <div class="tool-tip">Создай фоновую музыку для своих Reels — уникальную, без авторских прав и абсолютно бесплатно.</div>
+    </div>
+
+    <!-- 6 CapCut -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🎬</div>
+        <div class="tool-meta">
+          <div class="tool-name">CapCut</div>
+          <div class="tool-site">capcut.com · приложение</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        Видеоредактор с ИИ прямо на телефоне. <strong>Монтирует Reels автоматически, добавляет субтитры, эффекты и музыку.</strong> Самый популярный инструмент для Instagram.
+      </div>
+      <div class="tool-tip">Автоматические субтитры — ИИ сам распознаёт твою речь и добавляет текст на видео. Огромная помощь!</div>
+    </div>
+
+    <!-- 7 Midjourney -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">✨</div>
+        <div class="tool-meta">
+          <div class="tool-name">Midjourney</div>
+          <div class="tool-site">midjourney.com</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-paid">Платно</span>
+        <span class="badge badge-medium">Средне</span>
+      </div>
+      <div class="tool-desc">
+        Лучший генератор изображений в мире. <strong>Создаёт фотореалистичные и художественные картинки невероятного качества.</strong> Работает через Discord — чуть сложнее, но результат потрясает.
+      </div>
+      <div class="tool-tip">Если хочешь по-настоящему профессиональные изображения для блога — это твой инструмент.</div>
+    </div>
+
+    <!-- 8 Google Gemini -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🔍</div>
+        <div class="tool-meta">
+          <div class="tool-name">Google Gemini</div>
+          <div class="tool-site">gemini.google.com</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        ИИ от Google — <strong>отвечает на вопросы, ищет информацию, помогает с текстами.</strong> Если ты уже используешь Gmail или Google Docs — Gemini встроен прямо туда.
+      </div>
+      <div class="tool-tip">Отлично для быстрых вопросов и поиска информации. Привычный интерфейс Google — никакого стресса.</div>
+    </div>
+
+    <!-- 9 ElevenLabs -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🎙️</div>
+        <div class="tool-meta">
+          <div class="tool-name">ElevenLabs</div>
+          <div class="tool-site">elevenlabs.io</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-medium">Средне</span>
+      </div>
+      <div class="tool-desc">
+        <strong>Превращает любой текст в живую речь.</strong> Выбираешь голос — мужской, женский, любой акцент — и ИИ озвучивает твой текст. Звучит как настоящий человек.
+      </div>
+      <div class="tool-tip">Создай озвучку для своих видео без записи голоса — идеально если стесняешься говорить на камеру.</div>
+    </div>
+
+    <!-- 10 Remove.bg -->
+    <div class="tool-card">
+      <div class="tool-header">
+        <div class="tool-emoji">🪄</div>
+        <div class="tool-meta">
+          <div class="tool-name">Remove.bg</div>
+          <div class="tool-site">remove.bg</div>
+        </div>
+      </div>
+      <div class="tool-badges">
+        <span class="badge badge-free">Бесплатно</span>
+        <span class="badge badge-easy">Легко</span>
+      </div>
+      <div class="tool-desc">
+        <strong>Убирает фон с фотографии одним кликом.</strong> Загружаешь своё фото — ИИ мгновенно вырезает тебя на прозрачный фон. Потом можно поставить любой фон.
+      </div>
+      <div class="tool-tip">Сделай профессиональное фото для профиля Instagram — без фотографа и студии, прямо дома.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ИТОГ -->
+<div class="summary-section">
+  <div class="summary-inner">
+    <div class="summary-label">Главное</div>
+    <h2 class="summary-title">С чего <em>начать?</em></h2>
+    <ul class="summary-list">
+      <li>Начни с <strong>ChatGPT</strong> — самый простой и понятный старт</li>
+      <li>Установи <strong>CapCut</strong> на телефон — сразу поможет с Reels</li>
+      <li>Зарегистрируйся в <strong>Canva</strong> — красивые посты без дизайнера</li>
+      <li>Попробуй <strong>Remove.bg</strong> — магия за одну секунду</li>
+      <li>Не бойся ошибаться — ИИ не осуждает, он помогает</li>
+    </ul>
+    <div class="summary-quote">«Я начала в 54. Если смогла я — сможешь и ты.»</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-label">Следующий шаг</div>
+  <h2 class="cta-title">Хочешь научиться?<br><em>Начнём вместе</em></h2>
+  <p class="cta-text">Напиши мне — покажу как использовать нейросети на практике, без лишней теории</p>
+  <a href="https://t.me/Natali_Ivahnenko" class="cta-btn">Написать в Telegram</a>
+  <div class="cta-handle">@nataliya_v_puti · @Natali_Ivahnenko</div>
+</div>
+
+</body>
+</html>
