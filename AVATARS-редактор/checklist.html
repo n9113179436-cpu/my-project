@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Готов ли ты к путешествию мечты? — Наталья Ивахненко</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #FAF8F3;
+    font-family: 'Inter', sans-serif;
+    color: #2C2416;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ОБЛОЖКА */
+  .cover {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+  .cover-photo {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80') center/cover no-repeat;
+    z-index: 0;
+  }
+  .cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(155deg, rgba(26,15,6,0.78), rgba(44,20,8,0.72), rgba(15,10,5,0.82));
+    z-index: 1;
+  }
+  .cover > *:not(.cover-photo):not(.cover-overlay) { position: relative; z-index: 2; }
+  .cover-tag {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #F59E0B;
+    border: 1px solid rgba(245,158,11,0.35);
+    padding: 0.4em 1.2em;
+    border-radius: 2em;
+    margin-bottom: 2rem;
+    display: inline-block;
+  }
+  .cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 8vw, 3.6rem);
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .cover-title em { font-style: italic; color: #FCD34D; }
+  .cover-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    max-width: 380px;
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .cover-btn {
+    display: inline-block;
+    background: #F59E0B;
+    color: #1a0f06;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9em 2.5em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .cover-btn:hover { background: #FCD34D; }
+  .cover-author {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .cover-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.6); }
+  .cover-handle { font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.25); text-transform: uppercase; }
+
+  /* ЧЕК-ЛИСТ */
+  #checklist { display: none; }
+  .checklist-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+  .checklist-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .checklist-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin-bottom: 0.6rem;
+  }
+  .checklist-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    color: #1A0F06;
+    line-height: 1.2;
+  }
+  .checklist-title em { font-style: italic; color: #B8860B; }
+
+  /* ВОПРОС */
+  .question {
+    background: white;
+    border: 1px solid rgba(44,36,22,0.08);
+    border-radius: 1rem;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    transition: box-shadow 0.2s;
+  }
+  .question.answered { border-color: rgba(184,134,11,0.2); }
+  .q-num {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin-bottom: 0.5rem;
+  }
+  .q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: #1A0F06;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+  }
+  .q-hint {
+    font-size: 0.82rem;
+    color: #8A7060;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+  }
+  .q-answers {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .q-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.7em 1em;
+    border-radius: 0.5rem;
+    border: 1.5px solid rgba(44,36,22,0.15);
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #3A2A18;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .q-btn:hover { border-color: #F59E0B; color: #B8860B; background: rgba(245,158,11,0.05); }
+  .q-btn.selected-yes { background: rgba(16,185,129,0.1); border-color: #10B981; color: #065F46; }
+  .q-btn.selected-no { background: rgba(245,158,11,0.1); border-color: #F59E0B; color: #92400E; }
+  .q-feedback {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .q-feedback.yes { background: rgba(16,185,129,0.08); color: #065F46; border-left: 3px solid #10B981; }
+  .q-feedback.no { background: rgba(245,158,11,0.08); color: #92400E; border-left: 3px solid #F59E0B; }
+
+  /* ПРОГРЕСС */
+  .progress-bar-wrap {
+    background: rgba(44,36,22,0.08);
+    border-radius: 2em;
+    height: 4px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #F59E0B, #FCD34D);
+    border-radius: 2em;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #8A7060;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    text-align: right;
+  }
+
+  /* РЕЗУЛЬТАТ */
+  #result { display: none; }
+  .result-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+    text-align: center;
+  }
+  .result-score {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 600;
+    color: #F59E0B;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .result-score span { font-size: 2rem; color: #B8860B; }
+  .result-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin-bottom: 1.5rem;
+  }
+  .result-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    color: #1A0F06;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .result-title em { font-style: italic; color: #B8860B; }
+  .result-text {
+    font-size: 0.95rem;
+    color: #5A4030;
+    line-height: 1.85;
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto 2rem;
+  }
+  .result-cta {
+    display: inline-block;
+    background: #F59E0B;
+    color: #1a0f06;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9em 2.5em;
+    border-radius: 0.3em;
+    text-decoration: none;
+    transition: background 0.2s;
+    margin-bottom: 1rem;
+  }
+  .result-cta:hover { background: #FCD34D; }
+  .result-restart {
+    display: block;
+    font-size: 0.75rem;
+    color: #8A7060;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .result-restart:hover { color: #B8860B; }
+
+  .result-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin: 1.5rem 0 2rem;
+    text-align: left;
+  }
+  .result-item {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    background: white;
+    border: 1px solid rgba(44,36,22,0.08);
+    border-radius: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    color: #3A2A18;
+    line-height: 1.5;
+  }
+  .result-item .icon { flex-shrink: 0; font-size: 1rem; }
+
+  @media (max-width: 480px) {
+    .checklist-wrap, .result-wrap { padding: 3rem 1.2rem 5rem; }
+    .q-answers { flex-direction: column; }
+    .q-btn { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ОБЛОЖКА -->
+<div class="cover" id="coverPage">
+  <div class="cover-photo"></div>
+  <div class="cover-overlay"></div>
+  <div class="cover-tag">Чек-лист</div>
+  <h1 class="cover-title">Готов ли ты<br>к <em>путешествию<br>мечты?</em></h1>
+  <p class="cover-sub">5 вопросов, которые покажут — где ты сейчас и что нужно сделать, чтобы первая поездка стала реальностью</p>
+  <button class="cover-btn" onclick="startChecklist()">Пройти чек-лист →</button>
+  <div class="cover-author">
+    <div class="cover-name">Наталья Ивахненко</div>
+    <div class="cover-handle">@nataliya_v_puti</div>
+  </div>
+</div>
+
+<!-- ЧЕК-ЛИСТ -->
+<div id="checklist">
+  <div class="checklist-wrap">
+    <div class="checklist-header">
+      <div class="checklist-label">Чек-лист</div>
+      <h2 class="checklist-title">Ответь честно<br><em>на 5 вопросов</em></h2>
+    </div>
+    <div class="progress-text" id="progressText">0 из 5</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Вопрос 1 -->
+    <div class="question" id="q1">
+      <div class="q-num">Вопрос 01</div>
+      <div class="q-text">Есть ли у тебя загранпаспорт?</div>
+      <div class="q-hint">Без загранпаспорта путешествие за рубеж невозможно. Оформляется от 2 недель до 2 месяцев.</div>
+      <div class="q-answers">
+        <button class="q-btn" onclick="answer(1,'yes',this)">✓ Да, есть</button>
+        <button class="q-btn" onclick="answer(1,'no',this)">✗ Нет, пока нет</button>
+      </div>
+      <div class="q-feedback yes" id="q1-yes">Отлично! Первый шаг уже сделан — паспорт есть. Убедись, что срок действия не менее 6 месяцев от даты поездки.</div>
+      <div class="q-feedback no" id="q1-no">Это первое, с чего нужно начать. Подай заявление на загранпаспорт через Госуслуги — займёт 30 минут онлайн.</div>
+    </div>
+
+    <!-- Вопрос 2 -->
+    <div class="question" id="q2">
+      <div class="q-num">Вопрос 02</div>
+      <div class="q-text">Ты уже бывал за границей?</div>
+      <div class="q-hint">Опыт зарубежных поездок помогает чувствовать себя увереннее. Но первый раз бывает у всех — и это незабываемо.</div>
+      <div class="q-answers">
+        <button class="q-btn" onclick="answer(2,'yes',this)">✓ Да, бывал</button>
+        <button class="q-btn" onclick="answer(2,'no',this)">✗ Нет, ни разу</button>
+      </div>
+      <div class="q-feedback yes" id="q2-yes">Хорошо — у тебя уже есть опыт и понимание как это работает. Теперь можно думать о том, чтобы путешествовать чаще и выгоднее.</div>
+      <div class="q-feedback no" id="q2-no">Первая поездка — самая важная. Я сама долго откладывала. Самое важное — просто решиться. Дальше всё идёт само.</div>
+    </div>
+
+    <!-- Вопрос 3 -->
+    <div class="question" id="q3">
+      <div class="q-num">Вопрос 03</div>
+      <div class="q-text">Есть ли у тебя финансовая подушка на путешествие?</div>
+      <div class="q-hint">Даже небольшой отложенный бюджет — это уже начало. Существуют способы сократить расходы на поездки в 2 и более раз.</div>
+      <div class="q-answers">
+        <button class="q-btn" onclick="answer(3,'yes',this)">✓ Да, есть</button>
+        <button class="q-btn" onclick="answer(3,'no',this)">✗ Пока не получается</button>
+      </div>
+      <div class="q-feedback yes" id="q3-yes">Это большой плюс. Теперь важно научиться тратить этот бюджет умнее — клубные цены на отели помогают сэкономить до 50%.</div>
+      <div class="q-feedback no" id="q3-no">Есть решение — накапливать баллы через клуб путешествий. Я сама так поехала в Тибет, существенно сократив личные расходы.</div>
+    </div>
+
+    <!-- Вопрос 4 -->
+    <div class="question" id="q4">
+      <div class="q-num">Вопрос 04</div>
+      <div class="q-text">Умеешь ли бронировать самостоятельно?</div>
+      <div class="q-hint">Билеты, отели, визы — всё это можно сделать онлайн самостоятельно. Это несложно, если знать где искать.</div>
+      <div class="q-answers">
+        <button class="q-btn" onclick="answer(4,'yes',this)">✓ Да, справляюсь</button>
+        <button class="q-btn" onclick="answer(4,'no',this)">✗ Нет, не пробовал</button>
+      </div>
+      <div class="q-feedback yes" id="q4-yes">Отлично — самостоятельное бронирование даёт свободу выбора и экономию. Особенно в связке с клубными ценами.</div>
+      <div class="q-feedback no" id="q4-no">Это проще, чем кажется. Я помогу разобраться — напиши мне, покажу пошагово как забронировать первую поездку.</div>
+    </div>
+
+    <!-- Вопрос 5 -->
+    <div class="question" id="q5">
+      <div class="q-num">Вопрос 05</div>
+      <div class="q-text">Есть ли у тебя план — куда ты хочешь поехать в этом году?</div>
+      <div class="q-hint">Мечта без плана — просто мечта. Конкретная цель — первый шаг к реальной поездке.</div>
+      <div class="q-answers">
+        <button class="q-btn" onclick="answer(5,'yes',this)">✓ Да, есть цель</button>
+        <button class="q-btn" onclick="answer(5,'no',this)">✗ Пока не определился</button>
+      </div>
+      <div class="q-feedback yes" id="q5-yes">Цель есть — значит уже в пути. Теперь осталось найти лучший способ добраться туда выгодно.</div>
+      <div class="q-feedback no" id="q5-no">Давай определимся вместе. Напиши мне — расскажу про направления, доступные через клуб путешествий MWR Life.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- РЕЗУЛЬТАТ -->
+<div id="result">
+  <div class="result-wrap">
+    <div class="result-score" id="resultScore">0<span>/5</span></div>
+    <div class="result-label">Твой результат</div>
+    <h2 class="result-title" id="resultTitle"></h2>
+    <p class="result-text" id="resultText"></p>
+    <div class="result-items" id="resultItems"></div>
+    <a href="https://t.me/Natali_Ivahnenko" class="result-cta">Написать Наталье в Telegram</a>
+    <button class="result-restart" onclick="restart()">← Пройти снова</button>
+  </div>
+</div>
+
+<script>
+const answers = {};
+const total = 5;
+
+const feedbacks = {
+  1: { yes: 'Загранпаспорт ✓', no: 'Нужно оформить загранпаспорт' },
+  2: { yes: 'Опыт поездок есть ✓', no: 'Первая поездка впереди' },
+  3: { yes: 'Финансовая подушка есть ✓', no: 'Нужно выстроить бюджет на поездки' },
+  4: { yes: 'Умеешь бронировать ✓', no: 'Нужно научиться бронировать' },
+  5: { yes: 'Цель на год есть ✓', no: 'Нужно выбрать направление' },
+};
+
+function startChecklist() {
+  document.getElementById('coverPage').style.display = 'none';
+  document.getElementById('checklist').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function answer(qNum, value, btn) {
+  answers[qNum] = value;
+  const question = document.getElementById('q' + qNum);
+  question.classList.add('answered');
+  question.querySelectorAll('.q-btn').forEach(b => {
+    b.classList.remove('selected-yes', 'selected-no');
+  });
+  btn.classList.add(value === 'yes' ? 'selected-yes' : 'selected-no');
+  document.querySelectorAll('#q' + qNum + ' .q-feedback').forEach(f => f.style.display = 'none');
+  const fb = document.getElementById('q' + qNum + '-' + value);
+  if (fb) fb.style.display = 'block';
+
+  const answered = Object.keys(answers).length;
+  document.getElementById('progressText').textContent = answered + ' из ' + total;
+  document.getElementById('progressBar').style.width = (answered / total * 100) + '%';
+
+  if (answered === total) {
+    setTimeout(showResult, 600);
+  }
+}
+
+function showResult() {
+  const score = Object.values(answers).filter(v => v === 'yes').length;
+  document.getElementById('checklist').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  document.getElementById('resultScore').innerHTML = score + '<span>/5</span>';
+
+  let title, text;
+  if (score === 5) {
+    title = 'Ты полностью готов.<br><em>Пора действовать!</em>';
+    text = 'У тебя есть всё необходимое для путешествия мечты. Осталось найти лучший способ ехать выгоднее — я помогу.';
+  } else if (score >= 3) {
+    title = 'Почти готов.<br><em>Осталось немного!</em>';
+    text = 'Хороший результат — основа есть. Несколько шагов отделяют тебя от первой поездки. Давай разберём их вместе.';
+  } else if (score >= 1) {
+    title = 'Начало пути.<br><em>Самое время начать</em>';
+    text = 'Именно так начинала и я. Год назад у меня тоже не было ответа на многие из этих вопросов. Сегодня я лечу в Тибет.';
+  } else {
+    title = 'Старт с нуля.<br><em>Это нормально!</em>';
+    text = 'Я сама начинала с нуля — никогда не была за границей, не знала как бронировать. Сейчас я уже бронирую Тибет. Напиши мне — помогу сделать первые шаги.';
+  }
+
+  document.getElementById('resultTitle').innerHTML = title;
+  document.getElementById('resultText').textContent = text;
+
+  const itemsEl = document.getElementById('resultItems');
+  itemsEl.innerHTML = '';
+  for (let i = 1; i <= total; i++) {
+    const val = answers[i];
+    const icon = val === 'yes' ? '✅' : '📌';
+    const text = feedbacks[i][val];
+    itemsEl.innerHTML += `<div class="result-item"><span class="icon">${icon}</span>${text}</div>`;
+  }
+}
+
+function restart() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('coverPage').style.display = 'flex';
+  document.querySelectorAll('.question').forEach(q => {
+    q.classList.remove('answered');
+    q.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected-yes','selected-no'));
+    q.querySelectorAll('.q-feedback').forEach(f => f.style.display = 'none');
+  });
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressText').textContent = '0 из 5';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
