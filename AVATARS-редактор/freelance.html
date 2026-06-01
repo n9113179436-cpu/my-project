@@ -6,22 +6,28 @@
 <title>Наталья Ивахненко — Сайты и контент с помощью ИИ</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #FAF8F3; --bg2: #F2EDE6; --card: #FFFFFF;
+    --text: #2C2416; --muted: #7A6A58; --light: #A89880;
+    --accent: #B8860B; --accent2: #8B5E3C;
+    --border: rgba(44,36,22,0.1); --shadow: 0 8px 32px rgba(44,36,22,0.1);
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: #0C0E1A; font-family: 'Inter', sans-serif; color: white; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+  body { background: var(--bg); font-family: 'Inter', sans-serif; color: var(--text); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 4rem;
-    background: rgba(12,14,26,0.92); backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(250,248,243,0.94); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
   }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: white; text-decoration: none; }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: #F59E0B; }
+  .nav-links a { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
 
   /* HERO */
   #hero {
@@ -35,173 +41,160 @@
   .hero-glow {
     position: fixed; top: -20%; right: -10%;
     width: 600px; height: 600px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,158,11,0.06), transparent 65%);
+    background: radial-gradient(circle, rgba(184,134,11,0.06), transparent 65%);
     pointer-events: none;
   }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 0.5rem;
     font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-    color: #F59E0B; border: 1px solid rgba(245,158,11,0.25);
+    color: var(--accent); border: 1px solid rgba(184,134,11,0.25);
     padding: 0.4em 1em; border-radius: 2em; margin-bottom: 1.5rem;
+    background: rgba(184,134,11,0.06);
   }
-  .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; animation: pulse 2s infinite; }
+  .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 4vw, 3.8rem);
-    line-height: 1.08; margin-bottom: 1.2rem;
-  }
-  .hero-title em { font-style: italic; color: #F59E0B; }
-  .hero-sub { font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; max-width: 480px; }
-  .hero-sub strong { color: rgba(255,255,255,0.8); font-weight: 500; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 3.8rem); line-height: 1.08; margin-bottom: 1.2rem; color: var(--text); }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1rem; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; max-width: 480px; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
-    background: #F59E0B; color: #0C0E1A; font-weight: 700;
+    background: var(--accent); color: white; font-weight: 700;
     font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 0.85em 2em; border-radius: 0.3em; text-decoration: none; transition: background 0.2s;
   }
-  .btn-primary:hover { background: #FCD34D; }
+  .btn-primary:hover { background: #9A6E09; }
   .btn-ghost {
-    border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6);
+    border: 1px solid var(--border); color: var(--muted);
     font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 0.85em 2em; border-radius: 0.3em; text-decoration: none; transition: all 0.2s;
   }
-  .btn-ghost:hover { border-color: #F59E0B; color: #F59E0B; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
   .hero-photo {
     width: 100%; aspect-ratio: 4/5; border-radius: 1rem; overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-    position: relative;
+    box-shadow: 0 30px 80px rgba(44,36,22,0.15); position: relative;
   }
-  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
   .hero-photo::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(12,14,26,0.6), transparent 50%);
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(44,36,22,0.5), transparent 50%);
   }
-  .hero-stats {
-    position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
-    display: flex; gap: 1rem; z-index: 1;
-  }
+  .hero-stats { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; display: flex; gap: 1rem; z-index: 1; }
   .hero-stat {
-    flex: 1; background: rgba(12,14,26,0.75); backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.08); border-radius: 0.6rem;
+    flex: 1; background: rgba(250,248,243,0.88); backdrop-filter: blur(10px);
+    border: 1px solid rgba(44,36,22,0.08); border-radius: 0.6rem;
     padding: 0.8rem; text-align: center;
   }
-  .hero-stat .num { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #F59E0B; font-weight: 600; line-height: 1; }
-  .hero-stat .lbl { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.2rem; }
+  .hero-stat .num { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--accent); font-weight: 600; line-height: 1; }
+  .hero-stat .lbl { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
 
   /* СЕКЦИИ */
   section { padding: 7rem 4rem; }
   .section-inner { max-width: 1200px; margin: 0 auto; }
-  .section-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #F59E0B; margin-bottom: 0.8rem; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; margin-bottom: 1rem; }
-  .section-title em { font-style: italic; color: #F59E0B; }
-  .section-sub { font-size: 1rem; color: rgba(255,255,255,0.45); font-weight: 300; max-width: 560px; }
+  .section-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; margin-bottom: 1rem; color: var(--text); }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-sub { font-size: 1rem; color: var(--muted); font-weight: 300; max-width: 560px; }
 
   /* УТП */
-  #utp { background: #0F1220; }
+  #utp { background: var(--bg2); }
   .utp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
   .utp-card {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 1rem; padding: 2rem; transition: background 0.2s;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 1rem; padding: 2rem; transition: box-shadow 0.2s;
   }
-  .utp-card:hover { background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.15); }
+  .utp-card:hover { box-shadow: var(--shadow); border-color: rgba(184,134,11,0.2); }
   .utp-icon { font-size: 2rem; margin-bottom: 1rem; }
-  .utp-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
-  .utp-text { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.7; font-weight: 300; }
+  .utp-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+  .utp-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
 
   /* УСЛУГИ */
-  #services { background: #0C0E1A; }
+  #services { background: var(--bg); }
   .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
   .service-card {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: var(--card); border: 1px solid var(--border);
     border-radius: 1rem; padding: 2rem; position: relative; overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-  .service-card.featured { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(44,36,22,0.1); }
+  .service-card.featured { border-color: rgba(184,134,11,0.35); background: #FFFBF0; }
   .service-badge {
     position: absolute; top: 1.2rem; right: 1.2rem;
     font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    background: #F59E0B; color: #0C0E1A; padding: 0.25em 0.7em; border-radius: 2em;
+    background: var(--accent); color: white; padding: 0.25em 0.7em; border-radius: 2em;
   }
-  .service-name { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #F59E0B; margin-bottom: 0.6rem; }
-  .service-price { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: white; line-height: 1; margin-bottom: 0.3rem; }
-  .service-price span { font-size: 1.2rem; color: rgba(255,255,255,0.4); }
-  .service-desc { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; font-weight: 300; }
+  .service-name { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+  .service-price { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: var(--text); line-height: 1; margin-bottom: 0.3rem; }
+  .service-price span { font-size: 1.2rem; color: var(--muted); }
+  .service-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; font-weight: 300; }
   .service-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.8rem; }
-  .service-features li { font-size: 0.85rem; color: rgba(255,255,255,0.65); display: flex; gap: 0.6rem; }
-  .service-features li::before { content: '✓'; color: #F59E0B; font-weight: 700; flex-shrink: 0; }
+  .service-features li { font-size: 0.85rem; color: var(--text); display: flex; gap: 0.6rem; opacity: 0.8; }
+  .service-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
   .service-btn {
     display: block; text-align: center; width: 100%;
-    background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);
-    color: #F59E0B; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.25);
+    color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
     text-transform: uppercase; padding: 0.75em; border-radius: 0.4em;
     text-decoration: none; transition: all 0.2s;
   }
-  .service-card.featured .service-btn { background: #F59E0B; color: #0C0E1A; border-color: #F59E0B; }
-  .service-btn:hover { background: #F59E0B; color: #0C0E1A; border-color: #F59E0B; }
+  .service-card.featured .service-btn { background: var(--accent); color: white; border-color: var(--accent); }
+  .service-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
   /* РАБОТЫ */
-  #portfolio { background: #0F1220; }
-  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 1.5rem; margin-top: 3rem; }
+  #portfolio { background: var(--bg2); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; margin-top: 3rem; }
   .work-card {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    background: var(--card); border: 1px solid var(--border);
     border-radius: 1rem; overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; display: block;
   }
-  .work-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
-  .work-preview {
-    height: 160px; position: relative; display: flex;
-    align-items: center; justify-content: center; overflow: hidden;
-  }
-  .work-preview .preview-icon { font-size: 3rem; opacity: 0.8; }
+  .work-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(44,36,22,0.12); }
+  .work-preview { height: 160px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .work-preview .preview-icon { font-size: 3rem; opacity: 0.7; }
   .work-preview .preview-tag {
     position: absolute; top: 1rem; left: 1rem;
     font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-    color: white; padding: 0.3em 0.8em; border-radius: 2em;
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.85); color: var(--text);
+    padding: 0.3em 0.8em; border-radius: 2em; border: 1px solid rgba(44,36,22,0.1);
   }
   .work-preview .preview-link {
     position: absolute; bottom: 1rem; right: 1rem;
     font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    background: rgba(245,158,11,0.9); color: #0C0E1A;
-    padding: 0.3em 0.8em; border-radius: 2em;
+    background: var(--accent); color: white; padding: 0.3em 0.8em; border-radius: 2em;
   }
   .work-body { padding: 1.3rem; }
-  .work-type { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.3rem; }
-  .work-title { font-weight: 600; font-size: 0.95rem; color: white; margin-bottom: 0.4rem; }
-  .work-desc { font-size: 0.8rem; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+  .work-type { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); margin-bottom: 0.3rem; }
+  .work-title { font-weight: 600; font-size: 0.95rem; color: var(--text); margin-bottom: 0.4rem; }
+  .work-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 
   /* ОБО МНЕ */
-  #about { background: #0C0E1A; }
+  #about { background: var(--bg); }
   .about-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; align-items: center; }
-  .about-photo { border-radius: 1rem; overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
-  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-  .about-text { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.85; font-weight: 300; margin-bottom: 1rem; }
-  .about-text strong { color: white; font-weight: 600; }
+  .about-photo { border-radius: 1rem; overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 30px 80px rgba(44,36,22,0.15); }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+  .about-text { font-size: 0.95rem; color: var(--muted); line-height: 1.85; font-weight: 300; margin-bottom: 1rem; }
+  .about-text strong { color: var(--text); font-weight: 600; }
   .about-quote {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem; font-style: italic; color: #F59E0B;
-    border-left: 2px solid #F59E0B;
+    font-size: 1.15rem; font-style: italic; color: var(--accent);
+    border-left: 2px solid var(--accent);
     padding: 0.8rem 1.2rem; margin-top: 1.5rem;
-    background: rgba(245,158,11,0.05); border-radius: 0 0.5rem 0.5rem 0;
+    background: rgba(184,134,11,0.05); border-radius: 0 0.5rem 0.5rem 0;
   }
 
   /* КОНТАКТ */
-  #contact { background: linear-gradient(155deg, #1a0f06, #2a1508, #1a0f06); text-align: center; }
+  #contact { background: linear-gradient(155deg, #1a0f06, #2c1a0a, #1a0f06); text-align: center; }
   .contact-inner { max-width: 640px; margin: 0 auto; }
-  .contact-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,5vw,3.2rem); line-height: 1.15; margin-bottom: 1rem; }
+  .contact-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,5vw,3.2rem); line-height: 1.15; margin-bottom: 1rem; color: white; }
   .contact-title em { font-style: italic; color: #FCD34D; }
   .contact-sub { font-size: 0.95rem; color: rgba(255,255,255,0.45); font-weight: 300; line-height: 1.8; margin-bottom: 2.5rem; }
   .contact-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .contact-handle { margin-top: 2rem; font-size: 0.62rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.18); text-transform: uppercase; }
+  .contact-handle { margin-top: 2rem; font-size: 0.62rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.2); text-transform: uppercase; }
 
   /* FOOTER */
-  footer { background: #080A14; padding: 2rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); }
-  .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.4); }
-  .footer-note { font-size: 0.65rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.18); }
+  footer { background: var(--bg2); padding: 2rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+  .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--muted); }
+  .footer-note { font-size: 0.65rem; letter-spacing: 0.08em; color: var(--light); }
 
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
