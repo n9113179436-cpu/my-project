@@ -218,6 +218,65 @@
     animation: scrollPulse 2s ease-in-out infinite;
   }
 
+  /* ── МОЯ ИСТОРИЯ ── */
+  #story {
+    background: #FAF8F5;
+    padding: 7rem 5rem;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+  }
+  .story-photo {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    aspect-ratio: 4/5;
+  }
+  .story-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .story-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #06B6D4;
+    margin-bottom: 1rem;
+  }
+  .story-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #0A0E27;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .story-title em { font-style: italic; color: #06B6D4; }
+  .story-text {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.9;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .story-text strong { color: #0A0E27; font-weight: 600; }
+  .story-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #06B6D4;
+    border-left: 3px solid #06B6D4;
+    padding-left: 1.2rem;
+    margin-top: 1.5rem;
+    line-height: 1.7;
+  }
+  @media (max-width: 768px) {
+    #story { padding: 5rem 1.5rem; }
+    .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
   /* ── О КОМПАНИИ (фон — Мальдивы) ── */
   #about {
     background-image: url('мальдивы.png');
@@ -785,6 +844,7 @@
 <nav id="navbar">
   <a href="#" class="nav-logo">MWR Life</a>
   <ul class="nav-links">
+    <li><a href="#story">Моя история</a></li>
     <li><a href="#about">О компании</a></li>
     <li><a href="#travel">Travel</a></li>
     <li><a href="#business">Бизнес</a></li>
@@ -811,6 +871,25 @@
   <div class="hero-scroll">
     <div class="scroll-line"></div>
     <span>Скролл</span>
+  </div>
+</section>
+
+<!-- МОЯ ИСТОРИЯ -->
+<section id="story">
+  <div class="story-grid">
+    <div class="story-photo fade-up">
+      <img src="личный бренд.png" alt="Наталья Ивахненко">
+    </div>
+    <div class="fade-up">
+      <div class="story-label">Моя история</div>
+      <h2 class="story-title">Ещё несколько лет назад<br>я <em>никогда не была</em><br>за границей</h2>
+      <p class="story-text">Работаю на железной дороге с 2004 года. Жила от отпуска к отпуску — и мечтала о путешествиях, которые казались недоступными.</p>
+      <p class="story-text">В 2021 году вышла на пенсию, но останавливаться не стала. Начала искать новые возможности — и нашла их там, где не ожидала.</p>
+      <p class="story-text">Сегодня <strong>путешествия стали частью моей жизни.</strong> Первое путешествие на Тибет — и это только начало. Я помогаю другим открыть для себя такие же возможности.</p>
+      <div class="story-quote">
+        «Мне 55. Я не готовлюсь к старости.<br>Я открываю мир.»
+      </div>
+    </div>
   </div>
 </section>
 
