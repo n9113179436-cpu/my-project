@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Путешествуй после 50 — Travel Advantage™</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #FDF6ED;
+  --teal: #2A9D8F;
+  --teal-light: #E8F5F3;
+  --amber: #E9A84C;
+  --amber-light: #FEF3DC;
+  --brown: #2C1F0E;
+  --brown-mid: #6B4F2A;
+  --brown-light: #A07850;
+  --white: #FFFFFF;
+  --shadow: 0 4px 24px rgba(44,31,14,0.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--brown);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* ── НАВИГАЦИЯ ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(253,246,237,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(44,31,14,0.08);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: none;
+}
+.nav-cta {
+  background: var(--teal);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: #228176; }
+
+/* ── ГЕРОЙ ── */
+.hero {
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 2rem 4rem;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 30%, rgba(42,157,143,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(233,168,76,0.10) 0%, transparent 55%),
+    linear-gradient(160deg, #FDF6ED 0%, #F5EAD6 60%, #EDE0C8 100%);
+}
+.hero-waves {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23ffffff' fill-opacity='0.6' d='M0,60 C360,120 1080,0 1440,60 L1440,120 L0,120 Z'/%3E%3C/svg%3E") no-repeat bottom center / cover;
+  opacity: 0.5;
+}
+.hero-inner {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 1;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--amber-light);
+  color: var(--brown-mid);
+  border: 1px solid rgba(233,168,76,0.4);
+  border-radius: 2rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--brown);
+  margin-bottom: 1.2rem;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--teal);
+}
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--brown-mid);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--teal);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(42,157,143,0.35);
+}
+.btn-primary:hover { background: #228176; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42,157,143,0.4); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--brown);
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1.5px solid rgba(44,31,14,0.2);
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 3.5rem;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--teal);
+  line-height: 1;
+}
+.hero-stat-txt {
+  font-size: 0.82rem;
+  color: var(--brown-light);
+  margin-top: 0.3rem;
+}
+
+/* ── СЕКЦИИ ── */
+section { padding: 5rem 2rem; }
+.section-inner { max-width: 1000px; margin: 0 auto; }
+.section-tag {
+  display: inline-block;
+  background: var(--teal-light);
+  color: var(--teal);
+  border-radius: 2rem;
+  padding: 0.3rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-tag.amber {
+  background: var(--amber-light);
+  color: var(--brown-mid);
+}
+.section-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+}
+.section-h em { font-style: italic; color: var(--teal); }
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--brown-mid);
+  max-width: 600px;
+  margin-bottom: 3rem;
+  line-height: 1.7;
+}
+
+/* ── ВОЗМОЖНОСТИ ── */
+.perks {
+  background: white;
+}
+.perks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.5rem;
+}
+.perk-card {
+  background: var(--cream);
+  border-radius: 1.2rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(44,31,14,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.perk-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.perk-icon {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.perk-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--brown);
+}
+.perk-text {
+  font-size: 0.92rem;
+  color: var(--brown-mid);
+  line-height: 1.6;
+}
+
+/* ── КАК РАБОТАЕТ ── */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  counter-reset: steps;
+}
+.step {
+  position: relative;
+  padding: 2rem 1.5rem 2rem 4.5rem;
+  background: white;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(44,31,14,0.07);
+  counter-increment: steps;
+}
+.step::before {
+  content: counter(steps);
+  position: absolute;
+  left: 1.5rem;
+  top: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background: var(--teal);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.step-text {
+  font-size: 0.92rem;
+  color: var(--brown-mid);
+  line-height: 1.6;
+}
+
+/* ── ПЛАТФОРМА ── */
+.platform {
+  background: linear-gradient(135deg, #1a6b61 0%, #2A9D8F 50%, #3ab8a8 100%);
+  color: white;
+}
+.platform .section-h { color: white; }
+.platform .section-h em { color: var(--amber); }
+.platform .section-desc { color: rgba(255,255,255,0.8); }
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.platform-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 1.2rem;
+  padding: 1.8rem 1.5rem;
+}
+.platform-card-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+.platform-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: white;
+}
+.platform-card-text {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+}
+
+/* ── МАГАЗИН ── */
+.shop { background: var(--amber-light); }
+.shop-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (max-width: 680px) { .shop-inner { grid-template-columns: 1fr; } }
+.shop-visual {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.shop-visual-emoji { font-size: 4rem; margin-bottom: 1rem; display: block; }
+.shop-visual-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 0.3rem;
+}
+.shop-visual-sub {
+  font-size: 0.85rem;
+  color: var(--brown-light);
+}
+.shop-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  border-radius: 0.8rem;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(44,31,14,0.06);
+}
+.shop-item-icon { font-size: 1.8rem; flex-shrink: 0; }
+.shop-item-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--brown);
+}
+.shop-item-text {
+  font-size: 0.82rem;
+  color: var(--brown-mid);
+}
+
+/* ── УСЛОВИЯ ── */
+.conditions { background: white; }
+.conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.condition-card {
+  border-radius: 1.2rem;
+  padding: 2rem;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.condition-card.basic {
+  background: var(--cream);
+  border-color: rgba(44,31,14,0.1);
+}
+.condition-card.plus {
+  background: var(--teal-light);
+  border-color: var(--teal);
+}
+.condition-badge {
+  display: inline-block;
+  border-radius: 2rem;
+  padding: 0.25rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.basic .condition-badge { background: rgba(44,31,14,0.08); color: var(--brown-mid); }
+.plus .condition-badge { background: var(--teal); color: white; }
+.condition-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 0.2rem;
+  line-height: 1;
+}
+.condition-price-note {
+  font-size: 0.82rem;
+  color: var(--brown-light);
+  margin-bottom: 1.2rem;
+}
+.condition-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.condition-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--brown);
+  line-height: 1.5;
+}
+.condition-list li::before {
+  content: '✓';
+  color: var(--teal);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.05em;
+}
+.condition-note {
+  margin-top: 1rem;
+  background: rgba(42,157,143,0.08);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.8rem 1rem;
+  font-size: 0.88rem;
+  color: var(--brown-mid);
+}
+
+/* ── РЕГИСТРАЦИЯ ── */
+.register {
+  background: linear-gradient(160deg, #FDF6ED 0%, #EAF6F4 100%);
+  text-align: center;
+}
+.register .section-h { color: var(--brown); }
+.register .section-desc { margin-left: auto; margin-right: auto; }
+.register-steps {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.reg-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: white;
+  border-radius: 2rem;
+  padding: 0.7rem 1.3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--brown);
+  box-shadow: 0 2px 10px rgba(44,31,14,0.08);
+}
+.reg-step-num {
+  width: 1.6rem;
+  height: 1.6rem;
+  background: var(--teal);
+  color: white;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.register-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--teal);
+  color: white;
+  padding: 1.2rem 3rem;
+  border-radius: 3rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(42,157,143,0.4);
+  transition: all 0.2s;
+  margin-bottom: 1.2rem;
+}
+.register-cta:hover { background: #228176; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(42,157,143,0.5); }
+.register-hint {
+  font-size: 0.9rem;
+  color: var(--brown-light);
+}
+
+/* ── ФУТЕР ── */
+footer {
+  background: var(--brown);
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.85rem;
+}
+footer a { color: var(--amber); text-decoration: none; }
+
+/* ── АНИМАЦИИ ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ── МОБАЙЛ ── */
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  nav { padding: 0.9rem 1.2rem; }
+  .hero { padding: 4rem 1.2rem 3rem; min-height: auto; padding-top: 6rem; }
+  section { padding: 3.5rem 1.2rem; }
+  .hero-stats { gap: 1.2rem; }
+  .btn-primary, .btn-secondary { padding: 0.9rem 1.5rem; font-size: 1rem; }
+  .register-cta { padding: 1rem 2rem; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav>
+  <a href="#" class="nav-logo">Travel Advantage™</a>
+  <a href="https://t.me/Natali_Ivahnenko" class="nav-cta" target="_blank">Написать Наталье →</a>
+</nav>
+
+<!-- ГЕРОЙ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-waves"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">✈️ Для тех, кому за 50</div>
+    <h1>Путешествуй<br><em>дешевле</em>, чем<br>все остальные</h1>
+    <p class="hero-sub">Закрытый тревел-клуб с ценами, которых нет в открытом доступе. Отели, авиа, круизы — до 70% дешевле. Всё просто, всё понятно.</p>
+    <div class="hero-btns">
+      <a href="https://t.me/Natali_Ivahnenko" class="btn-primary" target="_blank">✈️ Хочу путешествовать</a>
+      <a href="#how" class="btn-secondary">Как это работает?</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">до 70%</div>
+        <div class="hero-stat-txt">скидки на отели</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">180+</div>
+        <div class="hero-stat-txt">стран доступно</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">с 2013</div>
+        <div class="hero-stat-txt">работает клуб</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВОЗМОЖНОСТИ -->
+<section class="perks" id="perks">
+  <div class="section-inner">
+    <div class="fade-up">
+      <span class="section-tag">Возможности</span>
+      <h2 class="section-h">Что ты получаешь<br><em>в клубе</em></h2>
+      <p class="section-desc">Один раз вступаешь — и получаешь доступ к ценам, которые закрытые для обычных путешественников.</p>
+    </div>
+    <div class="perks-grid fade-up">
+      <div class="perk-card">
+        <span class="perk-icon">🏨</span>
+        <div class="perk-title">Отели дешевле</div>
+        <p class="perk-text">Скидки до 70% на отели по всему миру. Тот же отель — в 2 раза дешевле, чем на Booking.</p>
+      </div>
+      <div class="perk-card">
+        <span class="perk-icon">✈️</span>
+        <div class="perk-title">Авиабилеты</div>
+        <p class="perk-text">Специальные тарифы на авиаперелёты. Экономия на каждом рейсе — в любую страну мира.</p>
+      </div>
+      <div class="perk-card">
+        <span class="perk-icon">🚢</span>
+        <div class="perk-title">Круизы</div>
+        <p class="perk-text">Эксклюзивные условия на круизы. Средиземноморье, Карибы, Норвегия — по ценам клуба.</p>
+      </div>
+      <div class="perk-card">
+        <span class="perk-icon">🚗</span>
+        <div class="perk-title">Авто и трансфер</div>
+        <p class="perk-text">Аренда автомобилей и трансферы со скидкой. Удобно и выгодно в каждой поездке.</p>
+      </div>
+      <div class="perk-card">
+        <span class="perk-icon">🛍️</span>
+        <div class="perk-title">Магазин Life Style</div>
+        <p class="perk-text">Брендовые вещи для путешественников прямо на платформе. Стильно и по-особому.</p>
+      </div>
+      <div class="perk-card">
+        <span class="perk-icon">💰</span>
+        <div class="perk-title">Доход</div>
+        <p class="perk-text">Рекомендуешь клуб — получаешь вознаграждение. Просто, честно, без скрытых условий.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КАК РАБОТАЕТ -->
+<section id="how">
+  <div class="section-inner">
+    <div class="fade-up">
+      <span class="section-tag">Просто</span>
+      <h2 class="section-h">Три шага —<br><em>и ты в клубе</em></h2>
+      <p class="section-desc">Никаких сложных инструкций. Всё объясним пошагово — лично.</p>
+    </div>
+    <div class="steps-grid fade-up">
+      <div class="step">
+        <div class="step-title">Пишешь Наталье</div>
+        <p class="step-text">Задаёшь любые вопросы. Наталья расскажет всё простым языком — без жаргона и непонятных терминов.</p>
+      </div>
+      <div class="step">
+        <div class="step-title">Выбираешь условия</div>
+        <p class="step-text">Подбираем подходящий тариф. Объясним что входит, сколько стоит, как пользоваться платформой.</p>
+      </div>
+      <div class="step">
+        <div class="step-title">Начинаешь путешествовать</div>
+        <p class="step-text">Получаешь доступ к платформе Travel Advantage™ и начинаешь бронировать по ценам клуба.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПЛАТФОРМА -->
+<section class="platform" id="platform">
+  <div class="section-inner">
+    <div class="fade-up">
+      <span class="section-tag amber">Платформа</span>
+      <h2 class="section-h">Travel Advantage™ —<br><em>твой личный кабинет</em></h2>
+      <p class="section-desc">Удобная платформа, где всё собрано в одном месте. Бронируй, выбирай, экономь.</p>
+    </div>
+    <div class="platform-grid fade-up">
+      <div class="platform-card">
+        <span class="platform-card-icon">🖥️</span>
+        <div class="platform-card-title">Простой интерфейс</div>
+        <p class="platform-card-text">Удобно для тех, кто не дружит с технологиями. Всё понятно с первого взгляда.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-card-icon">🔍</span>
+        <div class="platform-card-title">Поиск и бронирование</div>
+        <p class="platform-card-text">Ищешь отель, билет или тур — сразу видишь цену клуба и обычную цену.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-card-icon">💳</span>
+        <div class="platform-card-title">Безопасная оплата</div>
+        <p class="platform-card-text">Оплата картой, защита платежей. Как в обычном интернет-магазине.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-card-icon">📱</span>
+        <div class="platform-card-title">С телефона</div>
+        <p class="platform-card-text">Работает на любом смартфоне. Бронируй из дома или в дороге.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- МАГАЗИН -->
+<section class="shop" id="shop">
+  <div class="section-inner">
+    <div class="shop-inner">
+      <div class="fade-up">
+        <span class="section-tag amber">Магазин</span>
+        <h2 class="section-h">Life Style —<br><em>для стильных путешественников</em></h2>
+        <p class="section-desc">Полноценный магазин на платформе Travel Advantage™. Одежда, красота, дом, подарки — тысячи товаров в одном месте. Всё для твоего стиля жизни.</p>
+        <div class="shop-items">
+          <div class="shop-item">
+            <span class="shop-item-icon">👗</span>
+            <div>
+              <div class="shop-item-title">Одежда и мода</div>
+              <p class="shop-item-text">Брендовая одежда, обувь, аксессуары</p>
+            </div>
+          </div>
+          <div class="shop-item">
+            <span class="shop-item-icon">🏠</span>
+            <div>
+              <div class="shop-item-title">Дом и быт</div>
+              <p class="shop-item-text">Товары для дома, интерьера, кухни</p>
+            </div>
+          </div>
+          <div class="shop-item">
+            <span class="shop-item-icon">💄</span>
+            <div>
+              <div class="shop-item-title">Красота и здоровье</div>
+              <p class="shop-item-text">Косметика, уход, велнес-продукты</p>
+            </div>
+          </div>
+          <div class="shop-item">
+            <span class="shop-item-icon">🧳</span>
+            <div>
+              <div class="shop-item-title">Путешествия</div>
+              <p class="shop-item-text">Чемоданы, органайзеры, travel-аксессуары</p>
+            </div>
+          </div>
+          <div class="shop-item">
+            <span class="shop-item-icon">🎁</span>
+            <div>
+              <div class="shop-item-title">Подарки и многое другое</div>
+              <p class="shop-item-text">Тысячи товаров в одном месте — всё для стиля жизни</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shop-visual fade-up">
+        <span class="shop-visual-emoji">🛍️</span>
+        <div class="shop-visual-name">Life Style</div>
+        <div class="shop-visual-sub">на платформе Travel Advantage™</div>
+        <br>
+        <a href="https://t.me/Natali_Ivahnenko" class="btn-primary" target="_blank" style="justify-content:center;margin-top:1rem;">Узнать подробнее</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- УСЛОВИЯ -->
+<section class="conditions" id="conditions">
+  <div class="section-inner">
+    <div class="fade-up">
+      <span class="section-tag">Условия</span>
+      <h2 class="section-h">Понятные цены —<br><em>без мелкого шрифта</em></h2>
+      <p class="section-desc">Один раз платишь за членство — и получаешь доступ ко всем скидкам навсегда.</p>
+    </div>
+    <div class="conditions-grid fade-up">
+      <div class="condition-card basic">
+        <span class="condition-badge">Старт</span>
+        <div class="condition-price">120 USDT</div>
+        <div class="condition-price-note">единоразовый взнос</div>
+        <ul class="condition-list">
+          <li>Доступ к Travel Advantage™</li>
+          <li>Скидки на отели и авиа</li>
+          <li>Магазин Life Style</li>
+          <li>Личный помощник Наталья</li>
+        </ul>
+        <div class="condition-note">💡 Компания удваивает твой взнос — 240 USDT на путешествия</div>
+      </div>
+      <div class="condition-card plus">
+        <span class="condition-badge">Безоплатка</span>
+        <div class="condition-price">0 USDT</div>
+        <div class="condition-price-note">после 3 рекомендаций</div>
+        <ul class="condition-list">
+          <li>Всё что в тарифе Старт</li>
+          <li>Компания закрывает взнос</li>
+          <li>Приведи 3 человека — ездишь бесплатно</li>
+          <li>Дополнительный доход</li>
+        </ul>
+        <div class="condition-note">✨ Так путешествует уже много участников клуба</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- РЕГИСТРАЦИЯ -->
+<section class="register" id="register">
+  <div class="section-inner">
+    <div class="fade-up">
+      <span class="section-tag">Старт</span>
+      <h2 class="section-h">Готова<br><em>путешествовать выгодно?</em></h2>
+      <p class="section-desc">Напиши Наталье — она ответит на все вопросы, расскажет как зарегистрироваться и поможет с первым бронированием.</p>
+    </div>
+    <div class="register-steps fade-up">
+      <div class="reg-step"><span class="reg-step-num">1</span> Напиши в Telegram</div>
+      <div class="reg-step"><span class="reg-step-num">2</span> Задай любые вопросы</div>
+      <div class="reg-step"><span class="reg-step-num">3</span> Получи доступ к клубу</div>
+    </div>
+    <div class="fade-up">
+      <a href="https://t.me/Natali_Ivahnenko" class="register-cta" target="_blank">
+        ✈️ Написать Наталье в Telegram
+      </a>
+      <br>
+      <span class="register-hint">Бесплатная консультация · Без давления · Всё объясним</span>
+    </div>
+  </div>
+</section>
+
+<!-- ФУТЕР -->
+<footer>
+  <p>© 2025 Travel Advantage™ · MWR Life · Наталья Ивахненко · <a href="https://t.me/Natali_Ivahnenko">@Natali_Ivahnenko</a></p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
