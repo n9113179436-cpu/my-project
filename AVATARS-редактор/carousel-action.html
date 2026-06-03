@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Карусель — Акция MWR Life</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;0,900;1,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,328 +14,270 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  padding: 2rem 1rem;
+  gap: 1.2rem;
+  padding: 1.5rem 1rem;
   min-height: 100vh;
 }
 
-h1 {
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
-  opacity: 0.6;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
+h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-spacing: 0.12em; text-transform: uppercase; }
 
-/* Навигация */
-.nav {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+.nav { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
 .nav-btn {
   font-family: 'Nunito', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 800;
-  padding: 0.4rem 1rem;
-  border-radius: 2rem;
+  font-size: 0.7rem; font-weight: 800;
+  padding: 0.4rem 1rem; border-radius: 2rem;
   border: 2px solid rgba(255,255,255,0.15);
-  background: transparent;
-  color: rgba(255,255,255,0.4);
-  cursor: pointer;
-  transition: all 0.2s;
+  background: transparent; color: rgba(255,255,255,0.4);
+  cursor: pointer; transition: all 0.2s;
 }
-.nav-btn.active {
-  background: #A855F7;
-  border-color: #A855F7;
-  color: white;
-}
+.nav-btn.active { background: #A855F7; border-color: #A855F7; color: white; }
 
-/* Слайд — формат 1:1 для Instagram */
+/* СЛАЙД — формат 4:5 как в Instagram */
 .slide {
-  width: min(480px, 94vw);
-  aspect-ratio: 1/1;
-  border-radius: 1.5rem;
+  width: min(400px, 92vw);
+  aspect-ratio: 4/5;
+  background: white;
+  border-radius: 1.2rem;
   overflow: hidden;
   position: relative;
   display: none;
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  container-type: inline-size;
 }
-.slide.active { display: flex; }
+.slide.active { display: block; }
 
-/* Фон слайда */
-.slide-bg {
+/* Персонаж — большой, слева */
+.char {
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  bottom: 0;
+  left: -3%;
+  height: 85%;
+  z-index: 3;
+  object-fit: contain;
+  object-position: bottom left;
+  filter: drop-shadow(2px 0 8px rgba(0,0,0,0.08));
 }
 
-/* Декор — искорки */
-.sparkle {
-  position: absolute;
-  pointer-events: none;
-  z-index: 2;
-  animation: sparkAnim 2s ease-in-out infinite;
-  user-select: none;
-}
-@keyframes sparkAnim {
-  0%,100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
-  50% { transform: scale(1.3) rotate(20deg); opacity: 1; }
-}
-
-/* Пузырь речи */
+/* Речевой пузырь */
 .bubble {
   position: absolute;
   background: white;
-  border-radius: 1rem;
-  padding: 0.5rem 0.9rem;
-  font-size: clamp(0.65rem, 2.5cqw, 0.9rem);
+  border: 2px solid #E9D5FF;
+  border-radius: 1em 1em 1em 0.2em;
+  padding: 0.4em 0.8em;
+  font-size: clamp(0.6rem, 3cqw, 0.78rem);
   font-weight: 800;
   color: #1a1a2e;
   white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  z-index: 10;
+  z-index: 5;
+  box-shadow: 0 2px 10px rgba(168,85,247,0.15);
 }
 .bubble::after {
   content: '';
   position: absolute;
-  bottom: -8px;
-  left: 20px;
+  bottom: -8px; left: 12px;
   border: 5px solid transparent;
   border-top-color: white;
   border-bottom: none;
 }
 
-/* Персонаж */
-.character {
+/* Декор — звёздочки, сердечки */
+.sp {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 68%;
-  z-index: 5;
-  object-fit: contain;
-  object-position: bottom;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
+  z-index: 4;
+  animation: spAnim 2s ease-in-out infinite;
+  pointer-events: none;
+  user-select: none;
+  font-style: normal;
 }
-.character.left  { left: -4%; transform: none; height: 75%; }
-.character.right { left: auto; right: -4%; transform: none; height: 75%; }
+@keyframes spAnim {
+  0%,100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(15deg); }
+}
 
-/* Текст — свободно по слайду */
-.txt {
+/* Текст правая сторона */
+.rtext {
   position: absolute;
-  z-index: 7;
+  right: 0;
+  top: 0; bottom: 0;
+  width: 54%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6% 5% 15% 0;
 }
-.txt-top    { top: 6%; left: 0; right: 0; text-align: center; padding: 0 6%; }
-.txt-topleft  { top: 6%; left: 5%; max-width: 55%; }
-.txt-topright { top: 6%; right: 5%; max-width: 55%; text-align: right; }
-.txt-mid    { top: 38%; left: 0; right: 0; text-align: center; padding: 0 6%; }
-.txt-midleft  { top: 35%; left: 5%; max-width: 50%; }
-.txt-midright { top: 35%; right: 5%; max-width: 50%; text-align: right; }
-.txt-bot    { bottom: 12%; left: 0; right: 0; text-align: center; padding: 0 6%; }
 
 .tag {
   display: inline-block;
-  font-size: clamp(0.5rem, 3cqw, 0.65rem);
+  font-size: clamp(0.45rem, 2.5cqw, 0.6rem);
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 0.3em 1em;
+  padding: 0.3em 0.9em;
   border-radius: 2em;
   margin-bottom: 0.6em;
   width: fit-content;
 }
 
-.title {
-  font-size: clamp(1.1rem, 7.5cqw, 1.6rem);
+.big {
+  font-size: clamp(1.2rem, 8.5cqw, 2rem);
   font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 0.5em;
+  line-height: 1.05;
+  color: #1a1a2e;
+  margin-bottom: 0.4em;
+  text-transform: uppercase;
 }
+.big em { font-style: italic; text-transform: none; }
+.big .purple { color: #A855F7; }
+.big .green { color: #10B981; }
 
-.sub {
+.mid {
   font-family: 'Inter', sans-serif;
-  font-size: clamp(0.62rem, 3.8cqw, 0.82rem);
-  font-weight: 600;
-  line-height: 1.5;
-  color: rgba(0,0,0,0.6);
-  margin-bottom: 0.8em;
-}
-
-.math-box {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 0.8em;
-  padding: 0.6em 0.8em;
+  font-size: clamp(0.58rem, 3.2cqw, 0.75rem);
+  color: #555;
+  line-height: 1.55;
   margin-bottom: 0.6em;
 }
-.math-row {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  font-size: clamp(0.58rem, 3.5cqw, 0.75rem);
-  font-weight: 700;
+.mid strong { color: #1a1a2e; font-weight: 700; }
+.mid .hl { color: #A855F7; font-weight: 700; text-decoration: underline; }
+
+.math {
+  background: #F3E8FF;
+  border-radius: 0.6em;
+  padding: 0.6em 0.7em;
+  margin-bottom: 0.5em;
+}
+.math-line {
+  font-size: clamp(0.58rem, 3cqw, 0.72rem);
+  font-weight: 800;
   color: #1a1a2e;
   line-height: 1.6;
 }
-.math-row .num { color: #A855F7; font-weight: 900; font-size: 1.15em; }
+.math-line .n { color: #A855F7; font-size: 1.15em; }
 .math-total {
-  font-size: clamp(0.9rem, 5.5cqw, 1.2rem);
+  font-size: clamp(1rem, 6cqw, 1.4rem);
   font-weight: 900;
   color: #A855F7;
-  margin-top: 0.3em;
+  margin-top: 0.2em;
 }
 
-.cta {
+.cta-word {
+  font-size: clamp(1.5rem, 9cqw, 2.2rem);
+  font-weight: 900;
+  color: #A855F7;
+  line-height: 1;
+  display: block;
+}
+.cta-arrow {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.55rem, 2.8cqw, 0.7rem);
+  color: #888;
+  margin-top: 0.2em;
+}
+.cta-btn {
   display: inline-block;
   background: #A855F7;
   color: white;
-  font-size: clamp(0.65rem, 4cqw, 0.85rem);
-  font-weight: 900;
-  padding: 0.6em 1.3em;
+  font-size: clamp(0.5rem, 2.8cqw, 0.65rem);
+  font-weight: 800;
+  padding: 0.5em 1.2em;
   border-radius: 2em;
-  margin-top: 0.4em;
-  letter-spacing: 0.03em;
-  box-shadow: 0 4px 15px rgba(168,85,247,0.4);
-}
-.cta-word {
-  font-size: clamp(0.9rem, 5cqw, 1.1rem);
-  font-weight: 900;
-  color: #A855F7;
-  display: block;
-  line-height: 1.2;
-}
-.cta-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(0.55rem, 3cqw, 0.7rem);
-  font-weight: 600;
-  color: rgba(0,0,0,0.55);
+  margin-top: 0.5em;
+  letter-spacing: 0.04em;
 }
 
+/* Линия разделитель */
+.line {
+  width: 2.5em; height: 2px;
+  background: #A855F7;
+  margin: 0.5em 0;
+  border-radius: 2px;
+}
+
+/* Ник */
 .handle {
   position: absolute;
   bottom: 3%;
   right: 4%;
-  font-size: clamp(0.42rem, 2cqw, 0.55rem);
+  font-size: clamp(0.4rem, 1.8cqw, 0.52rem);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  opacity: 0.35;
-  z-index: 8;
+  letter-spacing: 0.12em;
+  opacity: 0.3;
+  z-index: 6;
   color: #1a1a2e;
 }
 
-/* Стрелки */
-.arrows {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
+/* Кнопки */
+.arrows { display: flex; gap: 1rem; align-items: center; }
 .arrow-btn {
-  width: 2.5rem; height: 2.5rem;
+  width: 2.4rem; height: 2.4rem;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
+  color: white; font-size: 1rem;
+  cursor: pointer; transition: all 0.2s;
   display: flex; align-items: center; justify-content: center;
 }
 .arrow-btn:hover { background: #A855F7; border-color: #A855F7; }
 .counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 700; }
 
-.hint { font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
-.slide { container-type: inline-size; }
-
-/* Кнопка на весь экран */
 .fullscreen-btn {
   font-family: 'Nunito', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 800;
-  padding: 0.6rem 1.5rem;
-  border-radius: 2rem;
-  background: #A855F7;
-  border: none;
-  color: white;
-  cursor: pointer;
-  letter-spacing: 0.05em;
+  font-size: 0.8rem; font-weight: 800;
+  padding: 0.6rem 1.5rem; border-radius: 2rem;
+  background: #A855F7; border: none;
+  color: white; cursor: pointer;
 }
 
-/* Оверлей на весь экран */
+/* ОВЕРЛЕЙ */
 #overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  display: none; position: fixed; inset: 0;
+  background: #000; z-index: 1000;
+  align-items: center; justify-content: center;
 }
 #overlay.show { display: flex; }
 #overlay-slide {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
+  width: 100vw; height: 100vh;
+  position: relative; overflow: hidden;
 }
 #overlay-slide .slide {
-  display: flex !important;
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
   aspect-ratio: unset !important;
   border-radius: 0 !important;
+  max-width: none !important;
 }
 .close-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1100;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: white;
-  width: 2.5rem; height: 2.5rem;
-  border-radius: 50%;
-  font-size: 1.1rem;
-  cursor: pointer;
+  position: fixed; top: 1rem; right: 1rem; z-index: 1100;
+  background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3);
+  color: white; width: 2.5rem; height: 2.5rem;
+  border-radius: 50%; font-size: 1.1rem; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
 .nav-fs {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  z-index: 1100;
+  position: fixed; bottom: 1.5rem; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 0.8rem; z-index: 1100;
 }
 .nav-fs-btn {
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: white;
-  width: 2.8rem; height: 2.8rem;
-  border-radius: 50%;
-  font-size: 1.1rem;
-  cursor: pointer;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: white; width: 2.8rem; height: 2.8rem;
+  border-radius: 50%; font-size: 1.1rem; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
 .nav-fs-counter {
-  background: rgba(0,0,0,0.4);
-  color: rgba(255,255,255,0.7);
-  border-radius: 2rem;
-  padding: 0 1rem;
-  font-size: 0.8rem;
-  font-weight: 700;
+  background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.7);
+  border-radius: 2rem; padding: 0 1rem;
+  font-size: 0.8rem; font-weight: 700;
   display: flex; align-items: center;
 }
+.hint { font-size: 0.65rem; color: rgba(255,255,255,0.25); }
 </style>
 </head>
 <body>
 
-<h1>Карусель — Акция MWR Life</h1>
-
+<h1>Карусель — MWR Life</h1>
 <div class="nav">
   <button class="nav-btn active" onclick="goTo(0)">1</button>
   <button class="nav-btn" onclick="goTo(1)">2</button>
@@ -344,132 +286,118 @@ h1 {
   <button class="nav-btn" onclick="goTo(4)">5</button>
 </div>
 
-<!-- СЛАЙД 1 -->
+<!-- СЛАЙД 1 — ХУК -->
 <div class="slide active" id="s0">
-  <div class="slide-bg" style="background:linear-gradient(160deg,#FFF0FB 0%,#F3E8FF 50%,#EDE9FE 100%);"></div>
-  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);animation-delay:0s">✦</span>
-  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#A855F7;animation-delay:0.4s">★</span>
-  <span class="sparkle" style="top:18%;left:8%;font-size:clamp(0.6rem,3cqw,0.9rem);animation-delay:0.7s">✧</span>
-  <span class="sparkle" style="top:22%;right:4%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.2s">✦</span>
-  <span class="sparkle" style="bottom:28%;left:5%;font-size:clamp(0.6rem,2.5cqw,0.85rem);color:#A855F7;animation-delay:0.9s">❋</span>
-  <span class="sparkle" style="bottom:32%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.5s">✦</span>
+  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
+  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#C084FC;animation-delay:.4s">★</span>
+  <span class="sp" style="top:6%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.8s">🚀</span>
+  <span class="sp" style="top:18%;right:3%;font-size:clamp(0.6rem,3cqw,0.9rem);color:#A855F7;animation-delay:.2s">✧</span>
+  <span class="sp" style="bottom:32%;left:42%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#E879F9;animation-delay:.6s">💜</span>
+  <span class="sp" style="bottom:26%;left:38%;font-size:clamp(0.5rem,2.5cqw,0.7rem);animation-delay:1s">✦</span>
+  <span class="sp" style="bottom:20%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.3s">🚀</span>
 
-  <div class="txt txt-top">
-    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life · Акция</span>
-    <div class="title" style="color:#1a1a2e;font-size:clamp(1.3rem,8cqw,2rem);margin-top:0.4em;">Есть кое-что<br>важное!</div>
-  </div>
+  <div class="bubble" style="top:8%;left:40%;">жду тебя! 👋</div>
 
-  <img class="character" src="natalia_3d-3.png" alt="Наталья" style="left:-6%;transform:none;height:72%;bottom:8%;">
+  <img class="char" src="natalia_3d-3.png" alt="">
 
-  <div class="txt" style="top:32%;right:5%;max-width:48%;z-index:7;">
-    <div class="sub" style="text-align:right;color:#4C1D95;font-size:clamp(0.65rem,3.5cqw,0.85rem);">Акция, о которой<br>я не могла молчать.<br>Расскажу честно 👇</div>
-  </div>
-
-  <div class="txt txt-bot">
-    <div class="cta">листай дальше →</div>
+  <div class="rtext">
+    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life</span>
+    <div class="big">Есть<br>кое-что<br><span class="purple">важное!</span></div>
+    <div class="line"></div>
+    <div class="mid">Акция, о которой<br>я <span class="hl">не могла молчать</span>.<br>Листай дальше 👇</div>
   </div>
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 2 -->
+<!-- СЛАЙД 2 — ИСТОРИЯ -->
 <div class="slide" id="s1">
-  <div class="slide-bg" style="background:linear-gradient(160deg,#FFF8F0 0%,#FEF3DC 50%,#FDE8C8 100%);"></div>
-  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);animation-delay:0.3s">✦</span>
-  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#F59E0B;animation-delay:0s">★</span>
-  <span class="sparkle" style="bottom:30%;left:5%;font-size:clamp(0.6rem,2.5cqw,0.85rem);animation-delay:0.6s">✧</span>
-  <span class="sparkle" style="bottom:26%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.9s">✦</span>
+  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#F59E0B;">✦</span>
+  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.3s">★</span>
+  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.7s">✈️</span>
+  <span class="sp" style="bottom:30%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#FCD34D;animation-delay:.5s">✦</span>
+  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.2s">🌟</span>
 
-  <div class="txt txt-top">
+  <div class="bubble" style="top:7%;left:38%;">год в клубе ✈️</div>
+
+  <img class="char" src="natalia_3d.png" alt="">
+
+  <div class="rtext">
     <span class="tag" style="background:#FEF3DC;color:#B45309;">Моя история</span>
-    <div class="title" style="color:#1a1a2e;font-size:clamp(1.2rem,7.5cqw,1.9rem);margin-top:0.4em;">Год в MWR Life<br>изменил всё</div>
+    <div class="big" style="font-size:clamp(1.1rem,7.5cqw,1.8rem);">Год в<br>MWR Life<br><span style="color:#F59E0B;">изменил<br>всё</span></div>
+    <div class="line" style="background:#F59E0B;"></div>
+    <div class="mid">Первое бесплатное<br>путешествие с семьёй.<br><strong>Это работает ✓</strong></div>
   </div>
-
-  <img class="character" src="natalia_3d.png" alt="Наталья" style="left:auto;right:-4%;transform:none;height:70%;bottom:8%;">
-
-  <div class="txt" style="top:32%;left:5%;max-width:50%;z-index:7;">
-    <div class="sub" style="color:#78350F;font-size:clamp(0.65rem,3.5cqw,0.85rem);">Первое бесплатное<br>путешествие с семьёй<br>за накопленные баллы.</div>
-    <div style="margin-top:0.6em;font-size:clamp(0.7rem,3.5cqw,0.88rem);font-weight:700;color:#B45309;">Это работает ✓<br>Я проверила.</div>
-  </div>
-
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 3 -->
+<!-- СЛАЙД 3 — МАТЕМАТИКА -->
 <div class="slide" id="s2">
-  <div class="slide-bg" style="background:linear-gradient(160deg,#F0FDF4 0%,#DCFCE7 50%,#D1FAE5 100%);"></div>
-  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;animation-delay:0s">✦</span>
-  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:0.5s">★</span>
-  <span class="sparkle" style="bottom:30%;left:5%;font-size:clamp(0.6rem,2.5cqw,0.85rem);animation-delay:0.3s">✧</span>
-  <span class="sparkle" style="bottom:26%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);color:#10B981;animation-delay:0.8s">✦</span>
+  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;">✦</span>
+  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#34D399;animation-delay:.5s">★</span>
+  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">💰</span>
+  <span class="sp" style="bottom:30%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#10B981;animation-delay:.7s">✦</span>
+  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.1s">🎉</span>
 
-  <div class="txt txt-top">
-    <span class="tag" style="background:#DCFCE7;color:#065F46;">Акция до 30 июня</span>
-    <div class="title" style="color:#1a1a2e;font-size:clamp(1.2rem,7.5cqw,1.9rem);margin-top:0.3em;">540 USDT<br>за 3 человека</div>
-  </div>
+  <div class="bubble" style="top:7%;left:38%;">считаем! 🧮</div>
 
-  <div class="txt" style="top:30%;left:5%;z-index:7;max-width:44%;">
-    <div class="math-box" style="background:rgba(255,255,255,0.75);">
-      <div class="math-row"><span class="num">80</span>×3 = <span class="num">240</span></div>
-      <div class="math-row">+бонус = <span class="num">300</span></div>
+  <img class="char" src="natalia_3d-5.jpg" alt="">
+
+  <div class="rtext">
+    <span class="tag" style="background:#D1FAE5;color:#065F46;">Акция</span>
+    <div class="big" style="font-size:clamp(1rem,7cqw,1.6rem);">540<br><span style="color:#10B981;">USDT</span><br>за 3<br>человека</div>
+    <div class="math">
+      <div class="math-line"><span class="n">80</span>×3 = <span class="n">240</span></div>
+      <div class="math-line">+бонус = <span class="n">300</span></div>
       <div class="math-total">= 540 🎉</div>
     </div>
+    <div class="mid" style="font-size:clamp(0.5rem,2.5cqw,0.62rem);">до <strong>30 июня</strong></div>
   </div>
-
-  <img class="character" src="natalia_3d-5.jpg" alt="Наталья" style="left:auto;right:-2%;transform:none;height:68%;bottom:8%;">
-
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 4 -->
+<!-- СЛАЙД 4 — ПАКЕТ -->
 <div class="slide" id="s3">
-  <div class="slide-bg" style="background:linear-gradient(160deg,#EFF6FF 0%,#DBEAFE 50%,#E0E7FF 100%);"></div>
-  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;animation-delay:0.2s">✦</span>
-  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:0.7s">★</span>
-  <span class="sparkle" style="bottom:30%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.5s">✦</span>
+  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;">✦</span>
+  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.4s">★</span>
+  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.8s">🤔</span>
+  <span class="sp" style="bottom:28%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#818CF8;animation-delay:.6s">✦</span>
+  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.2s">✧</span>
 
-  <div class="txt txt-top">
-    <span class="tag" style="background:#DBEAFE;color:#1E40AF;">Пакет Турбо Элит</span>
-    <div class="title" style="color:#1a1a2e;font-size:clamp(1.2rem,7.5cqw,1.9rem);margin-top:0.3em;">590 USDT —<br>это не трата</div>
+  <div class="bubble" style="top:7%;left:38%;">590 USDT? 🤔</div>
+
+  <img class="char" src="Natalia_3d-2.png" alt="">
+
+  <div class="rtext">
+    <span class="tag" style="background:#E0E7FF;color:#3730A3;">Пакет</span>
+    <div class="big" style="font-size:clamp(1rem,7cqw,1.6rem);">590<br>USDT —<br>это <span style="color:#6366F1;">не<br>трата!</span></div>
+    <div class="line" style="background:#6366F1;"></div>
+    <div class="mid"><span class="n" style="color:#6366F1;font-size:1.1em;font-weight:900;">490</span> — поездки ✈️<br><span class="n" style="color:#6366F1;font-size:1.1em;font-weight:900;">99</span> — вход в клуб 🔑<br><strong>Большую часть<br>получаешь обратно!</strong></div>
   </div>
-
-  <img class="character" src="Natalia_3d-2.png" alt="Наталья" style="left:-4%;transform:none;height:68%;bottom:8%;">
-
-  <div class="txt" style="top:30%;right:5%;max-width:50%;z-index:7;">
-    <div class="math-box" style="background:rgba(255,255,255,0.75);">
-      <div class="math-row"><span class="num" style="color:#6366F1;">490</span> баллы</div>
-      <div class="math-row" style="font-size:0.75em;color:#6B5240;">тратишь на поездки ✈️</div>
-      <div style="height:0.5em;"></div>
-      <div class="math-row"><span class="num" style="color:#6366F1;">99</span> франшиза</div>
-      <div class="math-row" style="font-size:0.75em;color:#6B5240;">вход в клуб 🔑</div>
-    </div>
-    <div class="sub" style="margin-top:0.5em;font-size:clamp(0.6rem,3cqw,0.75rem);">Большую часть<br>получаешь обратно!</div>
-  </div>
-
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 5 -->
+<!-- СЛАЙД 5 — CTA -->
 <div class="slide" id="s4">
-  <div class="slide-bg" style="background:linear-gradient(160deg,#FFF0FB 0%,#F3E8FF 40%,#EDE9FE 100%);"></div>
-  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.6rem);animation-delay:0.1s">✦</span>
-  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.9rem,4cqw,1.3rem);animation-delay:0.9s">✧</span>
-  <span class="sparkle" style="top:20%;left:7%;font-size:clamp(0.7rem,3cqw,1rem);color:#A855F7;animation-delay:0.3s">✦</span>
-  <span class="sparkle" style="bottom:28%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.6s">❋</span>
+  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
+  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#C084FC;animation-delay:.4s">★</span>
+  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.9s">💌</span>
+  <span class="sp" style="top:20%;right:3%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#A855F7;animation-delay:.2s">💜</span>
+  <span class="sp" style="bottom:28%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:.6s">✦</span>
+  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.3s">🚀</span>
 
-  <div class="txt txt-top">
+  <div class="bubble" style="top:7%;left:38%;">пиши мне! 💌</div>
+
+  <img class="char" src="natalia_3d-4.jpg" alt="">
+
+  <div class="rtext">
     <span class="tag" style="background:#F3E8FF;color:#7C3AED;">До 30 июня</span>
-    <div class="title" style="color:#1a1a2e;font-size:clamp(1.1rem,7cqw,1.7rem);margin-top:0.3em;">Хочешь свой бизнес<br>и путешествия?</div>
+    <div class="big" style="font-size:clamp(1rem,6.5cqw,1.5rem);">Хочешь<br>бизнес<br>и<br>поездки?</div>
+    <div class="line"></div>
+    <div class="mid">Пиши слово</div>
+    <span class="cta-word">АКЦИЯ</span>
+    <div class="cta-arrow">в директ или Telegram →</div>
+    <div class="cta-btn">@Natali_Ivahnenko</div>
   </div>
-
-  <img class="character" src="natalia_3d-4.jpg" alt="Наталья" style="left:auto;right:-2%;transform:none;height:68%;bottom:8%;">
-
-  <div class="txt" style="top:32%;left:5%;max-width:52%;z-index:7;">
-    <div class="sub" style="font-size:clamp(0.65rem,3.2cqw,0.8rem);color:#4C1D95;">Пиши слово</div>
-    <span class="cta-word" style="font-size:clamp(1.6rem,9cqw,2.4rem);">АКЦИЯ</span>
-    <div class="cta-sub" style="margin-top:0.3em;">в директ или Telegram</div>
-    <div class="cta" style="margin-top:0.6em;display:inline-block;">@Natali_Ivahnenko →</div>
-  </div>
-
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
@@ -479,7 +407,6 @@ h1 {
   <span class="counter" id="counter">1 / 5</span>
   <button class="arrow-btn" onclick="goTo(cur+1)">→</button>
 </div>
-
 <button class="fullscreen-btn" onclick="openFullscreen()">⛶ На весь экран → скриншот</button>
 <div class="hint">Нажми кнопку → сделай скриншот</div>
 
@@ -505,23 +432,19 @@ function goTo(idx) {
   cur = idx;
   document.getElementById('s'+cur).classList.add('active');
   document.querySelectorAll('.nav-btn')[cur].classList.add('active');
-  document.getElementById('counter').textContent = (cur+1) + ' / ' + total;
+  document.getElementById('counter').textContent = (cur+1)+' / '+total;
 }
 
 function openFullscreen() {
   const slide = document.getElementById('s'+cur);
   const clone = slide.cloneNode(true);
   clone.classList.add('active');
-  clone.style.width = '100%';
-  clone.style.height = '100%';
-  clone.style.aspectRatio = 'unset';
-  clone.style.borderRadius = '0';
-  const overlay = document.getElementById('overlay');
+  clone.style.cssText = 'display:block!important;width:100vw!important;height:100vh!important;aspect-ratio:unset!important;border-radius:0!important;max-width:none!important;';
   const os = document.getElementById('overlay-slide');
   os.innerHTML = '';
   os.appendChild(clone);
-  document.getElementById('fs-counter').textContent = (cur+1) + ' / ' + total;
-  overlay.classList.add('show');
+  document.getElementById('fs-counter').textContent = (cur+1)+' / '+total;
+  document.getElementById('overlay').classList.add('show');
   document.body.style.overflow = 'hidden';
 }
 
@@ -538,8 +461,9 @@ function fsNav(dir) {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight') { goTo(cur+1); if(document.getElementById('overlay').classList.contains('show')) openFullscreen(); }
-  if (e.key === 'ArrowLeft')  { goTo(cur-1); if(document.getElementById('overlay').classList.contains('show')) openFullscreen(); }
+  const fs = document.getElementById('overlay').classList.contains('show');
+  if (e.key === 'ArrowRight') { goTo(cur+1); if(fs) openFullscreen(); }
+  if (e.key === 'ArrowLeft')  { goTo(cur-1); if(fs) openFullscreen(); }
   if (e.key === 'Escape') closeFullscreen();
 });
 </script>
