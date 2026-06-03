@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карусель — Акция MWR Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #1a1a2e;
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+h1 {
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: 0.6;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Навигация */
+.nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.nav-btn {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  border: 2px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn.active {
+  background: #A855F7;
+  border-color: #A855F7;
+  color: white;
+}
+
+/* Слайд — формат 1:1 для Instagram */
+.slide {
+  width: min(480px, 94vw);
+  aspect-ratio: 1/1;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  position: relative;
+  display: none;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.slide.active { display: flex; }
+
+/* Фон слайда */
+.slide-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Декор — искорки */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  animation: sparkAnim 2s ease-in-out infinite;
+  user-select: none;
+}
+@keyframes sparkAnim {
+  0%,100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+  50% { transform: scale(1.3) rotate(20deg); opacity: 1; }
+}
+
+/* Пузырь речи */
+.bubble {
+  position: absolute;
+  background: white;
+  border-radius: 1rem;
+  padding: 0.5rem 0.9rem;
+  font-size: clamp(0.65rem, 2.5cqw, 0.9rem);
+  font-weight: 800;
+  color: #1a1a2e;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+.bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  border: 5px solid transparent;
+  border-top-color: white;
+  border-bottom: none;
+}
+
+/* Персонаж */
+.character {
+  position: absolute;
+  bottom: 0;
+  left: -2%;
+  height: 90%;
+  z-index: 5;
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(4px 0 12px rgba(0,0,0,0.15));
+}
+
+/* Контент текст */
+.content {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 55%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6% 6% 6% 2%;
+  container-type: inline-size;
+}
+
+.tag {
+  display: inline-block;
+  font-size: clamp(0.5rem, 3cqw, 0.65rem);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.3em 1em;
+  border-radius: 2em;
+  margin-bottom: 0.6em;
+  width: fit-content;
+}
+
+.title {
+  font-size: clamp(1.1rem, 7.5cqw, 1.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 0.5em;
+}
+
+.sub {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.62rem, 3.8cqw, 0.82rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 0.8em;
+}
+
+.math-box {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 0.8em;
+  padding: 0.6em 0.8em;
+  margin-bottom: 0.6em;
+}
+.math-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: clamp(0.58rem, 3.5cqw, 0.75rem);
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.6;
+}
+.math-row .num { color: #A855F7; font-weight: 900; font-size: 1.15em; }
+.math-total {
+  font-size: clamp(0.9rem, 5.5cqw, 1.2rem);
+  font-weight: 900;
+  color: #A855F7;
+  margin-top: 0.3em;
+}
+
+.cta {
+  display: inline-block;
+  background: #A855F7;
+  color: white;
+  font-size: clamp(0.65rem, 4cqw, 0.85rem);
+  font-weight: 900;
+  padding: 0.6em 1.3em;
+  border-radius: 2em;
+  margin-top: 0.4em;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 15px rgba(168,85,247,0.4);
+}
+.cta-word {
+  font-size: clamp(0.9rem, 5cqw, 1.1rem);
+  font-weight: 900;
+  color: #A855F7;
+  display: block;
+  line-height: 1.2;
+}
+.cta-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.55rem, 3cqw, 0.7rem);
+  font-weight: 600;
+  color: rgba(0,0,0,0.55);
+}
+
+.handle {
+  position: absolute;
+  bottom: 3%;
+  right: 4%;
+  font-size: clamp(0.42rem, 2cqw, 0.55rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  opacity: 0.35;
+  z-index: 8;
+  color: #1a1a2e;
+}
+
+/* Стрелки */
+.arrows {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.arrow-btn {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.arrow-btn:hover { background: #A855F7; border-color: #A855F7; }
+.counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 700; }
+
+.hint { font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
+.slide { container-type: inline-size; }
+</style>
+</head>
+<body>
+
+<h1>Карусель — Акция MWR Life</h1>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="goTo(0)">1</button>
+  <button class="nav-btn" onclick="goTo(1)">2</button>
+  <button class="nav-btn" onclick="goTo(2)">3</button>
+  <button class="nav-btn" onclick="goTo(3)">4</button>
+  <button class="nav-btn" onclick="goTo(4)">5</button>
+</div>
+
+<!-- СЛАЙД 1 -->
+<div class="slide active" id="s0">
+  <div class="slide-bg" style="background: linear-gradient(135deg, #FFF0FB 0%, #F3E8FF 50%, #EDE9FE 100%);"></div>
+
+  <span class="sparkle" style="top:6%;left:48%;font-size:clamp(1rem,5cqw,1.6rem);animation-delay:0s">✦</span>
+  <span class="sparkle" style="top:12%;left:55%;font-size:clamp(0.7rem,3cqw,1rem);color:#A855F7;animation-delay:0.4s">★</span>
+  <span class="sparkle" style="top:5%;right:5%;font-size:clamp(0.9rem,4cqw,1.3rem);animation-delay:0.8s">✧</span>
+  <span class="sparkle" style="top:18%;right:3%;font-size:clamp(0.6rem,2.5cqw,0.9rem);color:#A855F7;animation-delay:0.2s">✦</span>
+  <span class="sparkle" style="bottom:25%;left:48%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:1s">❋</span>
+
+  <div class="bubble" style="top:9%;left:44%;">жду тебя! 👋</div>
+
+  <img class="character" src="natalia-3d.png" alt="Наталья">
+
+  <div class="content">
+    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life</span>
+    <div class="title" style="color:#1a1a2e;">Есть кое-что важное!</div>
+    <div class="sub">Акция, о которой я не могла молчать. Расскажу всё честно 👇</div>
+    <div class="cta">листай дальше →</div>
+  </div>
+  <div class="handle">@nataliya_v_puti</div>
+</div>
+
+<!-- СЛАЙД 2 -->
+<div class="slide" id="s1">
+  <div class="slide-bg" style="background: linear-gradient(135deg, #FFF8F0 0%, #FEF3DC 50%, #FDE8C8 100%);"></div>
+
+  <span class="sparkle" style="top:6%;left:46%;font-size:clamp(1rem,5cqw,1.5rem);animation-delay:0.3s">✦</span>
+  <span class="sparkle" style="top:14%;left:54%;font-size:clamp(0.7rem,3cqw,1rem);color:#F59E0B;animation-delay:0s">★</span>
+  <span class="sparkle" style="top:8%;right:4%;font-size:clamp(0.9rem,4cqw,1.2rem);animation-delay:0.6s">✧</span>
+  <span class="sparkle" style="bottom:22%;left:47%;font-size:clamp(0.6rem,2cqw,0.85rem);animation-delay:0.9s">✦</span>
+
+  <div class="bubble" style="top:8%;left:42%;">год в клубе ✈️</div>
+
+  <img class="character" src="natalia-3d.png" alt="Наталья">
+
+  <div class="content">
+    <span class="tag" style="background:#FEF3DC;color:#B45309;">Моя история</span>
+    <div class="title" style="color:#1a1a2e;">Год в MWR Life изменил всё</div>
+    <div class="sub">Первое бесплатное путешествие за границу с семьёй — за накопленные баллы.<br><br>Это работает. Я проверила.</div>
+  </div>
+  <div class="handle">@nataliya_v_puti</div>
+</div>
+
+<!-- СЛАЙД 3 -->
+<div class="slide" id="s2">
+  <div class="slide-bg" style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #D1FAE5 100%);"></div>
+
+  <span class="sparkle" style="top:6%;left:47%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;animation-delay:0s">✦</span>
+  <span class="sparkle" style="top:13%;left:56%;font-size:clamp(0.7rem,3cqw,1rem);color:#059669;animation-delay:0.5s">★</span>
+  <span class="sparkle" style="top:7%;right:4%;font-size:clamp(0.9rem,4cqw,1.2rem);animation-delay:0.3s">✧</span>
+  <span class="sparkle" style="bottom:24%;left:47%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:0.8s">✦</span>
+
+  <div class="bubble" style="top:8%;left:42%;">считаем! 🧮</div>
+
+  <img class="character" src="natalia-3d.png" alt="Наталья">
+
+  <div class="content">
+    <span class="tag" style="background:#DCFCE7;color:#065F46;">Акция</span>
+    <div class="title" style="color:#1a1a2e;">540 USDT за 3 человека</div>
+    <div class="math-box">
+      <div class="math-row"><span class="num">80</span> USDT × 3 человека = <span class="num">240</span></div>
+      <div class="math-row">+ бонус компании = <span class="num">300</span></div>
+      <div class="math-total">= 540 USDT 🎉</div>
+    </div>
+    <div class="sub">Акция до <strong>30 июня</strong></div>
+  </div>
+  <div class="handle">@nataliya_v_puti</div>
+</div>
+
+<!-- СЛАЙД 4 -->
+<div class="slide" id="s3">
+  <div class="slide-bg" style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #E0E7FF 100%);"></div>
+
+  <span class="sparkle" style="top:6%;left:47%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;animation-delay:0.2s">✦</span>
+  <span class="sparkle" style="top:14%;left:55%;font-size:clamp(0.7rem,3cqw,1rem);color:#4F46E5;animation-delay:0.7s">★</span>
+  <span class="sparkle" style="top:7%;right:4%;font-size:clamp(0.9rem,4cqw,1.2rem);animation-delay:0s">✧</span>
+  <span class="sparkle" style="bottom:23%;left:47%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:0.5s">✦</span>
+
+  <div class="bubble" style="top:8%;left:42%;">590 USDT? 🤔</div>
+
+  <img class="character" src="natalia-3d.png" alt="Наталья">
+
+  <div class="content">
+    <span class="tag" style="background:#DBEAFE;color:#1E40AF;">Пакет</span>
+    <div class="title" style="color:#1a1a2e;">590 USDT — это не трата</div>
+    <div class="math-box">
+      <div class="math-row"><span class="num" style="color:#6366F1;">490</span> — баллы на поездки</div>
+      <div class="math-row"><span class="num" style="color:#6366F1;">99</span> — вход в клуб</div>
+    </div>
+    <div class="sub">Баллы сразу можно тратить на отели, авиа и круизы ✈️</div>
+  </div>
+  <div class="handle">@nataliya_v_puti</div>
+</div>
+
+<!-- СЛАЙД 5 -->
+<div class="slide" id="s4">
+  <div class="slide-bg" style="background: linear-gradient(135deg, #FFF0FB 0%, #F3E8FF 40%, #EDE9FE 100%);"></div>
+
+  <span class="sparkle" style="top:5%;left:47%;font-size:clamp(1rem,5cqw,1.6rem);animation-delay:0.1s">✦</span>
+  <span class="sparkle" style="top:13%;left:56%;font-size:clamp(0.7rem,3cqw,1rem);color:#A855F7;animation-delay:0.5s">★</span>
+  <span class="sparkle" style="top:6%;right:4%;font-size:clamp(0.9rem,4cqw,1.3rem);animation-delay:0.9s">✧</span>
+  <span class="sparkle" style="top:20%;right:3%;font-size:clamp(0.6rem,2.5cqw,0.85rem);color:#A855F7;animation-delay:0.3s">✦</span>
+  <span class="sparkle" style="bottom:23%;left:47%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:0.7s">❋</span>
+
+  <div class="bubble" style="top:8%;left:42%;">пиши мне! 💌</div>
+
+  <img class="character" src="natalia-3d.png" alt="Наталья">
+
+  <div class="content">
+    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">До 30 июня</span>
+    <div class="title" style="color:#1a1a2e;">Хочешь узнать подробнее?</div>
+    <div class="sub">Пиши слово</div>
+    <span class="cta-word">АКЦИЯ</span>
+    <div class="cta-sub">в Telegram или директ — пришлю все детали</div>
+    <div class="cta" style="margin-top:0.6em;">@Natali_Ivahnenko →</div>
+  </div>
+  <div class="handle">@nataliya_v_puti</div>
+</div>
+
+<!-- Управление -->
+<div class="arrows">
+  <button class="arrow-btn" onclick="goTo(cur-1)">←</button>
+  <span class="counter" id="counter">1 / 5</span>
+  <button class="arrow-btn" onclick="goTo(cur+1)">→</button>
+</div>
+
+<div class="hint">Открой слайд на весь экран → сделай скриншот</div>
+
+<script>
+let cur = 0;
+const total = 5;
+
+function goTo(idx) {
+  if (idx < 0 || idx >= total) return;
+  document.getElementById('s'+cur).classList.remove('active');
+  document.querySelectorAll('.nav-btn')[cur].classList.remove('active');
+  cur = idx;
+  document.getElementById('s'+cur).classList.add('active');
+  document.querySelectorAll('.nav-btn')[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur+1) + ' / ' + total;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goTo(cur+1);
+  if (e.key === 'ArrowLeft') goTo(cur-1);
+});
+</script>
+</body>
+</html>
