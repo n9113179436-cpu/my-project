@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мультяшный персонаж — Наталья</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1.2rem;
+  padding: 1rem;
+  font-family: 'Nunito', sans-serif;
+}
+
+.scenes {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.scene-btn {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.scene-btn.active { background: #F59E0B; border-color: #F59E0B; color: #111; }
+
+/* Экран 9:16 */
+.screen {
+  width: min(320px, 88vw);
+  aspect-ratio: 9/16;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  background: linear-gradient(160deg, #FFF8F0 0%, #FFE8C8 50%, #FFD4A0 100%);
+}
+
+/* Фон сцен */
+.screen.scene-travel { background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 55%, #90EE90 55%, #5D8A3C 100%); }
+.screen.scene-home   { background: linear-gradient(180deg, #FFF8F0 0%, #FFE4CC 60%, #E8D5B0 60%, #D4A870 100%); }
+.screen.scene-happy  { background: linear-gradient(160deg, #667eea 0%, #764ba2 100%); }
+.screen.scene-idea   { background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+
+/* Облака */
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.85;
+}
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+/* Земля / пол */
+.ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+  border-radius: 40% 40% 0 0;
+}
+.scene-travel .ground { background: linear-gradient(180deg, #5D8A3C, #4a7030); }
+.scene-home   .ground { background: linear-gradient(180deg, #D4A870, #c49660); display: none; }
+
+/* Солнце */
+.sun {
+  position: absolute;
+  top: 8%; right: 12%;
+  width: 15%;
+  aspect-ratio: 1;
+  background: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255,215,0,0.3), 0 0 0 8px rgba(255,215,0,0.15);
+  animation: sunPulse 3s ease-in-out infinite;
+}
+@keyframes sunPulse { 0%,100%{box-shadow:0 0 0 4px rgba(255,215,0,0.3),0 0 0 8px rgba(255,215,0,0.15)} 50%{box-shadow:0 0 0 6px rgba(255,215,0,0.4),0 0 0 12px rgba(255,215,0,0.2)} }
+
+/* Звёзды */
+.stars { position: absolute; inset: 0; }
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* ══ ПЕРСОНАЖ ══ */
+.character {
+  position: absolute;
+  bottom: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: bottom center;
+}
+
+/* Голова */
+.head {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #FDBCB4;
+  border-radius: 50%;
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 2px 0 #E8A090;
+}
+
+/* Волосы */
+.hair {
+  position: absolute;
+  top: -18%;
+  left: -8%;
+  right: -8%;
+  height: 55%;
+  background: #8B4513;
+  border-radius: 50% 50% 30% 30%;
+  z-index: 4;
+}
+.hair::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: -5%;
+  width: 20%;
+  height: 60%;
+  background: #8B4513;
+  border-radius: 0 0 50% 50%;
+}
+.hair::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  right: -5%;
+  width: 20%;
+  height: 60%;
+  background: #8B4513;
+  border-radius: 0 0 50% 50%;
+}
+
+/* Глаза */
+.eyes {
+  position: absolute;
+  top: 40%;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 22%;
+  z-index: 5;
+}
+.eye {
+  width: 14%;
+  aspect-ratio: 1;
+  background: #2C1810;
+  border-radius: 50%;
+  position: relative;
+  animation: blink 4s ease-in-out infinite;
+}
+.eye::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  right: 15%;
+  width: 30%;
+  aspect-ratio: 1;
+  background: white;
+  border-radius: 50%;
+}
+@keyframes blink { 0%,90%,100%{transform:scaleY(1)} 95%{transform:scaleY(0.1)} }
+
+/* Улыбка */
+.mouth {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 18%;
+  border-radius: 0 0 50% 50%;
+  border: 3px solid #C0705A;
+  border-top: none;
+  z-index: 5;
+}
+.mouth.big {
+  width: 50%;
+  height: 25%;
+  background: #C0705A;
+}
+
+/* Румянец */
+.cheeks {
+  position: absolute;
+  top: 52%;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8%;
+  z-index: 5;
+}
+.cheek {
+  width: 20%;
+  aspect-ratio: 1;
+  background: rgba(255,150,120,0.4);
+  border-radius: 50%;
+}
+
+/* Тело */
+.body {
+  width: 80%;
+  height: 0;
+  padding-bottom: 55%;
+  background: #E86B9A;
+  border-radius: 35% 35% 40% 40%;
+  position: relative;
+  margin-top: -8%;
+  z-index: 2;
+  box-shadow: 0 3px 0 #C0507A;
+}
+/* Воротник */
+.body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 30%; right: 30%;
+  height: 20%;
+  background: #F9C4D8;
+  border-radius: 0 0 50% 50%;
+}
+/* Пуговицы */
+.body::after {
+  content: '';
+  position: absolute;
+  top: 25%; left: 50%;
+  transform: translateX(-50%);
+  width: 10%;
+  aspect-ratio: 1;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 18px 0 white, 0 36px 0 white;
+}
+
+/* Юбка */
+.skirt {
+  width: 110%;
+  height: 0;
+  padding-bottom: 35%;
+  background: #A855F7;
+  border-radius: 0 0 50% 50%;
+  margin-top: -5%;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 3px 0 #8B45D7;
+}
+/* Полоска на юбке */
+.skirt::after {
+  content: '';
+  position: absolute;
+  bottom: 20%;
+  left: 10%; right: 10%;
+  height: 12%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+}
+
+/* Ноги */
+.legs {
+  display: flex;
+  gap: 15%;
+  margin-top: 2%;
+  z-index: 1;
+}
+.leg {
+  width: 18%;
+  aspect-ratio: 0.4/1;
+  background: #FDBCB4;
+  border-radius: 0 0 30% 30%;
+  box-shadow: 0 3px 0 #E8A090;
+}
+/* Туфли */
+.leg::after {
+  content: '';
+  display: block;
+  width: 130%;
+  height: 30%;
+  background: #8B4513;
+  border-radius: 0 40% 40% 0;
+  margin-top: 72%;
+  margin-left: -15%;
+}
+
+/* Руки */
+.arm {
+  position: absolute;
+  top: 5%;
+  width: 20%;
+  height: 55%;
+  background: #FDBCB4;
+  border-radius: 40% 40% 50% 50%;
+  z-index: 1;
+  transform-origin: top center;
+  box-shadow: 0 2px 0 #E8A090;
+}
+.arm.left  { left: -18%; transform: rotate(20deg); }
+.arm.right { right: -18%; transform: rotate(-20deg); }
+
+/* АНИМАЦИИ ПЕРСОНАЖА */
+.character.wave .arm.right {
+  animation: wave 0.5s ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+@keyframes wave { from{transform:rotate(-20deg)} to{transform:rotate(-60deg)} }
+
+.character.jump {
+  animation: jump 0.6s ease-in-out infinite;
+}
+@keyframes jump { 0%,100%{bottom:28%} 50%{bottom:38%} }
+
+.character.dance {
+  animation: dance 0.8s ease-in-out infinite;
+}
+@keyframes dance { 0%,100%{transform:translateX(-50%) rotate(-3deg)} 50%{transform:translateX(-50%) rotate(3deg)} }
+
+.character.idle {
+  animation: breathe 3s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100%{transform:translateX(-50%) scaleY(1)} 50%{transform:translateX(-50%) scaleY(1.02)} }
+
+/* Чемодан */
+.suitcase {
+  position: absolute;
+  bottom: 29%;
+  right: 12%;
+  width: 14%;
+  aspect-ratio: 0.8/1;
+  background: #F59E0B;
+  border-radius: 15% 15% 15% 15%;
+  box-shadow: 0 3px 0 #D97706;
+  animation: suitcaseBob 3s ease-in-out infinite;
+}
+.suitcase::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 25%; right: 25%;
+  height: 25%;
+  border: 3px solid #D97706;
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+}
+.suitcase::after {
+  content: '';
+  position: absolute;
+  top: 42%;
+  left: 10%; right: 10%;
+  height: 15%;
+  background: rgba(255,255,255,0.4);
+  border-radius: 2px;
+}
+@keyframes suitcaseBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+/* Ноутбук */
+.laptop {
+  position: absolute;
+  bottom: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  z-index: 2;
+}
+.laptop-screen {
+  width: 100%;
+  padding-bottom: 62%;
+  background: #1a1a2e;
+  border-radius: 8% 8% 0 0;
+  border: 3px solid #555;
+  position: relative;
+  overflow: hidden;
+}
+.laptop-screen::before {
+  content: '✨ ИИ';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #06B6D4;
+  font-weight: 900;
+}
+.laptop-base {
+  width: 110%;
+  height: 8px;
+  background: #888;
+  border-radius: 0 0 5px 5px;
+  margin-left: -5%;
+}
+
+/* Самолёт */
+.airplane {
+  position: absolute;
+  top: 20%;
+  font-size: clamp(1.5rem, 8cqw, 2.5rem);
+  animation: fly 4s linear infinite;
+  z-index: 5;
+}
+@keyframes fly { from{left:-15%;transform:scaleX(1)} to{left:110%;transform:scaleX(1)} }
+
+/* Пузырь речи */
+.bubble {
+  position: absolute;
+  background: white;
+  border-radius: 1.2em;
+  padding: 0.6em 0.9em;
+  font-size: clamp(0.55rem, 3cqw, 0.75rem);
+  font-weight: 700;
+  color: #1C1710;
+  line-height: 1.4;
+  text-align: center;
+  max-width: 60%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  z-index: 10;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: white;
+  border-bottom: none;
+}
+@keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+
+/* Звёздочки вокруг */
+.sparkle {
+  position: absolute;
+  font-size: clamp(0.8rem, 3.5cqw, 1.2rem);
+  animation: sparkleAnim 1.5s ease-in-out infinite;
+  z-index: 5;
+}
+@keyframes sparkleAnim { 0%,100%{transform:scale(1) rotate(0deg);opacity:0.7} 50%{transform:scale(1.3) rotate(15deg);opacity:1} }
+
+/* Текст сцены */
+.scene-title {
+  position: absolute;
+  top: 6%;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: clamp(0.85rem, 4.5cqw, 1.1rem);
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 10;
+  animation: fadeSlide 0.6s ease both;
+}
+.handle-tag {
+  position: absolute;
+  bottom: 4%;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: clamp(0.45rem, 2cqw, 0.6rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  z-index: 10;
+}
+@keyframes fadeSlide { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+
+.hint { font-size: 0.7rem; color: rgba(255,255,255,0.3); text-align: center; }
+.screen { container-type: inline-size; }
+</style>
+</head>
+<body>
+
+<div class="scenes">
+  <button class="scene-btn active" onclick="showScene('travel')">✈️ Путешествие</button>
+  <button class="scene-btn" onclick="showScene('happy')">🎉 Радость</button>
+  <button class="scene-btn" onclick="showScene('idea')">💡 Нейросети</button>
+  <button class="scene-btn" onclick="showScene('home')">👋 Привет</button>
+</div>
+
+<div class="screen scene-travel" id="screen">
+  <div id="scene-content"></div>
+</div>
+
+<div class="hint">👆 Нажми на экран — снова</div>
+
+<script>
+const scenes = {
+
+  travel: () => `
+    <div class="sun"></div>
+    <div class="cloud" style="top:12%;left:5%;width:22%;height:7%;"></div>
+    <div class="cloud" style="top:18%;left:60%;width:18%;height:6%;"></div>
+    <div class="airplane">✈️</div>
+    <div class="ground"></div>
+    <div class="scene-title">Путешествую с MWR Life ✈️</div>
+    <div class="suitcase"></div>
+    <div class="character wave idle" style="left:40%">
+      <div class="head">
+        <div class="hair"></div>
+        <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+        <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+        <div class="mouth big"></div>
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+      </div>
+      <div class="body"></div>
+      <div class="skirt"></div>
+      <div class="legs"><div class="leg"></div><div class="leg"></div></div>
+    </div>
+    <div class="bubble" style="top:28%;left:8%;animation-delay:0.8s">
+      Лечу в отпуск<br>со скидкой 70%! 🏖️
+    </div>
+    <div class="sparkle" style="top:42%;left:8%;animation-delay:0.3s">⭐</div>
+    <div class="sparkle" style="top:35%;right:8%;animation-delay:0.7s">✨</div>
+    <div class="handle-tag">@nataliya_v_puti</div>
+  `,
+
+  happy: () => `
+    <div class="sparkle" style="top:8%;left:8%;animation-delay:0s">🌟</div>
+    <div class="sparkle" style="top:8%;right:8%;animation-delay:0.4s">✨</div>
+    <div class="sparkle" style="top:22%;left:5%;animation-delay:0.8s">⭐</div>
+    <div class="sparkle" style="top:22%;right:5%;animation-delay:0.2s">💫</div>
+    <div class="scene-title">Жизнь после 50 🎉</div>
+    <div class="character dance" style="bottom:25%">
+      <div class="head">
+        <div class="hair"></div>
+        <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+        <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+        <div class="mouth big"></div>
+        <div class="arm left" style="animation:wave 0.4s ease-in-out infinite alternate;transform-origin:top center"></div>
+        <div class="arm right" style="animation:wave 0.4s 0.2s ease-in-out infinite alternate;transform-origin:top center"></div>
+      </div>
+      <div class="body"></div>
+      <div class="skirt"></div>
+      <div class="legs"><div class="leg"></div><div class="leg"></div></div>
+    </div>
+    <div class="bubble" style="top:24%;left:50%;transform:translateX(-50%);animation-delay:0.5s;white-space:nowrap">
+      только начинается! 🔥
+    </div>
+    <div class="sparkle" style="bottom:28%;left:5%;font-size:1.4rem;animation-delay:0.1s">🎊</div>
+    <div class="sparkle" style="bottom:28%;right:5%;font-size:1.4rem;animation-delay:0.5s">🎊</div>
+    <div class="handle-tag">@nataliya_v_puti</div>
+  `,
+
+  idea: () => `
+    <div class="stars" id="stars"></div>
+    <div class="scene-title" style="color:#06B6D4">Я делаю сайты с ИИ 🤖</div>
+    <div class="laptop">
+      <div class="laptop-screen"></div>
+      <div class="laptop-base"></div>
+    </div>
+    <div class="character idle" style="bottom:26%;left:30%">
+      <div class="head">
+        <div class="hair"></div>
+        <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+        <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+        <div class="mouth"></div>
+        <div class="arm left" style="transform:rotate(40deg)"></div>
+        <div class="arm right" style="transform:rotate(-40deg)"></div>
+      </div>
+      <div class="body"></div>
+      <div class="skirt"></div>
+      <div class="legs"><div class="leg"></div><div class="leg"></div></div>
+    </div>
+    <div class="bubble" style="top:26%;right:4%;animation-delay:0.6s">
+      Мне 55 и я<br>создаю сайты! 💻
+    </div>
+    <div class="sparkle" style="top:38%;right:6%;animation-delay:0.2s;color:#06B6D4">💡</div>
+    <div class="handle-tag">@nataliya_v_puti</div>
+  `,
+
+  home: () => `
+    <div class="sun" style="top:8%;left:12%;right:auto"></div>
+    <div class="scene-title">Привет! Я Наталья 👋</div>
+    <div class="character wave idle" style="bottom:24%">
+      <div class="head">
+        <div class="hair"></div>
+        <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+        <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+        <div class="mouth big"></div>
+        <div class="arm left"></div>
+        <div class="arm right" style="animation:wave 0.5s ease-in-out infinite alternate;transform-origin:top center"></div>
+      </div>
+      <div class="body"></div>
+      <div class="skirt"></div>
+      <div class="legs"><div class="leg"></div><div class="leg"></div></div>
+    </div>
+    <div class="bubble" style="top:26%;left:50%;transform:translateX(-50%);animation-delay:0.4s;white-space:nowrap">
+      Нейросети · Путешествия<br>Жизнь после 50 ❤️
+    </div>
+    <div class="sparkle" style="top:52%;left:6%;animation-delay:0s">🌸</div>
+    <div class="sparkle" style="top:52%;right:6%;animation-delay:0.6s">🌸</div>
+    <div class="sparkle" style="bottom:32%;left:6%;animation-delay:0.3s">💖</div>
+    <div class="sparkle" style="bottom:32%;right:6%;animation-delay:0.9s">💖</div>
+    <div class="handle-tag">@nataliya_v_puti</div>
+  `
+};
+
+function showScene(name) {
+  document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  const screen = document.getElementById('screen');
+  screen.className = 'screen scene-' + name;
+  screen.onclick = () => showSceneById(name);
+
+  const cont = document.getElementById('scene-content');
+  cont.style.opacity = 0;
+  setTimeout(() => {
+    cont.innerHTML = scenes[name]();
+    cont.style.opacity = 1;
+    if (name === 'idea') addStars();
+  }, 150);
+}
+
+function showSceneById(name) {
+  const cont = document.getElementById('scene-content');
+  cont.style.opacity = 0;
+  setTimeout(() => {
+    cont.innerHTML = scenes[name]();
+    cont.style.opacity = 1;
+    if (name === 'idea') addStars();
+  }, 150);
+}
+
+function addStars() {
+  const el = document.getElementById('stars');
+  if (!el) return;
+  for (let i = 0; i < 25; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*70}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*2}s;animation-duration:${Math.random()*2+1.5}s`;
+    el.appendChild(s);
+  }
+}
+
+// Старт
+const cont = document.getElementById('scene-content');
+cont.innerHTML = scenes.travel();
+</script>
+</body>
+</html>
