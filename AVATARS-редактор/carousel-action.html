@@ -46,16 +46,17 @@ h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-sp
 }
 .slide.active { display: block; }
 
-/* Персонаж — большой, слева */
+/* Персонаж — по центру снизу */
 .char {
   position: absolute;
   bottom: 0;
-  left: -3%;
-  height: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 62%;
   z-index: 3;
   object-fit: contain;
-  object-position: bottom left;
-  filter: drop-shadow(2px 0 8px rgba(0,0,0,0.08));
+  object-position: bottom center;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
 }
 
 /* Речевой пузырь */
@@ -95,17 +96,33 @@ h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-sp
   50% { transform: scale(1.2) rotate(15deg); }
 }
 
-/* Текст правая сторона */
-.rtext {
+/* Зоны текста — разбросаны по слайду */
+.t-top {
   position: absolute;
-  right: 0;
-  top: 0; bottom: 0;
-  width: 54%;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 6% 5% 15% 0;
+  top: 4%; left: 0; right: 0;
+  text-align: center;
+  padding: 0 6%;
+  z-index: 6;
+}
+.t-left {
+  position: absolute;
+  top: 36%; left: 4%;
+  max-width: 42%;
+  z-index: 6;
+}
+.t-right {
+  position: absolute;
+  top: 36%; right: 4%;
+  max-width: 42%;
+  text-align: right;
+  z-index: 6;
+}
+.t-bot {
+  position: absolute;
+  bottom: 4%; left: 0; right: 0;
+  text-align: center;
+  padding: 0 6%;
+  z-index: 6;
 }
 
 .tag {
@@ -288,116 +305,144 @@ h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-sp
 
 <!-- СЛАЙД 1 — ХУК -->
 <div class="slide active" id="s0">
-  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
-  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#C084FC;animation-delay:.4s">★</span>
-  <span class="sp" style="top:6%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.8s">🚀</span>
-  <span class="sp" style="top:18%;right:3%;font-size:clamp(0.6rem,3cqw,0.9rem);color:#A855F7;animation-delay:.2s">✧</span>
-  <span class="sp" style="bottom:32%;left:42%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#E879F9;animation-delay:.6s">💜</span>
-  <span class="sp" style="bottom:26%;left:38%;font-size:clamp(0.5rem,2.5cqw,0.7rem);animation-delay:1s">✦</span>
-  <span class="sp" style="bottom:20%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.3s">🚀</span>
+  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
+  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#C084FC;animation-delay:.4s">★</span>
+  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.8s">🚀</span>
+  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#E879F9;animation-delay:.2s">💜</span>
+  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">✧</span>
+  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">🚀</span>
 
-  <div class="bubble" style="top:8%;left:40%;">жду тебя! 👋</div>
+  <div class="t-top">
+    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life · Акция</span>
+    <div class="big" style="font-size:clamp(1.4rem,9cqw,2.2rem);margin-top:0.3em;">Есть кое-что<br><span class="purple">важное!</span></div>
+  </div>
+
+  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">жду тебя! 👋</div>
 
   <img class="char" src="natalia_3d-3.png" alt="">
 
-  <div class="rtext">
-    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life</span>
-    <div class="big">Есть<br>кое-что<br><span class="purple">важное!</span></div>
-    <div class="line"></div>
-    <div class="mid">Акция, о которой<br>я <span class="hl">не могла молчать</span>.<br>Листай дальше 👇</div>
+  <div class="t-left" style="top:38%;">
+    <div class="mid">Акция, о которой<br>я <span class="hl">не могла<br>молчать</span></div>
   </div>
+  <div class="t-right" style="top:38%;">
+    <div class="mid">Листай<br>дальше 👇</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 2 — ИСТОРИЯ -->
 <div class="slide" id="s1">
-  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#F59E0B;">✦</span>
-  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.3s">★</span>
-  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.7s">✈️</span>
-  <span class="sp" style="bottom:30%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#FCD34D;animation-delay:.5s">✦</span>
-  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.2s">🌟</span>
+  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#F59E0B;">✦</span>
+  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:.3s">★</span>
+  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.7s">✈️</span>
+  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#FCD34D;animation-delay:.5s">🌟</span>
+  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.2s">✦</span>
+  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.9s">✈️</span>
 
-  <div class="bubble" style="top:7%;left:38%;">год в клубе ✈️</div>
+  <div class="t-top">
+    <span class="tag" style="background:#FEF3DC;color:#B45309;">Моя история</span>
+    <div class="big" style="font-size:clamp(1.3rem,8.5cqw,2rem);margin-top:0.3em;">Год в MWR Life<br><span style="color:#F59E0B;">изменил всё</span></div>
+  </div>
+
+  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">год в клубе ✈️</div>
 
   <img class="char" src="natalia_3d.png" alt="">
 
-  <div class="rtext">
-    <span class="tag" style="background:#FEF3DC;color:#B45309;">Моя история</span>
-    <div class="big" style="font-size:clamp(1.1rem,7.5cqw,1.8rem);">Год в<br>MWR Life<br><span style="color:#F59E0B;">изменил<br>всё</span></div>
-    <div class="line" style="background:#F59E0B;"></div>
-    <div class="mid">Первое бесплатное<br>путешествие с семьёй.<br><strong>Это работает ✓</strong></div>
+  <div class="t-left" style="top:38%;">
+    <div class="mid">Первое бесплатное<br>путешествие<br>с семьёй</div>
   </div>
+  <div class="t-right" style="top:38%;">
+    <div class="mid"><strong>Это работает ✓</strong><br>Я проверила.</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 3 — МАТЕМАТИКА -->
 <div class="slide" id="s2">
-  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;">✦</span>
-  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#34D399;animation-delay:.5s">★</span>
-  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">💰</span>
-  <span class="sp" style="bottom:30%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#10B981;animation-delay:.7s">✦</span>
-  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.1s">🎉</span>
+  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;">✦</span>
+  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#34D399;animation-delay:.5s">★</span>
+  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.3s">💰</span>
+  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.7s">🎉</span>
+  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.1s">✦</span>
+  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">💰</span>
 
-  <div class="bubble" style="top:7%;left:38%;">считаем! 🧮</div>
+  <div class="t-top">
+    <span class="tag" style="background:#D1FAE5;color:#065F46;">Акция до 30 июня</span>
+    <div class="big" style="font-size:clamp(1.4rem,9cqw,2.2rem);margin-top:0.3em;"><span style="color:#10B981;">540 USDT</span><br>за 3 человека</div>
+  </div>
+
+  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">считаем! 🧮</div>
 
   <img class="char" src="natalia_3d-5.jpg" alt="">
 
-  <div class="rtext">
-    <span class="tag" style="background:#D1FAE5;color:#065F46;">Акция</span>
-    <div class="big" style="font-size:clamp(1rem,7cqw,1.6rem);">540<br><span style="color:#10B981;">USDT</span><br>за 3<br>человека</div>
-    <div class="math">
-      <div class="math-line"><span class="n">80</span>×3 = <span class="n">240</span></div>
-      <div class="math-line">+бонус = <span class="n">300</span></div>
-      <div class="math-total">= 540 🎉</div>
+  <div class="t-left" style="top:38%;">
+    <div class="math" style="background:#D1FAE5;">
+      <div class="math-line"><span class="n" style="color:#10B981;">80</span>×3=<span class="n" style="color:#10B981;">240</span></div>
+      <div class="math-line">+бонус=<span class="n" style="color:#10B981;">300</span></div>
+      <div class="math-total" style="color:#10B981;">= 540 🎉</div>
     </div>
-    <div class="mid" style="font-size:clamp(0.5rem,2.5cqw,0.62rem);">до <strong>30 июня</strong></div>
   </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 4 — ПАКЕТ -->
 <div class="slide" id="s3">
-  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;">✦</span>
-  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.4s">★</span>
-  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.8s">🤔</span>
-  <span class="sp" style="bottom:28%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#818CF8;animation-delay:.6s">✦</span>
-  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.2s">✧</span>
+  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;">✦</span>
+  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:.4s">★</span>
+  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.8s">🤔</span>
+  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#818CF8;animation-delay:.2s">✧</span>
+  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">✦</span>
+  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">🔑</span>
 
-  <div class="bubble" style="top:7%;left:38%;">590 USDT? 🤔</div>
+  <div class="t-top">
+    <span class="tag" style="background:#E0E7FF;color:#3730A3;">Пакет Турбо Элит</span>
+    <div class="big" style="font-size:clamp(1.3rem,8.5cqw,2rem);margin-top:0.3em;">590 USDT —<br><span style="color:#6366F1;">это не трата!</span></div>
+  </div>
+
+  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">590 USDT? 🤔</div>
 
   <img class="char" src="Natalia_3d-2.png" alt="">
 
-  <div class="rtext">
-    <span class="tag" style="background:#E0E7FF;color:#3730A3;">Пакет</span>
-    <div class="big" style="font-size:clamp(1rem,7cqw,1.6rem);">590<br>USDT —<br>это <span style="color:#6366F1;">не<br>трата!</span></div>
-    <div class="line" style="background:#6366F1;"></div>
-    <div class="mid"><span class="n" style="color:#6366F1;font-size:1.1em;font-weight:900;">490</span> — поездки ✈️<br><span class="n" style="color:#6366F1;font-size:1.1em;font-weight:900;">99</span> — вход в клуб 🔑<br><strong>Большую часть<br>получаешь обратно!</strong></div>
+  <div class="t-left" style="top:38%;">
+    <div class="mid"><span style="color:#6366F1;font-weight:900;font-size:1.15em;">490</span> USDT<br>— поездки ✈️</div>
   </div>
+  <div class="t-right" style="top:38%;">
+    <div class="mid"><span style="color:#6366F1;font-weight:900;font-size:1.15em;">99</span> USDT<br>— вход в клуб 🔑</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 5 — CTA -->
 <div class="slide" id="s4">
-  <span class="sp" style="top:5%;left:42%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
-  <span class="sp" style="top:10%;left:50%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#C084FC;animation-delay:.4s">★</span>
-  <span class="sp" style="top:7%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.9s">💌</span>
-  <span class="sp" style="top:20%;right:3%;font-size:clamp(0.6rem,3cqw,0.85rem);color:#A855F7;animation-delay:.2s">💜</span>
-  <span class="sp" style="bottom:28%;left:40%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:.6s">✦</span>
-  <span class="sp" style="bottom:22%;right:4%;font-size:clamp(0.7rem,3cqw,0.9rem);animation-delay:.3s">🚀</span>
+  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
+  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#C084FC;animation-delay:.4s">★</span>
+  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.9s">💌</span>
+  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#E879F9;animation-delay:.2s">💜</span>
+  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">✧</span>
+  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">🚀</span>
 
-  <div class="bubble" style="top:7%;left:38%;">пиши мне! 💌</div>
+  <div class="t-top">
+    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">До 30 июня</span>
+    <div class="big" style="font-size:clamp(1.3rem,8.5cqw,2rem);margin-top:0.3em;">Хочешь бизнес<br>и путешествия?</div>
+  </div>
+
+  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">пиши мне! 💌</div>
 
   <img class="char" src="natalia_3d-4.jpg" alt="">
 
-  <div class="rtext">
-    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">До 30 июня</span>
-    <div class="big" style="font-size:clamp(1rem,6.5cqw,1.5rem);">Хочешь<br>бизнес<br>и<br>поездки?</div>
-    <div class="line"></div>
+  <div class="t-left" style="top:38%;">
     <div class="mid">Пиши слово</div>
     <span class="cta-word">АКЦИЯ</span>
-    <div class="cta-arrow">в директ или Telegram →</div>
-    <div class="cta-btn">@Natali_Ivahnenko</div>
+    <div class="cta-arrow">в директ</div>
   </div>
+  <div class="t-right" style="top:38%;">
+    <div class="cta-btn">@Natali_<br>Ivahnenko →</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
