@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анимированный текст</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Кнопки тем */
+.themes {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 1rem;
+}
+.theme-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.theme-btn.active, .theme-btn:hover {
+  background: white;
+  color: #0a0a0a;
+  border-color: white;
+}
+
+/* Экран 9:16 */
+.screen {
+  width: min(360px, 90vw);
+  aspect-ratio: 9/16;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Фоны */
+.bg-dark {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99,102,241,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(139,92,246,0.15) 0%, transparent 50%),
+    linear-gradient(160deg, #080818 0%, #0d1030 50%, #06070f 100%);
+}
+.bg-warm {
+  background:
+    radial-gradient(ellipse 80% 55% at 85% 10%, rgba(245,158,11,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 40% at 10% 90%, rgba(200,60,10,0.2) 0%, transparent 55%),
+    linear-gradient(155deg, #1e0e06 0%, #2c1409 45%, #130804 100%);
+}
+.bg-teal {
+  background:
+    radial-gradient(ellipse 80% 55% at 80% 10%, rgba(6,182,212,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 10% 85%, rgba(16,185,129,0.15) 0%, transparent 55%),
+    linear-gradient(155deg, #030f0d 0%, #071510 50%, #020a08 100%);
+}
+.bg-pink {
+  background:
+    radial-gradient(ellipse 80% 55% at 80% 10%, rgba(236,72,153,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 10% 85%, rgba(168,85,247,0.15) 0%, transparent 55%),
+    linear-gradient(155deg, #100510 0%, #1a0820 50%, #0d040d 100%);
+}
+
+/* Частицы */
+canvas.particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Контент */
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10% 8%;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Строки текста */
+.line {
+  overflow: hidden;
+  margin-bottom: 0.15em;
+}
+.line-inner {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+.line-inner.show {
+  animation: slideUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes slideUp {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Типы строк */
+.tag {
+  font-size: clamp(0.45rem, 1.8cqw, 0.6rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.35em 1.2em;
+  border-radius: 2em;
+  margin-bottom: 1.2em;
+  display: inline-block;
+}
+.h-xl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 9cqw, 3rem);
+  font-weight: 700;
+  line-height: 1.08;
+  color: white;
+  letter-spacing: -0.01em;
+}
+.h-xl em { font-style: italic; }
+.h-md {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.85rem, 3.5cqw, 1.1rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: white;
+  line-height: 1.2;
+}
+.sub {
+  font-size: clamp(0.6rem, 2.2cqw, 0.78rem);
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  font-weight: 400;
+  margin-top: 0.6em;
+  max-width: 85%;
+}
+.accent-line {
+  width: 2.5em;
+  height: 2px;
+  margin: 0.7em auto;
+  border-radius: 2px;
+  opacity: 0;
+  transform: scaleX(0);
+}
+.accent-line.show {
+  animation: growLine 0.5s 0.2s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes growLine {
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+/* handle */
+.handle {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: clamp(0.45rem, 1.6cqw, 0.6rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 0.6s 2.5s ease forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* декор уголки */
+.corner {
+  position: absolute;
+  width: 2.5rem; height: 2.5rem;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 0.6s 0.3s ease forwards;
+}
+.corner.tl { top: 1.2rem; left: 1.2rem; border-top: 1px solid; border-left: 1px solid; }
+.corner.br { bottom: 3rem; right: 1.2rem; border-bottom: 1px solid; border-right: 1px solid; }
+
+.hint {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* CONTAINER QUERY */
+.screen { container-type: inline-size; }
+</style>
+</head>
+<body>
+
+<div class="themes">
+  <button class="theme-btn active" onclick="loadTheme(0)">Жизнь после 50</button>
+  <button class="theme-btn" onclick="loadTheme(1)">Путешествия</button>
+  <button class="theme-btn" onclick="loadTheme(2)">Нейросети</button>
+  <button class="theme-btn" onclick="loadTheme(3)">Акция</button>
+</div>
+
+<div class="screen bg-dark" id="screen" onclick="replay()">
+  <canvas class="particles" id="canvas"></canvas>
+  <div class="content" id="content"></div>
+  <div class="handle" id="handle">@nataliya_v_puti</div>
+  <div class="corner tl" id="corner-tl"></div>
+  <div class="corner br" id="corner-br"></div>
+</div>
+
+<div class="hint">👆 Нажми на экран — запустить заново</div>
+
+<script>
+const themes = [
+  {
+    bg: 'bg-dark',
+    cornerColor: 'rgba(129,140,248,0.5)',
+    accentColor: '#818CF8',
+    tagColor: '#A5B4FC',
+    tagBg: 'rgba(99,102,241,0.15)',
+    tagBorder: 'rgba(165,180,252,0.3)',
+    lineColor: '#818CF8',
+    lines: [
+      { type: 'tag',  text: 'Мой путь', delay: 0.1 },
+      { type: 'h-xl', text: 'Жизнь\nпосле 50', delay: 0.4, em: true },
+      { type: 'accent', delay: 1.0 },
+      { type: 'sub',  text: 'только\nначинается', delay: 1.1 },
+    ]
+  },
+  {
+    bg: 'bg-warm',
+    cornerColor: 'rgba(245,158,11,0.5)',
+    accentColor: '#F59E0B',
+    tagColor: '#FCD34D',
+    tagBg: 'rgba(245,158,11,0.12)',
+    tagBorder: 'rgba(245,158,11,0.3)',
+    lineColor: '#F59E0B',
+    lines: [
+      { type: 'tag',  text: 'Travel', delay: 0.1 },
+      { type: 'h-xl', text: 'Путешествуй.\nЗарабатывай.\nЖиви.', delay: 0.4 },
+      { type: 'accent', delay: 1.2 },
+      { type: 'sub',  text: 'Travel Advantage™\nскидки до 70%', delay: 1.3 },
+    ]
+  },
+  {
+    bg: 'bg-teal',
+    cornerColor: 'rgba(6,182,212,0.5)',
+    accentColor: '#06B6D4',
+    tagColor: '#67E8F9',
+    tagBg: 'rgba(6,182,212,0.12)',
+    tagBorder: 'rgba(6,182,212,0.3)',
+    lineColor: '#06B6D4',
+    lines: [
+      { type: 'tag',  text: 'Нейросети', delay: 0.1 },
+      { type: 'h-xl', text: 'Мне 55.\nЯ делаю сайты\nс ИИ.', delay: 0.4 },
+      { type: 'accent', delay: 1.3 },
+      { type: 'sub',  text: 'И тебя научу', delay: 1.4 },
+    ]
+  },
+  {
+    bg: 'bg-pink',
+    cornerColor: 'rgba(236,72,153,0.5)',
+    accentColor: '#EC4899',
+    tagColor: '#F9A8D4',
+    tagBg: 'rgba(236,72,153,0.12)',
+    tagBorder: 'rgba(236,72,153,0.3)',
+    lineColor: '#EC4899',
+    lines: [
+      { type: 'h-md', text: '⚡ ВНИМАНИЕ', delay: 0.1, color: '#F9A8D4' },
+      { type: 'h-xl', text: 'Акция\nдо 30\nиюня', delay: 0.4, emColor: '#F9A8D4' },
+      { type: 'accent', delay: 1.2 },
+      { type: 'sub',  text: '3 человека →\n540 USDT бонус', delay: 1.3 },
+    ]
+  }
+];
+
+let current = 0;
+let timeouts = [];
+
+function clearTimeouts() {
+  timeouts.forEach(t => clearTimeout(t));
+  timeouts = [];
+}
+
+function loadTheme(idx) {
+  current = idx;
+  document.querySelectorAll('.theme-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  const t = themes[idx];
+  const screen = document.getElementById('screen');
+  screen.className = 'screen ' + t.bg;
+  const corners = document.querySelectorAll('.corner');
+  corners.forEach(c => { c.style.borderColor = t.cornerColor; });
+  render(t);
+  initParticles(t.accentColor);
+}
+
+function replay() { loadTheme(current); }
+
+function render(t) {
+  clearTimeouts();
+  const cont = document.getElementById('content');
+  cont.innerHTML = '';
+
+  t.lines.forEach(l => {
+    if (l.type === 'accent') {
+      const div = document.createElement('div');
+      div.className = 'accent-line';
+      div.style.background = t.lineColor;
+      cont.appendChild(div);
+      timeouts.push(setTimeout(() => div.classList.add('show'), l.delay * 1000));
+      return;
+    }
+
+    const wrap = document.createElement('div');
+    wrap.className = 'line';
+    const inner = document.createElement('span');
+    inner.className = 'line-inner ' + l.type;
+
+    if (l.type === 'tag') {
+      inner.style.color = t.tagColor;
+      inner.style.background = t.tagBg;
+      inner.style.border = '1px solid ' + t.tagBorder;
+      inner.textContent = l.text;
+    } else if (l.type === 'h-xl') {
+      const lines = l.text.split('\n');
+      lines.forEach((line, i) => {
+        const span = document.createElement('span');
+        span.style.display = 'block';
+        if (i === lines.length - 1 && l.em) {
+          const em = document.createElement('em');
+          em.style.color = t.accentColor;
+          em.textContent = line;
+          span.appendChild(em);
+        } else if (l.emColor && i === lines.length - 1) {
+          span.style.color = l.emColor;
+          span.textContent = line;
+        } else {
+          span.textContent = line;
+        }
+        inner.appendChild(span);
+      });
+    } else if (l.type === 'h-md') {
+      inner.style.color = l.color || 'white';
+      inner.textContent = l.text;
+    } else if (l.type === 'sub') {
+      l.text.split('\n').forEach(line => {
+        const span = document.createElement('span');
+        span.style.display = 'block';
+        span.textContent = line;
+        inner.appendChild(span);
+      });
+    }
+
+    wrap.appendChild(inner);
+    cont.appendChild(wrap);
+
+    timeouts.push(setTimeout(() => inner.classList.add('show'), l.delay * 1000));
+  });
+}
+
+// Частицы
+function initParticles(color) {
+  const canvas = document.getElementById('canvas');
+  const screen = document.getElementById('screen');
+  canvas.width = screen.offsetWidth;
+  canvas.height = screen.offsetHeight;
+  const ctx = canvas.getContext('2d');
+
+  const particles = Array.from({length: 28}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.3,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: -Math.random() * 0.5 - 0.1,
+    alpha: Math.random() * 0.5 + 0.1
+  }));
+
+  let animId;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = color + Math.floor(p.alpha * 255).toString(16).padStart(2,'0');
+      ctx.fill();
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
+    });
+    animId = requestAnimationFrame(draw);
+  }
+  if (window._particleAnim) cancelAnimationFrame(window._particleAnim);
+  draw();
+  window._particleAnim = animId;
+}
+
+// Старт
+loadTheme(0);
+</script>
+</body>
+</html>
