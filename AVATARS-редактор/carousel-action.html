@@ -248,6 +248,88 @@ h1 {
 
 .hint { font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
 .slide { container-type: inline-size; }
+
+/* Кнопка на весь экран */
+.fullscreen-btn {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.6rem 1.5rem;
+  border-radius: 2rem;
+  background: #A855F7;
+  border: none;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+/* Оверлей на весь экран */
+#overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#overlay.show { display: flex; }
+#overlay-slide {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+#overlay-slide .slide {
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: unset !important;
+  border-radius: 0 !important;
+}
+.close-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1100;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-fs {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  z-index: 1100;
+}
+.nav-fs-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  width: 2.8rem; height: 2.8rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-fs-counter {
+  background: rgba(0,0,0,0.4);
+  color: rgba(255,255,255,0.7);
+  border-radius: 2rem;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex; align-items: center;
+}
 </style>
 </head>
 <body>
@@ -398,7 +480,19 @@ h1 {
   <button class="arrow-btn" onclick="goTo(cur+1)">→</button>
 </div>
 
-<div class="hint">Открой слайд на весь экран → сделай скриншот</div>
+<button class="fullscreen-btn" onclick="openFullscreen()">⛶ На весь экран → скриншот</button>
+<div class="hint">Нажми кнопку → сделай скриншот</div>
+
+<!-- ОВЕРЛЕЙ -->
+<div id="overlay">
+  <button class="close-btn" onclick="closeFullscreen()">✕</button>
+  <div id="overlay-slide"></div>
+  <div class="nav-fs">
+    <button class="nav-fs-btn" onclick="fsNav(-1)">←</button>
+    <span class="nav-fs-counter" id="fs-counter">1 / 5</span>
+    <button class="nav-fs-btn" onclick="fsNav(1)">→</button>
+  </div>
+</div>
 
 <script>
 let cur = 0;
@@ -414,9 +508,39 @@ function goTo(idx) {
   document.getElementById('counter').textContent = (cur+1) + ' / ' + total;
 }
 
+function openFullscreen() {
+  const slide = document.getElementById('s'+cur);
+  const clone = slide.cloneNode(true);
+  clone.classList.add('active');
+  clone.style.width = '100%';
+  clone.style.height = '100%';
+  clone.style.aspectRatio = 'unset';
+  clone.style.borderRadius = '0';
+  const overlay = document.getElementById('overlay');
+  const os = document.getElementById('overlay-slide');
+  os.innerHTML = '';
+  os.appendChild(clone);
+  document.getElementById('fs-counter').textContent = (cur+1) + ' / ' + total;
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFullscreen() {
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function fsNav(dir) {
+  const next = cur + dir;
+  if (next < 0 || next >= total) return;
+  goTo(next);
+  openFullscreen();
+}
+
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight') goTo(cur+1);
-  if (e.key === 'ArrowLeft') goTo(cur-1);
+  if (e.key === 'ArrowRight') { goTo(cur+1); if(document.getElementById('overlay').classList.contains('show')) openFullscreen(); }
+  if (e.key === 'ArrowLeft')  { goTo(cur-1); if(document.getElementById('overlay').classList.contains('show')) openFullscreen(); }
+  if (e.key === 'Escape') closeFullscreen();
 });
 </script>
 </body>
