@@ -112,28 +112,29 @@ h1 {
 .character {
   position: absolute;
   bottom: 0;
-  left: -2%;
-  height: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 68%;
   z-index: 5;
   object-fit: contain;
   object-position: bottom;
-  filter: drop-shadow(4px 0 12px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
 }
+.character.left  { left: -4%; transform: none; height: 75%; }
+.character.right { left: auto; right: -4%; transform: none; height: 75%; }
 
-/* Контент текст */
-.content {
+/* Текст — свободно по слайду */
+.txt {
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 55%;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 6% 6% 6% 2%;
-  container-type: inline-size;
+  z-index: 7;
 }
+.txt-top    { top: 6%; left: 0; right: 0; text-align: center; padding: 0 6%; }
+.txt-topleft  { top: 6%; left: 5%; max-width: 55%; }
+.txt-topright { top: 6%; right: 5%; max-width: 55%; text-align: right; }
+.txt-mid    { top: 38%; left: 0; right: 0; text-align: center; padding: 0 6%; }
+.txt-midleft  { top: 35%; left: 5%; max-width: 50%; }
+.txt-midright { top: 35%; right: 5%; max-width: 50%; text-align: right; }
+.txt-bot    { bottom: 12%; left: 0; right: 0; text-align: center; padding: 0 6%; }
 
 .tag {
   display: inline-block;
@@ -263,22 +264,26 @@ h1 {
 
 <!-- СЛАЙД 1 -->
 <div class="slide active" id="s0">
-  <div class="slide-bg" style="background: linear-gradient(135deg, #FFF0FB 0%, #F3E8FF 50%, #EDE9FE 100%);"></div>
+  <div class="slide-bg" style="background:linear-gradient(160deg,#FFF0FB 0%,#F3E8FF 50%,#EDE9FE 100%);"></div>
+  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);animation-delay:0s">✦</span>
+  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#A855F7;animation-delay:0.4s">★</span>
+  <span class="sparkle" style="top:18%;left:8%;font-size:clamp(0.6rem,3cqw,0.9rem);animation-delay:0.7s">✧</span>
+  <span class="sparkle" style="top:22%;right:4%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.2s">✦</span>
+  <span class="sparkle" style="bottom:28%;left:5%;font-size:clamp(0.6rem,2.5cqw,0.85rem);color:#A855F7;animation-delay:0.9s">❋</span>
+  <span class="sparkle" style="bottom:32%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.5s">✦</span>
 
-  <span class="sparkle" style="top:6%;left:48%;font-size:clamp(1rem,5cqw,1.6rem);animation-delay:0s">✦</span>
-  <span class="sparkle" style="top:12%;left:55%;font-size:clamp(0.7rem,3cqw,1rem);color:#A855F7;animation-delay:0.4s">★</span>
-  <span class="sparkle" style="top:5%;right:5%;font-size:clamp(0.9rem,4cqw,1.3rem);animation-delay:0.8s">✧</span>
-  <span class="sparkle" style="top:18%;right:3%;font-size:clamp(0.6rem,2.5cqw,0.9rem);color:#A855F7;animation-delay:0.2s">✦</span>
-  <span class="sparkle" style="bottom:25%;left:48%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:1s">❋</span>
+  <div class="txt txt-top">
+    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life · Акция</span>
+    <div class="title" style="color:#1a1a2e;font-size:clamp(1.3rem,8cqw,2rem);margin-top:0.4em;">Есть кое-что<br>важное!</div>
+  </div>
 
-  <div class="bubble" style="top:9%;left:44%;">псст! есть секрет 👀</div>
+  <img class="character" src="natalia_3d-3.png" alt="Наталья" style="left:-6%;transform:none;height:72%;bottom:8%;">
 
-  <img class="character" src="natalia_3d-3.png" alt="Наталья" style="left:-5%;height:92%;">
+  <div class="txt" style="top:32%;right:5%;max-width:48%;z-index:7;">
+    <div class="sub" style="text-align:right;color:#4C1D95;font-size:clamp(0.65rem,3.5cqw,0.85rem);">Акция, о которой<br>я не могла молчать.<br>Расскажу честно 👇</div>
+  </div>
 
-  <div class="content">
-    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life</span>
-    <div class="title" style="color:#1a1a2e;">Есть кое-что важное!</div>
-    <div class="sub">Акция, о которой я не могла молчать. Расскажу всё честно 👇</div>
+  <div class="txt txt-bot">
     <div class="cta">листай дальше →</div>
   </div>
   <div class="handle">@nataliya_v_puti</div>
@@ -286,98 +291,103 @@ h1 {
 
 <!-- СЛАЙД 2 -->
 <div class="slide" id="s1">
-  <div class="slide-bg" style="background: linear-gradient(135deg, #FFF8F0 0%, #FEF3DC 50%, #FDE8C8 100%);"></div>
+  <div class="slide-bg" style="background:linear-gradient(160deg,#FFF8F0 0%,#FEF3DC 50%,#FDE8C8 100%);"></div>
+  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);animation-delay:0.3s">✦</span>
+  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#F59E0B;animation-delay:0s">★</span>
+  <span class="sparkle" style="bottom:30%;left:5%;font-size:clamp(0.6rem,2.5cqw,0.85rem);animation-delay:0.6s">✧</span>
+  <span class="sparkle" style="bottom:26%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.9s">✦</span>
 
-  <span class="sparkle" style="top:6%;left:46%;font-size:clamp(1rem,5cqw,1.5rem);animation-delay:0.3s">✦</span>
-  <span class="sparkle" style="top:14%;left:54%;font-size:clamp(0.7rem,3cqw,1rem);color:#F59E0B;animation-delay:0s">★</span>
-  <span class="sparkle" style="top:8%;right:4%;font-size:clamp(0.9rem,4cqw,1.2rem);animation-delay:0.6s">✧</span>
-  <span class="sparkle" style="bottom:22%;left:47%;font-size:clamp(0.6rem,2cqw,0.85rem);animation-delay:0.9s">✦</span>
-
-  <div class="bubble" style="top:8%;left:42%;">год в клубе ✈️</div>
-
-  <img class="character" src="natalia_3d.png" alt="Наталья">
-
-  <div class="content">
+  <div class="txt txt-top">
     <span class="tag" style="background:#FEF3DC;color:#B45309;">Моя история</span>
-    <div class="title" style="color:#1a1a2e;">Год в MWR Life изменил всё</div>
-    <div class="sub">Первое бесплатное путешествие за границу с семьёй — за накопленные баллы.<br><br>Это работает. Я проверила.</div>
+    <div class="title" style="color:#1a1a2e;font-size:clamp(1.2rem,7.5cqw,1.9rem);margin-top:0.4em;">Год в MWR Life<br>изменил всё</div>
   </div>
+
+  <img class="character" src="natalia_3d.png" alt="Наталья" style="left:auto;right:-4%;transform:none;height:70%;bottom:8%;">
+
+  <div class="txt" style="top:32%;left:5%;max-width:50%;z-index:7;">
+    <div class="sub" style="color:#78350F;font-size:clamp(0.65rem,3.5cqw,0.85rem);">Первое бесплатное<br>путешествие с семьёй<br>за накопленные баллы.</div>
+    <div style="margin-top:0.6em;font-size:clamp(0.7rem,3.5cqw,0.88rem);font-weight:700;color:#B45309;">Это работает ✓<br>Я проверила.</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 3 -->
 <div class="slide" id="s2">
-  <div class="slide-bg" style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #D1FAE5 100%);"></div>
+  <div class="slide-bg" style="background:linear-gradient(160deg,#F0FDF4 0%,#DCFCE7 50%,#D1FAE5 100%);"></div>
+  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;animation-delay:0s">✦</span>
+  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:0.5s">★</span>
+  <span class="sparkle" style="bottom:30%;left:5%;font-size:clamp(0.6rem,2.5cqw,0.85rem);animation-delay:0.3s">✧</span>
+  <span class="sparkle" style="bottom:26%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);color:#10B981;animation-delay:0.8s">✦</span>
 
-  <span class="sparkle" style="top:6%;left:47%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;animation-delay:0s">✦</span>
-  <span class="sparkle" style="top:13%;left:56%;font-size:clamp(0.7rem,3cqw,1rem);color:#059669;animation-delay:0.5s">★</span>
-  <span class="sparkle" style="top:7%;right:4%;font-size:clamp(0.9rem,4cqw,1.2rem);animation-delay:0.3s">✧</span>
-  <span class="sparkle" style="bottom:24%;left:47%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:0.8s">✦</span>
-
-  <div class="bubble" style="top:8%;left:42%;">540 USDT! 🎉</div>
-
-  <img class="character" src="natalia_3d-5.jpg" alt="Наталья">
-
-  <div class="content">
-    <span class="tag" style="background:#DCFCE7;color:#065F46;">Акция</span>
-    <div class="title" style="color:#1a1a2e;">540 USDT за 3 человека</div>
-    <div class="math-box">
-      <div class="math-row"><span class="num">80</span> USDT × 3 человека = <span class="num">240</span></div>
-      <div class="math-row">+ бонус компании = <span class="num">300</span></div>
-      <div class="math-total">= 540 USDT 🎉</div>
-    </div>
-    <div class="sub">Акция до <strong>30 июня</strong></div>
+  <div class="txt txt-top">
+    <span class="tag" style="background:#DCFCE7;color:#065F46;">Акция до 30 июня</span>
+    <div class="title" style="color:#1a1a2e;font-size:clamp(1.2rem,7.5cqw,1.9rem);margin-top:0.3em;">540 USDT<br>за 3 человека</div>
   </div>
+
+  <div class="txt" style="top:30%;left:5%;z-index:7;max-width:44%;">
+    <div class="math-box" style="background:rgba(255,255,255,0.75);">
+      <div class="math-row"><span class="num">80</span>×3 = <span class="num">240</span></div>
+      <div class="math-row">+бонус = <span class="num">300</span></div>
+      <div class="math-total">= 540 🎉</div>
+    </div>
+  </div>
+
+  <img class="character" src="natalia_3d-5.jpg" alt="Наталья" style="left:auto;right:-2%;transform:none;height:68%;bottom:8%;">
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 4 -->
 <div class="slide" id="s3">
-  <div class="slide-bg" style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #E0E7FF 100%);"></div>
+  <div class="slide-bg" style="background:linear-gradient(160deg,#EFF6FF 0%,#DBEAFE 50%,#E0E7FF 100%);"></div>
+  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;animation-delay:0.2s">✦</span>
+  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:0.7s">★</span>
+  <span class="sparkle" style="bottom:30%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.5s">✦</span>
 
-  <span class="sparkle" style="top:6%;left:47%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;animation-delay:0.2s">✦</span>
-  <span class="sparkle" style="top:14%;left:55%;font-size:clamp(0.7rem,3cqw,1rem);color:#4F46E5;animation-delay:0.7s">★</span>
-  <span class="sparkle" style="top:7%;right:4%;font-size:clamp(0.9rem,4cqw,1.2rem);animation-delay:0s">✧</span>
-  <span class="sparkle" style="bottom:23%;left:47%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:0.5s">✦</span>
-
-  <div class="bubble" style="top:8%;left:42%;">590 USDT? 🤔</div>
-
-  <img class="character" src="Natalia_3d-2.png" alt="Наталья">
-
-  <div class="content">
-    <span class="tag" style="background:#DBEAFE;color:#1E40AF;">Пакет</span>
-    <div class="title" style="color:#1a1a2e;">590 USDT — это не трата</div>
-    <div class="math-box">
-      <div class="math-row"><span class="num" style="color:#6366F1;">490</span> — баллы на поездки</div>
-      <div class="math-row"><span class="num" style="color:#6366F1;">99</span> — вход в клуб</div>
-    </div>
-    <div class="sub">Баллы сразу можно тратить на отели, авиа и круизы ✈️</div>
+  <div class="txt txt-top">
+    <span class="tag" style="background:#DBEAFE;color:#1E40AF;">Пакет Турбо Элит</span>
+    <div class="title" style="color:#1a1a2e;font-size:clamp(1.2rem,7.5cqw,1.9rem);margin-top:0.3em;">590 USDT —<br>это не трата</div>
   </div>
+
+  <img class="character" src="Natalia_3d-2.png" alt="Наталья" style="left:-4%;transform:none;height:68%;bottom:8%;">
+
+  <div class="txt" style="top:30%;right:5%;max-width:50%;z-index:7;">
+    <div class="math-box" style="background:rgba(255,255,255,0.75);">
+      <div class="math-row"><span class="num" style="color:#6366F1;">490</span> баллы</div>
+      <div class="math-row" style="font-size:0.75em;color:#6B5240;">тратишь на поездки ✈️</div>
+      <div style="height:0.5em;"></div>
+      <div class="math-row"><span class="num" style="color:#6366F1;">99</span> франшиза</div>
+      <div class="math-row" style="font-size:0.75em;color:#6B5240;">вход в клуб 🔑</div>
+    </div>
+    <div class="sub" style="margin-top:0.5em;font-size:clamp(0.6rem,3cqw,0.75rem);">Большую часть<br>получаешь обратно!</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
 <!-- СЛАЙД 5 -->
 <div class="slide" id="s4">
-  <div class="slide-bg" style="background: linear-gradient(135deg, #FFF0FB 0%, #F3E8FF 40%, #EDE9FE 100%);"></div>
+  <div class="slide-bg" style="background:linear-gradient(160deg,#FFF0FB 0%,#F3E8FF 40%,#EDE9FE 100%);"></div>
+  <span class="sparkle" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.6rem);animation-delay:0.1s">✦</span>
+  <span class="sparkle" style="top:8%;right:6%;font-size:clamp(0.9rem,4cqw,1.3rem);animation-delay:0.9s">✧</span>
+  <span class="sparkle" style="top:20%;left:7%;font-size:clamp(0.7rem,3cqw,1rem);color:#A855F7;animation-delay:0.3s">✦</span>
+  <span class="sparkle" style="bottom:28%;right:5%;font-size:clamp(0.7rem,3cqw,1rem);animation-delay:0.6s">❋</span>
 
-  <span class="sparkle" style="top:5%;left:47%;font-size:clamp(1rem,5cqw,1.6rem);animation-delay:0.1s">✦</span>
-  <span class="sparkle" style="top:13%;left:56%;font-size:clamp(0.7rem,3cqw,1rem);color:#A855F7;animation-delay:0.5s">★</span>
-  <span class="sparkle" style="top:6%;right:4%;font-size:clamp(0.9rem,4cqw,1.3rem);animation-delay:0.9s">✧</span>
-  <span class="sparkle" style="top:20%;right:3%;font-size:clamp(0.6rem,2.5cqw,0.85rem);color:#A855F7;animation-delay:0.3s">✦</span>
-  <span class="sparkle" style="bottom:23%;left:47%;font-size:clamp(0.6rem,2cqw,0.8rem);animation-delay:0.7s">❋</span>
-
-  <div class="bubble" style="top:8%;left:42%;">пиши мне! 💌</div>
-
-  <img class="character" src="natalia_3d-4.jpg" alt="Наталья">
-
-  <div class="content">
+  <div class="txt txt-top">
     <span class="tag" style="background:#F3E8FF;color:#7C3AED;">До 30 июня</span>
-    <div class="title" style="color:#1a1a2e;">Хочешь узнать подробнее?</div>
-    <div class="sub">Пиши слово</div>
-    <span class="cta-word">АКЦИЯ</span>
-    <div class="cta-sub">в Telegram или директ — пришлю все детали</div>
-    <div class="cta" style="margin-top:0.6em;">@Natali_Ivahnenko →</div>
+    <div class="title" style="color:#1a1a2e;font-size:clamp(1.1rem,7cqw,1.7rem);margin-top:0.3em;">Хочешь свой бизнес<br>и путешествия?</div>
   </div>
+
+  <img class="character" src="natalia_3d-4.jpg" alt="Наталья" style="left:auto;right:-2%;transform:none;height:68%;bottom:8%;">
+
+  <div class="txt" style="top:32%;left:5%;max-width:52%;z-index:7;">
+    <div class="sub" style="font-size:clamp(0.65rem,3.2cqw,0.8rem);color:#4C1D95;">Пиши слово</div>
+    <span class="cta-word" style="font-size:clamp(1.6rem,9cqw,2.4rem);">АКЦИЯ</span>
+    <div class="cta-sub" style="margin-top:0.3em;">в директ или Telegram</div>
+    <div class="cta" style="margin-top:0.6em;display:inline-block;">@Natali_Ivahnenko →</div>
+  </div>
+
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
