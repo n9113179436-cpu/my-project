@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>План рилсов — MWR Life | 5–30 июня</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F7F4EF;
+  color: #1C1710;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+header {
+  background: linear-gradient(135deg, #1a6b61, #2A9D8F);
+  color: white;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+header h1 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+header p { color: rgba(255,255,255,0.8); font-size: 1rem; }
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.hstat {
+  background: rgba(255,255,255,0.15);
+  border-radius: 0.8rem;
+  padding: 0.6rem 1.2rem;
+  text-align: center;
+}
+.hstat-num { font-size: 1.4rem; font-weight: 700; }
+.hstat-lbl { font-size: 0.72rem; opacity: 0.8; }
+
+.blocks { max-width: 1100px; margin: 2rem auto; padding: 0 1rem 3rem; }
+
+.block { margin-bottom: 2.5rem; }
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.8rem 0.8rem 0 0;
+  margin-bottom: 0;
+}
+.block-header h2 { font-size: 1rem; font-weight: 700; color: white; }
+.block-header p { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 0.1rem; }
+.block-emoji { font-size: 1.5rem; }
+
+.b1 .block-header { background: #C97D20; }
+.b2 .block-header { background: #2A9D8F; }
+.b3 .block-header { background: #4361EE; }
+.b4 .block-header { background: #D62828; }
+
+.days { display: flex; flex-direction: column; gap: 0; }
+
+.day {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.07);
+  border-top: none;
+  padding: 1.2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1rem;
+  transition: background 0.15s;
+}
+.day:last-child { border-radius: 0 0 0.8rem 0.8rem; }
+.day:hover { background: #FDFAF6; }
+
+.day-meta { text-align: center; padding-top: 0.2rem; }
+.day-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: white;
+  margin-bottom: 0.3rem;
+}
+.b1 .day-num { background: #C97D20; }
+.b2 .day-num { background: #2A9D8F; }
+.b3 .day-num { background: #4361EE; }
+.b4 .day-num { background: #D62828; }
+
+.day-date { font-size: 0.7rem; color: #999; font-weight: 500; }
+
+.day-content {}
+.day-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1C1710;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.day-hook {
+  background: #FEF9EC;
+  border-left: 3px solid #E9A84C;
+  border-radius: 0 0.4rem 0.4rem 0;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #7A5C1E;
+  margin-bottom: 0.7rem;
+}
+.day-hook strong { font-style: normal; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #C97D20; display: block; margin-bottom: 0.2rem; }
+.day-script {
+  font-size: 0.88rem;
+  color: #4A3F30;
+  line-height: 1.7;
+}
+.day-cta {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.3rem 0.9rem;
+  border-radius: 2rem;
+}
+.b1 .day-cta { background: #C97D20; }
+.b2 .day-cta { background: #2A9D8F; }
+.b3 .day-cta { background: #4361EE; }
+.b4 .day-cta { background: #D62828; }
+
+.done-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: #bbb;
+  cursor: pointer;
+  user-select: none;
+}
+.done-check input { cursor: pointer; }
+.done-check.checked { color: #2A9D8F; }
+
+.day.completed { background: #F0FAF8; }
+.day.completed .day-title { text-decoration: line-through; color: #aaa; }
+
+@media (max-width: 600px) {
+  .day { grid-template-columns: 60px 1fr; gap: 0.7rem; padding: 1rem; }
+  .day-title { font-size: 0.92rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📱 План рилсов — MWR Life</h1>
+  <p>@nataliya_v_puti · Акция до 30 июня</p>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-num">26</div><div class="hstat-lbl">рилсов</div></div>
+    <div class="hstat"><div class="hstat-num">5–30</div><div class="hstat-lbl">июня</div></div>
+    <div class="hstat"><div class="hstat-num">540</div><div class="hstat-lbl">USDT бонус</div></div>
+    <div class="hstat"><div class="hstat-num">1/день</div><div class="hstat-lbl">ритм</div></div>
+  </div>
+</header>
+
+<div class="blocks">
+
+<!-- БЛОК 1 -->
+<div class="block b1">
+  <div class="block-header">
+    <span class="block-emoji">🟡</span>
+    <div>
+      <h2>БЛОК 1 — Личная история</h2>
+      <p>5–11 июня · 7 дней · Строим доверие, рассказываем кто ты и что такое MWR Life</p>
+    </div>
+  </div>
+  <div class="days">
+
+    <div class="day" id="d1">
+      <div class="day-meta">
+        <div class="day-num">1</div>
+        <div class="day-date">5 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Год назад я ничего не знала про этот бизнес»</div>
+        <div class="day-hook"><strong>🎣 Хук — первые 3 секунды:</strong>«Если бы мне год назад сказали, что я буду зарабатывать на путешествиях — я бы покрутила пальцем у виска»</div>
+        <div class="day-script">Год назад я случайно узнала о MWR Life. Было непонятно, страшно, казалось — это не для меня. Я долго думала. Потом решила попробовать. И вот сегодня хочу рассказать — что из этого вышло. Следующие несколько недель буду делиться своим путём. Честно, без прикрас.</div>
+        <span class="day-cta">👉 Подписывайся — расскажу всё</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d1')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d2">
+      <div class="day-meta">
+        <div class="day-num">2</div>
+        <div class="day-date">6 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Я боялась. И всё равно сделала шаг»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Знаешь что останавливает людей больше всего? Не деньги. Не время. Страх.»</div>
+        <div class="day-script">Я боялась что не разберусь. Боялась что надо мной будут смеяться. Боялась потерять деньги. Но потом поняла: страх — это просто незнакомость. Когда узнаёшь больше — страх уходит. Я сделала шаг. И не пожалела ни разу.</div>
+        <span class="day-cta">👉 Напиши если тоже боишься — поговорим</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d2')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d3">
+      <div class="day-meta">
+        <div class="day-num">3</div>
+        <div class="day-date">7 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Что такое MWR Life — объясняю за 60 секунд»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Забудь всё что слышала. Объясню так, как объяснила бы подруге за чашкой чая»</div>
+        <div class="day-script">MWR Life — это закрытый тревел-клуб. Работает с 2013 года. Ты платишь членский взнос — и получаешь доступ к ценам на отели, авиа и круизы, которых нет в открытом доступе. Те же отели — в 2 раза дешевле. Это не скидки. Это цены клуба.</div>
+        <span class="day-cta">👉 Есть вопросы? Пиши в директ</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d3')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d4">
+      <div class="day-meta">
+        <div class="day-num">4</div>
+        <div class="day-date">8 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«590 USDT — люди видят цифру и пугаются. А зря»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Возьми телефон. Открой калькулятор. Сейчас покажу кое-что интересное»</div>
+        <div class="day-script">590 USDT — это пугает. Но смотри: 490 из них — это баллы лояльности. Ты не тратишь их — ты используешь на путешествия. Бронируешь отель, летишь — тратишь баллы. Плюс 99 — это твоя франшиза, вход в клуб. То есть большую часть суммы ты получаешь обратно в виде поездок.</div>
+        <span class="day-cta">👉 Хочешь разобраться подробнее — пиши</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d4')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d5">
+      <div class="day-meta">
+        <div class="day-num">5</div>
+        <div class="day-date">9 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Мы полетели всей семьёй. Бесплатно»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Год копила баллы. И вот звоню дочке: мы летим. Она не верила»</div>
+        <div class="day-script">Это было моё первое путешествие за границу вместе с семьёй. За счёт накопленных баллов в MWR Life. Год назад это казалось мечтой — далёкой и нереальной. Сегодня это стало реальностью. Вот что значит сделать шаг и не останавливаться.</div>
+        <span class="day-cta">👉 Хочешь так же — напиши мне</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d5')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d6">
+      <div class="day-meta">
+        <div class="day-num">6</div>
+        <div class="day-date">10 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Мне говорили: это МЛМ. Отвечаю честно»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Этот вопрос мне задают чаще всего. Наконец отвечу — честно и без прикрас»</div>
+        <div class="day-script">МЛМ — это когда зарабатываешь только если продаёшь другим. MWR Life — это клуб, где ты сам пользуешься скидками. Хочешь — только путешествуй. Хочешь — ещё и рекомендуй и получай вознаграждение. Никто не заставляет. Компания работает с 2013 года — проверено.</div>
+        <span class="day-cta">👉 Остались вопросы — пиши, отвечу честно</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d6')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d7">
+      <div class="day-meta">
+        <div class="day-num">7</div>
+        <div class="day-date">11 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«3 человека — и я езжу бесплатно»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Это называется безоплатка. Звучит как сказка — но это реальные условия компании»</div>
+        <div class="day-script">Приведи в клуб 3 человека — и компания сама платит за твоё членство. Ты не платишь взнос. Просто путешествуешь. Я проверила — это работает. Это один из моих любимых бонусов в MWR Life.</div>
+        <span class="day-cta">👉 Хочешь так же — напиши ХОЧУ в директ</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d7')"> отснято</label>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- БЛОК 2 -->
+<div class="block b2">
+  <div class="block-header">
+    <span class="block-emoji">🟢</span>
+    <div>
+      <h2>БЛОК 2 — Возможности компании</h2>
+      <p>12–18 июня · 7 дней · Показываем что внутри: отели, авиа, магазин, доход</p>
+    </div>
+  </div>
+  <div class="days">
+
+    <div class="day" id="d8">
+      <div class="day-meta">
+        <div class="day-num">8</div>
+        <div class="day-date">12 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Тот же отель. Та же дата. В 2 раза дешевле»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Я зашла на Booking, нашла отель. Потом зашла в клуб. Смотри разницу — сама не поверила»</div>
+        <div class="day-script">Реальный пример. Отель в Греции, те же даты: на Booking — €320. В MWR Life — €160. Экономия €160 с одного бронирования. И это не акция, не распродажа. Это просто цена клуба. Всегда.</div>
+        <span class="day-cta">👉 Хочешь проверить свой отель — пиши</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d8')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d9">
+      <div class="day-meta">
+        <div class="day-num">9</div>
+        <div class="day-date">13 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Ты думала это только про отели? Смотри»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Авиа. Круизы. Авто. Всё в одном месте. Всё со скидкой. Показываю»</div>
+        <div class="day-script">Travel Advantage — это не только отели. Авиабилеты со специальными тарифами. Аренда авто в любой стране. Круизы — Средиземноморье, Карибы, Норвегия. И всё это по ценам клуба, которых нет в открытом доступе.</div>
+        <span class="day-cta">👉 Куда мечтаешь поехать — напиши мне</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d9')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d10">
+      <div class="day-meta">
+        <div class="day-num">10</div>
+        <div class="day-date">14 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«180 стран. Куда ты всегда мечтала поехать?»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Напиши в комментарии страну мечты. Скорее всего — она уже доступна по ценам клуба»</div>
+        <div class="day-script">Платформа Travel Advantage работает в 180+ странах. Европа, Азия, Америка, острова. Греция, Таиланд, Италия, Япония, Мальдивы. Куда хочешь — там есть цены клуба. Мир большой. И он теперь ближе.</div>
+        <span class="day-cta">👉 Напиши страну мечты в комментарии</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d10')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d11">
+      <div class="day-meta">
+        <div class="day-num">11</div>
+        <div class="day-date">15 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Магазин прямо на платформе — одежда, красота, дом»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Я не ожидала что там будет ещё и это. Показываю магазин»</div>
+        <div class="day-script">На платформе Travel Advantage есть магазин Life Style. Брендовая одежда и обувь. Косметика и уход за собой. Товары для дома. Подарки. Всё для путешествий. Тысячи товаров в одном месте — прямо там, где бронируешь отели.</div>
+        <span class="day-cta">👉 Хочешь узнать подробнее — пиши</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d11')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d12">
+      <div class="day-meta">
+        <div class="day-num">12</div>
+        <div class="day-date">16 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Ты платишь 120 USDT — компания удваивает. Как?»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Это не маркетинг и не обещание. Это условия программы. Сейчас объясню как это работает»</div>
+        <div class="day-script">Каждый месяц платишь членский взнос — 120 USDT. Компания начисляет баллы и удваивает их. Платишь 120 — получаешь 240 баллов на путешествия. Баллы копятся. Ты тратишь их на отели, авиа, круизы. Чем дольше в клубе — тем больше накоплено.</div>
+        <span class="day-cta">👉 Хочешь посчитать свой потенциал — пиши</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d12')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d13">
+      <div class="day-meta">
+        <div class="day-num">13</div>
+        <div class="day-date">17 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Я не продаю. Я рекомендую. И получаю вознаграждение»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Ты когда-нибудь советовала подруге хороший ресторан? Вот и здесь так же. Только тебе платят»</div>
+        <div class="day-script">Я не звоню людям и не уговариваю. Я просто рассказываю своим знакомым то, что знаю. Кому интересно — присоединяются. Я получаю вознаграждение. Это честно, это просто и это работает без давления на людей.</div>
+        <span class="day-cta">👉 Хочешь так же — напиши мне</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d13')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d14">
+      <div class="day-meta">
+        <div class="day-num">14</div>
+        <div class="day-date">18 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Это не для всех. Честно говорю — для кого»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Я не буду убеждать всех подряд. Но если ты узнаёшь себя в этом видео — читай дальше»</div>
+        <div class="day-script">MWR Life подходит тем, кто хочет путешествовать чаще и платить меньше. Кто хотел бы иметь дополнительный доход — без жёсткого графика. Кто готов разобраться и попробовать. Если это про тебя — напиши мне. Расскажу всё честно.</div>
+        <span class="day-cta">👉 Это про тебя? Пиши — поговорим</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d14')"> отснято</label>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- БЛОК 3 -->
+<div class="block b3">
+  <div class="block-header">
+    <span class="block-emoji">🔵</span>
+    <div>
+      <h2>БЛОК 3 — Акция</h2>
+      <p>19–25 июня · 7 дней · Рассказываем об акции, снимаем страхи, приглашаем</p>
+    </div>
+  </div>
+  <div class="days">
+
+    <div class="day" id="d15">
+      <div class="day-meta">
+        <div class="day-num">15</div>
+        <div class="day-date">19 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Компания объявила акцию — я первый раз такое вижу»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«За год в MWR Life таких условий ещё не было. Рассказываю — смотри до конца»</div>
+        <div class="day-script">До конца июня компания запустила специальную акцию. Она для тех, кто уже в MWR Life, но ещё не пригласил ни одного человека. Если это ты — это твой момент. Завтра расскажу математику — цифры очень интересные.</div>
+        <span class="day-cta">👉 Подписывайся — завтра расскажу детали</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d15')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d16">
+      <div class="day-meta">
+        <div class="day-num">16</div>
+        <div class="day-date">20 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«80 + 80 + 80 + 300 = 540 USDT. Считаем вместе»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Возьми телефон. Открой калькулятор. Считаем вместе — это важно»</div>
+        <div class="day-script">Акция до 30 июня. Приглашаешь 3 человека на пакет Турбо Элит. За каждого — 80 USDT. Три человека — 240 USDT. Плюс бонус от компании — 300 USDT. Итого: 540 USDT. За то, что просто поделилась информацией с людьми.</div>
+        <span class="day-cta">👉 Хочешь участвовать — напиши мне сегодня</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d16')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d17">
+      <div class="day-meta">
+        <div class="day-num">17</div>
+        <div class="day-date">21 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Турбо Элит — что это и почему именно этот пакет»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Все говорят Турбо Элит. Что это такое — объясняю простыми словами»</div>
+        <div class="day-script">Пакет Турбо Элит — 590 USDT. Из них 490 — это баллы лояльности. Ты сразу можешь бронировать путешествия. 99 — это франшиза, вход в клуб. Полный доступ ко всем возможностям платформы: отели, авиа, круизы, магазин.</div>
+        <span class="day-cta">👉 Вопросы по пакету — пиши в Telegram</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d17')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d18">
+      <div class="day-meta">
+        <div class="day-num">18</div>
+        <div class="day-date">22 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Кто может участвовать в акции — проверь себя»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Акция не для всех. Проверь прямо сейчас — подходишь ли ты»</div>
+        <div class="day-script">Условия простые. Ты уже в MWR Life. У тебя ещё нет ни одного приглашённого человека. Ты готова рассказать трём знакомым о клубе до 30 июня. Всё. Если это про тебя — напиши мне сегодня, пока есть время.</div>
+        <span class="day-cta">👉 Подходишь? Пиши прямо сейчас</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d18')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d19">
+      <div class="day-meta">
+        <div class="day-num">19</div>
+        <div class="day-date">23 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Написала 3 знакомым. Вот что они ответили»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Страшно предлагать людям? Покажу как я это делаю — просто и без давления»</div>
+        <div class="day-script">Я не продаю. Я пишу знакомым: "Есть интересная тема, хочу рассказать — тебе удобно?" Люди сами спрашивают подробнее. Я рассказываю — честно, без уговоров. Кому интересно — присоединяются. Главное — начать разговор.</div>
+        <span class="day-cta">👉 Помогу составить первое сообщение — пиши</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d19')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d20">
+      <div class="day-meta">
+        <div class="day-num">20</div>
+        <div class="day-date">24 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«А вдруг скажут нет? Отвечаю»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Страх отказа — это главное что мешает людям начать. Давай разберём»</div>
+        <div class="day-script">Скажут нет — и что? Ты просто поделилась информацией. Не купили — не страшно. Из 10 разговоров 2-3 точно заинтересуются. Нам нужно всего 3 человека. Это реально. Я помогу — напиши мне, разберём вместе.</div>
+        <span class="day-cta">👉 Напиши — помогу начать</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d20')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d21">
+      <div class="day-meta">
+        <div class="day-num">21</div>
+        <div class="day-date">25 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«5 вопросов об акции — отвечаю честно»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«За неделю мне написали десятки людей. Собрала самые частые вопросы — отвечаю»</div>
+        <div class="day-script">1. Когда получу деньги? — После регистрации каждого партнёра. 2. Нужно ли доплачивать? — Нет. 3. Можно ли приглашать незнакомых? — Да. 4. Что если человек передумает? — Уточни у меня. 5. Как начать? — Напиши мне прямо сейчас.</div>
+        <span class="day-cta">👉 Ещё вопросы? Пиши — отвечу лично</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d21')"> отснято</label>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- БЛОК 4 -->
+<div class="block b4">
+  <div class="block-header">
+    <span class="block-emoji">🔴</span>
+    <div>
+      <h2>БЛОК 4 — Дожим</h2>
+      <p>26–30 июня · 5 дней · Срочность, последний шанс, финальный призыв</p>
+    </div>
+  </div>
+  <div class="days">
+
+    <div class="day" id="d22">
+      <div class="day-meta">
+        <div class="day-num">22</div>
+        <div class="day-date">26 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Осталось 5 дней. Ты ещё успеваешь»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Пока ты думаешь — другие уже действуют. 5 дней. Три человека. 540 USDT.»</div>
+        <div class="day-script">Акция заканчивается 30 июня. Осталось 5 дней. Если ты смотришь это видео — ты ещё успеваешь. Не нужно всё продумать идеально. Нужно просто написать мне прямо сейчас — я помогу сделать первый шаг.</div>
+        <span class="day-cta">👉 Пиши сейчас — помогу быстро</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d22')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d23">
+      <div class="day-meta">
+        <div class="day-num">23</div>
+        <div class="day-date">27 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«4 дня. Что тебя останавливает? Пиши»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Я читаю все сообщения. Напиши прямо сейчас что мешает — отвечу лично»</div>
+        <div class="day-script">Нет времени разобраться? Непонятно как начать? Боишься что не получится? Напиши мне в Telegram — я на связи. Разберём твою ситуацию вместе. Осталось 4 дня. Ещё есть время.</div>
+        <span class="day-cta">👉 Напиши что останавливает — отвечу лично</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d23')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d24">
+      <div class="day-meta">
+        <div class="day-num">24</div>
+        <div class="day-date">28 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«3 дня. 3 человека. 540 USDT»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Три. Три. Пятьсот сорок. Повторяю специально — чтобы ты запомнила»</div>
+        <div class="day-script">Три дня осталось. Три человека нужно пригласить. Пятьсот сорок USDT получишь бонусом. Такой математики не было раньше и не будет после. Если ты думаешь — сегодня момент чтобы написать мне.</div>
+        <span class="day-cta">👉 Напиши АКЦИЯ в Telegram прямо сейчас</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d24')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d25">
+      <div class="day-meta">
+        <div class="day-num">25</div>
+        <div class="day-date">29 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Завтра акция закрывается. Это моё последнее напоминание»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Я обещала не надоедать. Но это — важно. Последний раз напоминаю»</div>
+        <div class="day-script">Завтра 30 июня. Акция закрывается. Если ты думала всю неделю — сегодня ночь для решения. Напиши ХОЧУ в директ или в Telegram. Я на связи до позднего вечера. Помогу оформить всё быстро.</div>
+        <span class="day-cta">👉 Напиши ХОЧУ — я отвечу сегодня</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d25')"> отснято</label>
+      </div>
+    </div>
+
+    <div class="day" id="d26">
+      <div class="day-meta">
+        <div class="day-num">26</div>
+        <div class="day-date">30 июня</div>
+      </div>
+      <div class="day-content">
+        <div class="day-title">«Последний день. Акция закрывается сегодня»</div>
+        <div class="day-hook"><strong>🎣 Хук:</strong>«Сегодня всё. После полуночи таких условий уже не будет»</div>
+        <div class="day-script">Это последний день акции. Кто успел — я рада за вас, это отличное решение. Кто не успел — не расстраивайся. Возможности MWR Life никуда не уходят. Путешествовать выгодно, зарабатывать на рекомендациях — это всегда доступно. Пиши — расскажу всё.</div>
+        <span class="day-cta">👉 Пиши в любое время — я всегда на связи</span>
+        <label class="done-check"><input type="checkbox" onchange="toggleDone(this,'d26')"> отснято</label>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<script>
+function toggleDone(cb, id) {
+  const day = document.getElementById(id);
+  const label = cb.parentElement;
+  if (cb.checked) {
+    day.classList.add('completed');
+    label.classList.add('checked');
+    label.childNodes[1].nodeValue = ' снято ✓';
+  } else {
+    day.classList.remove('completed');
+    label.classList.remove('checked');
+    label.childNodes[1].nodeValue = ' отснято';
+  }
+}
+</script>
+
+</body>
+</html>
