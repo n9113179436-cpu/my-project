@@ -4,248 +4,205 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Карусель — Акция MWR Life</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;0,900;1,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #1a1a2e;
+  background: #1a1020;
   font-family: 'Nunito', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.5rem 1rem;
-  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1.2rem;
+  padding: 1.5rem 1rem; min-height: 100vh;
 }
 
-h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-spacing: 0.12em; text-transform: uppercase; }
+h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spacing: 0.15em; text-transform: uppercase; }
 
 .nav { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
 .nav-btn {
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.7rem; font-weight: 800;
+  font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 800;
   padding: 0.4rem 1rem; border-radius: 2rem;
-  border: 2px solid rgba(255,255,255,0.15);
-  background: transparent; color: rgba(255,255,255,0.4);
+  border: 2px solid rgba(255,255,255,0.12);
+  background: transparent; color: rgba(255,255,255,0.35);
   cursor: pointer; transition: all 0.2s;
 }
-.nav-btn.active { background: #A855F7; border-color: #A855F7; color: white; }
+.nav-btn.active { background: #7C3AED; border-color: #7C3AED; color: white; }
 
-/* СЛАЙД — формат 4:5 как в Instagram */
+/* СЛАЙД 4:5 = 1080×1350 */
 .slide {
-  width: min(400px, 92vw);
+  width: min(380px, 92vw);
   aspect-ratio: 4/5;
   background: white;
   border-radius: 1.2rem;
   overflow: hidden;
   position: relative;
   display: none;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
   container-type: inline-size;
 }
 .slide.active { display: block; }
 
-/* Персонаж — по центру снизу */
-.char {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 62%;
-  z-index: 3;
-  object-fit: contain;
-  object-position: bottom center;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+/* ═══ ОБЩИЕ ЭЛЕМЕНТЫ ═══ */
+
+/* Декор фон */
+.bg-blob {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; z-index: 0;
 }
 
-/* Речевой пузырь */
+/* Персонаж */
+.char {
+  position: absolute; z-index: 4;
+  object-fit: contain; object-position: bottom;
+}
+
+/* Теги / бейджи */
+.tag {
+  display: inline-flex; align-items: center; gap: 0.3em;
+  font-size: clamp(0.42rem, 2.2cqw, 0.58rem);
+  font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.3em 0.9em; border-radius: 2em;
+}
+.tag-purple { background: #EDE9FE; color: #6D28D9; }
+.tag-dark   { background: #1a1020; color: white; }
+.tag-outline { background: transparent; border: 1.5px solid #7C3AED; color: #7C3AED; }
+
+/* Заголовки */
+.h-hero {
+  font-size: clamp(1.8rem, 11cqw, 2.8rem);
+  font-weight: 900; line-height: 1.0;
+  color: #0f0a1e; letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.h-hero .purple { color: #7C3AED; }
+.h-hero .underline {
+  position: relative; display: inline-block;
+}
+.h-hero .underline::after {
+  content: '';
+  position: absolute; bottom: -0.08em; left: 0; right: 0;
+  height: 0.12em; background: #7C3AED; border-radius: 2px;
+}
+.h-hero .bg-mark {
+  background: #EDE9FE; border-radius: 0.15em;
+  padding: 0 0.12em; display: inline-block;
+}
+.h-sub {
+  font-size: clamp(0.7rem, 4cqw, 1rem);
+  font-weight: 700; color: #4B5563; line-height: 1.4;
+}
+.h-tiny {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.5rem, 2.5cqw, 0.65rem);
+  color: #9CA3AF; font-weight: 500; line-height: 1.5;
+}
+
+/* Декоративные звёздочки */
+.star {
+  position: absolute; z-index: 5;
+  pointer-events: none; user-select: none;
+  animation: starPulse 2s ease-in-out infinite;
+  color: #7C3AED;
+}
+@keyframes starPulse {
+  0%,100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  50% { transform: scale(1.25) rotate(15deg); opacity: 1; }
+}
+
+/* Стрелки */
+.arrow {
+  position: absolute; z-index: 5;
+  font-size: clamp(0.8rem, 4cqw, 1.1rem);
+  color: #7C3AED; pointer-events: none;
+  animation: arrowBounce 1.2s ease-in-out infinite;
+}
+@keyframes arrowBounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* Пузырь речи */
 .bubble {
-  position: absolute;
-  background: white;
-  border: 2px solid #E9D5FF;
-  border-radius: 1em 1em 1em 0.2em;
+  position: absolute; z-index: 6;
+  background: white; border-radius: 1em 1em 1em 0.2em;
+  border: 2px solid #DDD6FE;
   padding: 0.4em 0.8em;
-  font-size: clamp(0.6rem, 3cqw, 0.78rem);
-  font-weight: 800;
-  color: #1a1a2e;
-  white-space: nowrap;
-  z-index: 5;
-  box-shadow: 0 2px 10px rgba(168,85,247,0.15);
+  font-size: clamp(0.5rem, 2.5cqw, 0.65rem);
+  font-weight: 800; color: #0f0a1e; white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(109,40,217,0.12);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
 }
 .bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -8px; left: 12px;
+  content: ''; position: absolute;
+  bottom: -7px; left: 12px;
   border: 5px solid transparent;
-  border-top-color: white;
-  border-bottom: none;
+  border-top-color: white; border-bottom: none;
+}
+.bubble.right::after { left: auto; right: 12px; }
+
+/* Выделение текста */
+.highlight {
+  background: linear-gradient(to right, #EDE9FE, #DDD6FE);
+  border-radius: 0.2em; padding: 0.05em 0.25em;
 }
 
-/* Декор — звёздочки, сердечки */
-.sp {
-  position: absolute;
-  z-index: 4;
-  animation: spAnim 2s ease-in-out infinite;
-  pointer-events: none;
-  user-select: none;
-  font-style: normal;
+/* Pill-бейджи с числами */
+.pill {
+  display: inline-flex; align-items: center; gap: 0.3em;
+  font-weight: 900; border-radius: 2em;
+  padding: 0.3em 0.7em; white-space: nowrap;
 }
-@keyframes spAnim {
-  0%,100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.2) rotate(15deg); }
+.pill-purple { background: #7C3AED; color: white; }
+.pill-light  { background: #EDE9FE; color: #6D28D9; }
+.pill-dark   { background: #0f0a1e; color: white; }
+
+/* Линия-акцент */
+.accent-line {
+  height: 3px; border-radius: 3px; background: #7C3AED;
 }
 
-/* Зоны текста — разбросаны по слайду */
-.t-top {
-  position: absolute;
-  top: 4%; left: 0; right: 0;
-  text-align: center;
-  padding: 0 6%;
-  z-index: 6;
+/* Карточки */
+.mini-card {
+  background: #FAFAFA; border: 1.5px solid #EDE9FE;
+  border-radius: 0.8em; padding: 0.6em 0.8em;
+  display: flex; align-items: center; gap: 0.5em;
 }
-.t-left {
-  position: absolute;
-  top: 36%; left: 4%;
-  max-width: 42%;
-  z-index: 6;
-}
-.t-right {
-  position: absolute;
-  top: 36%; right: 4%;
-  max-width: 42%;
-  text-align: right;
-  z-index: 6;
-}
-.t-bot {
-  position: absolute;
-  bottom: 4%; left: 0; right: 0;
-  text-align: center;
-  padding: 0 6%;
-  z-index: 6;
-}
-
-.tag {
-  display: inline-block;
-  font-size: clamp(0.45rem, 2.5cqw, 0.6rem);
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 0.3em 0.9em;
-  border-radius: 2em;
-  margin-bottom: 0.6em;
-  width: fit-content;
-}
-
-.big {
-  font-size: clamp(1.2rem, 8.5cqw, 2rem);
-  font-weight: 900;
-  line-height: 1.05;
-  color: #1a1a2e;
-  margin-bottom: 0.4em;
-  text-transform: uppercase;
-}
-.big em { font-style: italic; text-transform: none; }
-.big .purple { color: #A855F7; }
-.big .green { color: #10B981; }
-
-.mid {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(0.58rem, 3.2cqw, 0.75rem);
-  color: #555;
-  line-height: 1.55;
-  margin-bottom: 0.6em;
-}
-.mid strong { color: #1a1a2e; font-weight: 700; }
-.mid .hl { color: #A855F7; font-weight: 700; text-decoration: underline; }
-
-.math {
-  background: #F3E8FF;
-  border-radius: 0.6em;
-  padding: 0.6em 0.7em;
-  margin-bottom: 0.5em;
-}
-.math-line {
-  font-size: clamp(0.58rem, 3cqw, 0.72rem);
-  font-weight: 800;
-  color: #1a1a2e;
-  line-height: 1.6;
-}
-.math-line .n { color: #A855F7; font-size: 1.15em; }
-.math-total {
-  font-size: clamp(1rem, 6cqw, 1.4rem);
-  font-weight: 900;
-  color: #A855F7;
-  margin-top: 0.2em;
-}
-
-.cta-word {
-  font-size: clamp(1.5rem, 9cqw, 2.2rem);
-  font-weight: 900;
-  color: #A855F7;
-  line-height: 1;
-  display: block;
-}
-.cta-arrow {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(0.55rem, 2.8cqw, 0.7rem);
-  color: #888;
-  margin-top: 0.2em;
-}
-.cta-btn {
-  display: inline-block;
-  background: #A855F7;
-  color: white;
-  font-size: clamp(0.5rem, 2.8cqw, 0.65rem);
-  font-weight: 800;
-  padding: 0.5em 1.2em;
-  border-radius: 2em;
-  margin-top: 0.5em;
-  letter-spacing: 0.04em;
-}
-
-/* Линия разделитель */
-.line {
-  width: 2.5em; height: 2px;
-  background: #A855F7;
-  margin: 0.5em 0;
-  border-radius: 2px;
-}
+.mini-card-icon { font-size: clamp(0.9rem, 4.5cqw, 1.2rem); flex-shrink: 0; }
+.mini-card-text { font-size: clamp(0.45rem, 2.2cqw, 0.58rem); font-weight: 700; color: #1f1235; line-height: 1.4; }
+.mini-card-text span { color: #7C3AED; }
 
 /* Ник */
 .handle {
-  position: absolute;
-  bottom: 3%;
-  right: 4%;
-  font-size: clamp(0.4rem, 1.8cqw, 0.52rem);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  opacity: 0.3;
-  z-index: 6;
-  color: #1a1a2e;
+  position: absolute; bottom: 2.5%; right: 3%;
+  font-size: clamp(0.38rem, 1.8cqw, 0.5rem);
+  font-weight: 700; letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.2); z-index: 8;
 }
 
-/* Кнопки */
+/* Номер слайда */
+.slide-num {
+  position: absolute; top: 3%; right: 3%;
+  font-size: clamp(0.38rem, 1.8cqw, 0.5rem);
+  font-weight: 800; color: rgba(0,0,0,0.15);
+  letter-spacing: 0.08em; z-index: 8;
+}
+
+/* Кнопки управления */
 .arrows { display: flex; gap: 1rem; align-items: center; }
 .arrow-btn {
-  width: 2.4rem; height: 2.4rem;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white; font-size: 1rem;
-  cursor: pointer; transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center;
+  width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+  color: white; font-size: 1rem; cursor: pointer;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center;
 }
-.arrow-btn:hover { background: #A855F7; border-color: #A855F7; }
-.counter { color: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 700; }
-
+.arrow-btn:hover { background: #7C3AED; border-color: #7C3AED; }
+.counter { color: rgba(255,255,255,0.35); font-size: 0.8rem; font-weight: 700; }
 .fullscreen-btn {
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.8rem; font-weight: 800;
+  font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 800;
   padding: 0.6rem 1.5rem; border-radius: 2rem;
-  background: #A855F7; border: none;
-  color: white; cursor: pointer;
+  background: #7C3AED; border: none; color: white; cursor: pointer;
 }
+.hint { font-size: 0.6rem; color: rgba(255,255,255,0.2); }
 
 /* ОВЕРЛЕЙ */
 #overlay {
@@ -254,21 +211,15 @@ h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-sp
   align-items: center; justify-content: center;
 }
 #overlay.show { display: flex; }
-#overlay-slide {
-  width: 100vw; height: 100vh;
-  position: relative; overflow: hidden;
-}
+#overlay-slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
 #overlay-slide .slide {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  aspect-ratio: unset !important;
-  border-radius: 0 !important;
-  max-width: none !important;
+  display: block !important; width: 100% !important;
+  height: 100% !important; aspect-ratio: unset !important;
+  border-radius: 0 !important; max-width: none !important;
 }
 .close-btn {
   position: fixed; top: 1rem; right: 1rem; z-index: 1100;
-  background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.3);
   color: white; width: 2.5rem; height: 2.5rem;
   border-radius: 50%; font-size: 1.1rem; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
@@ -284,17 +235,16 @@ h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-sp
   display: flex; align-items: center; justify-content: center;
 }
 .nav-fs-counter {
-  background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.7);
+  background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.7);
   border-radius: 2rem; padding: 0 1rem;
   font-size: 0.8rem; font-weight: 700;
   display: flex; align-items: center;
 }
-.hint { font-size: 0.65rem; color: rgba(255,255,255,0.25); }
 </style>
 </head>
 <body>
 
-<h1>Карусель — MWR Life</h1>
+<h1>Карусель MWR Life · Акция</h1>
 <div class="nav">
   <button class="nav-btn active" onclick="goTo(0)">1</button>
   <button class="nav-btn" onclick="goTo(1)">2</button>
@@ -303,150 +253,274 @@ h1 { color: white; font-size: 0.85rem; font-weight: 700; opacity: 0.5; letter-sp
   <button class="nav-btn" onclick="goTo(4)">5</button>
 </div>
 
-<!-- СЛАЙД 1 — ХУК -->
+<!-- ══════════════════════════════════
+     СЛАЙД 1 — ХУК
+     Персонаж выглядывает снизу-слева,
+     огромный заголовок занимает верх
+══════════════════════════════════ -->
 <div class="slide active" id="s0">
-  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
-  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#C084FC;animation-delay:.4s">★</span>
-  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.8s">🚀</span>
-  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#E879F9;animation-delay:.2s">💜</span>
-  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">✧</span>
-  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">🚀</span>
+  <!-- фоновые блобы -->
+  <div class="bg-blob" style="width:55%;height:40%;top:-10%;right:-10%;background:radial-gradient(ellipse,rgba(167,139,250,0.15),transparent 70%);"></div>
+  <div class="bg-blob" style="width:40%;height:35%;bottom:15%;left:-8%;background:radial-gradient(ellipse,rgba(196,181,253,0.12),transparent 70%);"></div>
 
-  <div class="t-top">
-    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">MWR Life · Акция</span>
-    <div class="big" style="font-size:clamp(1.4rem,9cqw,2.2rem);margin-top:0.3em;">Есть кое-что<br><span class="purple">важное!</span></div>
+  <!-- звёздочки -->
+  <span class="star" style="top:6%;left:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0s">✦</span>
+  <span class="star" style="top:8%;right:8%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:0.5s">★</span>
+  <span class="star" style="top:20%;left:3%;font-size:clamp(0.5rem,2.5cqw,0.7rem);animation-delay:0.3s;color:#C084FC">✧</span>
+  <span class="star" style="bottom:35%;right:4%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:0.8s">✦</span>
+  <span class="star" style="bottom:28%;left:42%;font-size:clamp(0.5rem,2.5cqw,0.7rem);animation-delay:1.1s;color:#DDD6FE">✧</span>
+
+  <!-- слайд номер -->
+  <div class="slide-num">01/05</div>
+
+  <!-- ВЕРХНИЙ КОНТЕНТ — занимает ~50% высоты -->
+  <div style="position:absolute;top:5%;left:5%;right:5%;z-index:3;">
+    <span class="tag tag-dark" style="margin-bottom:clamp(0.4rem,2cqw,0.7rem);display:inline-flex;">⚡ MWR Life · Акция</span>
+
+    <div class="h-hero" style="margin-bottom:clamp(0.3rem,1.5cqw,0.5rem);">
+      ЕСТЬ<br>
+      <span class="bg-mark">КОЕ-ЧТО</span><br>
+      <span class="underline purple">ВАЖНОЕ!</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:0.5em;margin-top:clamp(0.5rem,2.5cqw,0.8rem);">
+      <div class="accent-line" style="width:2em;flex-shrink:0;"></div>
+      <div class="h-sub">Акция, о которой <span style="color:#7C3AED;font-weight:900;">я не могла молчать</span></div>
+    </div>
+
+    <div class="h-tiny" style="margin-top:clamp(0.3rem,1.5cqw,0.5rem);">
+      До 30 июня · Только для участников клуба
+    </div>
   </div>
 
-  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">жду тебя! 👋</div>
+  <!-- ПЕРСОНАЖ снизу-слева, выглядывает -->
+  <img class="char" src="babushka-3.png" alt=""
+    style="bottom:0;left:-4%;height:52%;transform:scaleX(-1);"
+    onerror="this.style.opacity='0.15';this.src='natalia_3d-3.png';this.style.opacity='1'">
 
-  <img class="char" src="natalia_3d-3.png" alt="">
+  <!-- пузырь над персонажем -->
+  <div class="bubble" style="bottom:46%;left:38%;">Читай до конца! 👀</div>
 
-  <div class="t-left" style="top:38%;">
-    <div class="mid">Акция, о которой<br>я <span class="hl">не могла<br>молчать</span></div>
+  <!-- стрелка листай -->
+  <div style="position:absolute;bottom:3.5%;left:50%;transform:translateX(-50%);z-index:5;text-align:center;">
+    <div class="arrow" style="position:relative;font-size:clamp(0.7rem,3.5cqw,1rem);">↓ листай дальше ↓</div>
   </div>
-  <div class="t-right" style="top:38%;">
-    <div class="mid">Листай<br>дальше 👇</div>
+
+  <!-- правый нижний текст -->
+  <div style="position:absolute;bottom:8%;right:4%;z-index:4;text-align:right;">
+    <div class="pill pill-purple" style="font-size:clamp(0.42rem,2.1cqw,0.56rem);">до 30 июня</div>
   </div>
 
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 2 — ИСТОРИЯ -->
+<!-- ══════════════════════════════════
+     СЛАЙД 2 — ИСТОРИЯ
+     Персонаж справа показывает на текст
+══════════════════════════════════ -->
 <div class="slide" id="s1">
-  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#F59E0B;">✦</span>
-  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:.3s">★</span>
-  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.7s">✈️</span>
-  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#FCD34D;animation-delay:.5s">🌟</span>
-  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.2s">✦</span>
-  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.9s">✈️</span>
+  <div class="bg-blob" style="width:60%;height:50%;top:-15%;left:-15%;background:radial-gradient(ellipse,rgba(251,240,255,0.9),transparent 70%);"></div>
 
-  <div class="t-top">
-    <span class="tag" style="background:#FEF3DC;color:#B45309;">Моя история</span>
-    <div class="big" style="font-size:clamp(1.3rem,8.5cqw,2rem);margin-top:0.3em;">Год в MWR Life<br><span style="color:#F59E0B;">изменил всё</span></div>
+  <span class="star" style="top:5%;right:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0.2s">✦</span>
+  <span class="star" style="top:16%;right:3%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.7s">✧</span>
+  <span class="star" style="bottom:30%;left:3%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:0.4s">★</span>
+
+  <div class="slide-num">02/05</div>
+
+  <!-- левая колонка — текст -->
+  <div style="position:absolute;top:5%;left:4%;width:55%;z-index:3;">
+    <span class="tag tag-outline" style="margin-bottom:clamp(0.5rem,2.5cqw,0.8rem);display:inline-flex;">Моя история</span>
+
+    <div class="h-hero" style="font-size:clamp(1.5rem,9.5cqw,2.3rem);margin-bottom:clamp(0.4rem,2cqw,0.6rem);">
+      ГОД В<br>
+      MWR<br>
+      <span class="purple underline">LIFE</span>
+    </div>
+
+    <div class="accent-line" style="width:3em;margin-bottom:clamp(0.4rem,2cqw,0.6rem);"></div>
+
+    <div class="h-sub" style="margin-bottom:clamp(0.3rem,1.5cqw,0.5rem);">
+      Первое путешествие<br>с семьёй —<br>
+      <span class="highlight">за накопленные баллы</span>
+    </div>
+
+    <div class="h-tiny">Это работает. Я проверила ✓</div>
   </div>
 
-  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">год в клубе ✈️</div>
+  <!-- персонаж справа, машет / показывает -->
+  <img class="char" src="babushka-1.png" alt=""
+    style="bottom:0;right:-3%;height:68%;"
+    onerror="this.src='natalia_3d.png'">
 
-  <img class="char" src="natalia_3d.png" alt="">
+  <!-- пузырь от персонажа -->
+  <div class="bubble right" style="bottom:60%;right:36%;">Это изменило всё! ✨</div>
 
-  <div class="t-left" style="top:38%;">
-    <div class="mid">Первое путешествие<br>с семьёй за<br>накопленные баллы</div>
-  </div>
-  <div class="t-right" style="top:38%;">
-    <div class="mid"><strong>Это работает ✓</strong><br>Я проверила.</div>
-  </div>
+  <!-- стрелка -->
+  <div class="arrow" style="bottom:4%;left:50%;transform:translateX(-50%);">↓ листай ↓</div>
 
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 3 — МАТЕМАТИКА -->
+<!-- ══════════════════════════════════
+     СЛАЙД 3 — МАТЕМАТИКА 540
+     Персонаж с руками вверх, огромная цифра
+══════════════════════════════════ -->
 <div class="slide" id="s2">
-  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#10B981;">✦</span>
-  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#34D399;animation-delay:.5s">★</span>
-  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.3s">💰</span>
-  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.7s">🎉</span>
-  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.1s">✦</span>
-  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">💰</span>
+  <div class="bg-blob" style="width:70%;height:60%;top:-20%;right:-20%;background:radial-gradient(ellipse,rgba(237,233,254,0.8),transparent 65%);"></div>
+  <div class="bg-blob" style="width:50%;height:40%;bottom:-10%;left:-10%;background:radial-gradient(ellipse,rgba(221,214,254,0.5),transparent 65%);"></div>
 
-  <div class="t-top">
-    <span class="tag" style="background:#D1FAE5;color:#065F46;">Акция до 30 июня</span>
-    <div class="big" style="font-size:clamp(1.4rem,9cqw,2.2rem);margin-top:0.3em;"><span style="color:#10B981;">540 USDT</span><br>за 3 человека</div>
+  <span class="star" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.4rem);animation-delay:0s">✦</span>
+  <span class="star" style="top:6%;right:6%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:0.6s">★</span>
+  <span class="star" style="top:28%;left:3%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.3s">✧</span>
+  <span class="star" style="bottom:28%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:0.9s">✦</span>
+
+  <div class="slide-num">03/05</div>
+
+  <!-- верх -->
+  <div style="position:absolute;top:4%;left:4%;right:4%;z-index:3;text-align:center;">
+    <span class="tag tag-purple">⚡ Акция до 30 июня</span>
+    <div class="h-hero" style="font-size:clamp(1.1rem,7cqw,1.7rem);margin-top:clamp(0.3rem,1.5cqw,0.5rem);">
+      ЗА 3 ЧЕЛОВЕКА
+    </div>
   </div>
 
-  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">считаем! 🧮</div>
+  <!-- ОГРОМНАЯ ЦИФРА по центру -->
+  <div style="position:absolute;top:22%;left:0;right:0;text-align:center;z-index:3;">
+    <div style="font-size:clamp(4rem,22cqw,5.5rem);font-weight:900;color:#7C3AED;line-height:1;letter-spacing:-0.02em;">540</div>
+    <div style="font-size:clamp(1rem,5.5cqw,1.4rem);font-weight:900;color:#0f0a1e;letter-spacing:0.05em;margin-top:-0.1em;">USDT</div>
+  </div>
 
-  <img class="char" src="natalia_3d-5.jpg" alt="">
+  <!-- формула — левая сторона -->
+  <div style="position:absolute;top:48%;left:4%;z-index:4;">
+    <div style="display:flex;flex-direction:column;gap:0.3em;">
+      <div style="display:flex;align-items:center;gap:0.4em;">
+        <span class="pill pill-light" style="font-size:clamp(0.5rem,2.5cqw,0.65rem);">80 USDT</span>
+        <span class="h-tiny">× 3 чел</span>
+        <span style="font-size:clamp(0.55rem,2.8cqw,0.72rem);font-weight:900;color:#7C3AED;">= 240</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.4em;">
+        <span class="pill pill-purple" style="font-size:clamp(0.5rem,2.5cqw,0.65rem);">+300</span>
+        <span class="h-tiny">бонус компании</span>
+      </div>
+      <div class="accent-line" style="width:100%;margin:0.2em 0;"></div>
+      <div style="font-size:clamp(0.65rem,3.3cqw,0.85rem);font-weight:900;color:#0f0a1e;">
+        Итого: <span style="color:#7C3AED;">540 USDT 🎉</span>
+      </div>
+    </div>
+  </div>
 
-  <div class="t-left" style="top:38%;">
-    <div class="math" style="background:#D1FAE5;">
-      <div class="math-line"><span class="n" style="color:#10B981;">80</span>×3=<span class="n" style="color:#10B981;">240</span></div>
-      <div class="math-line">+бонус=<span class="n" style="color:#10B981;">300</span></div>
-      <div class="math-total" style="color:#10B981;">= 540 🎉</div>
+  <!-- персонаж снизу-справа с руками вверх -->
+  <img class="char" src="babushka-4.png" alt=""
+    style="bottom:0;right:-2%;height:48%;"
+    onerror="this.src='natalia_3d-5.jpg'">
+
+  <div class="bubble right" style="bottom:42%;right:32%;">Считай сама! 🧮</div>
+
+  <div class="handle">@nataliya_v_puti</div>
+</div>
+
+<!-- ══════════════════════════════════
+     СЛАЙД 4 — ПРЕИМУЩЕСТВА
+     Персонаж удивляется, карточки вокруг
+══════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="bg-blob" style="width:55%;height:45%;top:-10%;left:-10%;background:radial-gradient(ellipse,rgba(237,233,254,0.6),transparent 65%);"></div>
+
+  <span class="star" style="top:5%;right:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0.3s">✦</span>
+  <span class="star" style="top:18%;left:4%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.7s">✧</span>
+  <span class="star" style="bottom:28%;right:3%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:0.5s">★</span>
+
+  <div class="slide-num">04/05</div>
+
+  <!-- заголовок сверху -->
+  <div style="position:absolute;top:4%;left:4%;right:4%;z-index:3;">
+    <span class="tag tag-purple" style="margin-bottom:clamp(0.3rem,1.5cqw,0.5rem);display:inline-flex;">Что ты получаешь</span>
+    <div class="h-hero" style="font-size:clamp(1.4rem,8.5cqw,2.1rem);">
+      В КЛУБЕ<br>
+      <span class="purple">MWR LIFE</span>
+    </div>
+  </div>
+
+  <!-- персонаж слева, удивляется -->
+  <img class="char" src="babushka-2.png" alt=""
+    style="bottom:0;left:-2%;height:52%;"
+    onerror="this.src='Natalia_3d-2.png'">
+
+  <div class="bubble" style="bottom:45%;left:38%;">Смотри сюда! →</div>
+
+  <!-- карточки справа и снизу -->
+  <div style="position:absolute;top:34%;right:3%;width:50%;z-index:4;display:flex;flex-direction:column;gap:0.4em;">
+    <div class="mini-card">
+      <span class="mini-card-icon">🏨</span>
+      <div class="mini-card-text">Отели <span>до -70%</span><br>180+ стран</div>
+    </div>
+    <div class="mini-card">
+      <span class="mini-card-icon">✈️</span>
+      <div class="mini-card-text">Авиа, круизы,<br>авто <span>со скидкой</span></div>
+    </div>
+    <div class="mini-card">
+      <span class="mini-card-icon">🛍️</span>
+      <div class="mini-card-text">Магазин <span>Life Style</span><br>часть — баллами</div>
+    </div>
+    <div class="mini-card">
+      <span class="mini-card-icon">🎯</span>
+      <div class="mini-card-text"><span>Безоплатка:</span> приведи 3 —<br>не платишь взнос</div>
     </div>
   </div>
 
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- СЛАЙД 4 — ПАКЕТ -->
-<div class="slide" id="s3">
-  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#6366F1;">✦</span>
-  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);animation-delay:.4s">★</span>
-  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.8s">🤔</span>
-  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#818CF8;animation-delay:.2s">✧</span>
-  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">✦</span>
-  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">🔑</span>
-
-  <div class="t-top">
-    <span class="tag" style="background:#E0E7FF;color:#3730A3;">Пакет Турбо Элит</span>
-    <div class="big" style="font-size:clamp(1.3rem,8.5cqw,2rem);margin-top:0.3em;">590 USDT —<br><span style="color:#6366F1;">это не трата!</span></div>
-  </div>
-
-  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">590 USDT? 🤔</div>
-
-  <img class="char" src="Natalia_3d-2.png" alt="">
-
-  <div class="t-left" style="top:38%;">
-    <div class="mid"><span style="color:#6366F1;font-weight:900;font-size:1.15em;">490</span> USDT<br>— поездки ✈️</div>
-  </div>
-  <div class="t-right" style="top:38%;">
-    <div class="mid"><span style="color:#6366F1;font-weight:900;font-size:1.15em;">99</span> USDT<br>— вход в клуб 🔑</div>
-  </div>
-
-  <div class="handle">@nataliya_v_puti</div>
-</div>
-
-<!-- СЛАЙД 5 — CTA -->
+<!-- ══════════════════════════════════
+     СЛАЙД 5 — CTA
+     Персонаж показывает на слово АКЦИЯ
+══════════════════════════════════ -->
 <div class="slide" id="s4">
-  <span class="sp" style="top:26%;left:3%;font-size:clamp(1rem,5cqw,1.5rem);color:#A855F7;">✦</span>
-  <span class="sp" style="top:32%;right:3%;font-size:clamp(0.8rem,4cqw,1.2rem);color:#C084FC;animation-delay:.4s">★</span>
-  <span class="sp" style="top:22%;left:8%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:.9s">💌</span>
-  <span class="sp" style="top:22%;right:7%;font-size:clamp(0.7rem,3.5cqw,1rem);color:#E879F9;animation-delay:.2s">💜</span>
-  <span class="sp" style="bottom:6%;left:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.6s">✧</span>
-  <span class="sp" style="bottom:6%;right:6%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:.3s">🚀</span>
+  <div class="bg-blob" style="width:65%;height:55%;top:-15%;right:-15%;background:radial-gradient(ellipse,rgba(237,233,254,0.7),transparent 65%);"></div>
+  <div class="bg-blob" style="width:50%;height:40%;bottom:-10%;left:-10%;background:radial-gradient(ellipse,rgba(196,181,253,0.3),transparent 65%);"></div>
 
-  <div class="t-top">
-    <span class="tag" style="background:#F3E8FF;color:#7C3AED;">До 30 июня</span>
-    <div class="big" style="font-size:clamp(1.3rem,8.5cqw,2rem);margin-top:0.3em;">Хочешь бизнес<br>и путешествия?</div>
+  <span class="star" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.4rem);animation-delay:0.1s">✦</span>
+  <span class="star" style="top:8%;right:6%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:0.6s">★</span>
+  <span class="star" style="top:22%;left:3%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.4s">✧</span>
+  <span class="star" style="bottom:32%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:0.9s">✦</span>
+  <span class="star" style="bottom:26%;left:4%;font-size:clamp(0.5rem,2.5cqw,0.7rem);animation-delay:0.2s;color:#DDD6FE">✧</span>
+
+  <div class="slide-num">05/05</div>
+
+  <!-- верх -->
+  <div style="position:absolute;top:4%;left:4%;right:4%;z-index:3;text-align:center;">
+    <span class="tag tag-dark">⏰ Только до 30 июня</span>
+    <div class="h-hero" style="font-size:clamp(1.3rem,8cqw,2rem);margin-top:clamp(0.4rem,2cqw,0.6rem);">
+      ХОЧЕШЬ БИЗНЕС<br>И ПОЕЗДКИ?
+    </div>
   </div>
 
-  <div class="bubble" style="top:36%;left:50%;transform:translateX(-50%);white-space:nowrap;">пиши мне! 💌</div>
-
-  <img class="char" src="natalia_3d-4.jpg" alt="">
-
-  <div class="t-left" style="top:38%;">
-    <div class="mid">Пиши слово</div>
-    <span class="cta-word">АКЦИЯ</span>
-    <div class="cta-arrow">в директ</div>
+  <!-- центр — главный призыв -->
+  <div style="position:absolute;top:36%;left:4%;right:4%;z-index:3;text-align:center;">
+    <div class="h-sub" style="margin-bottom:0.3em;">Пиши слово</div>
+    <div style="font-size:clamp(2.5rem,15cqw,3.8rem);font-weight:900;color:#7C3AED;line-height:1;letter-spacing:0.02em;text-decoration:underline;text-decoration-thickness:0.06em;text-underline-offset:0.1em;">АКЦИЯ</div>
+    <div class="h-tiny" style="margin-top:0.3em;">в директ или Telegram</div>
   </div>
-  <div class="t-right" style="top:38%;">
-    <div class="cta-btn">@Natali_<br>Ivahnenko →</div>
+
+  <!-- персонаж снизу, показывает -->
+  <img class="char" src="babushka-5.png" alt=""
+    style="bottom:0;right:-2%;height:50%;"
+    onerror="this.src='natalia_3d-4.jpg'">
+
+  <!-- стрелка от персонажа к тексту -->
+  <div style="position:absolute;bottom:42%;right:36%;z-index:5;font-size:clamp(1rem,5cqw,1.4rem);color:#7C3AED;transform:rotate(-20deg);">←</div>
+
+  <div class="bubble right" style="bottom:44%;right:38%;">Жду тебя! 💌</div>
+
+  <!-- контакт -->
+  <div style="position:absolute;bottom:5%;left:4%;z-index:4;">
+    <div class="pill pill-purple" style="font-size:clamp(0.45rem,2.2cqw,0.58rem);">@Natali_Ivahnenko →</div>
   </div>
 
   <div class="handle">@nataliya_v_puti</div>
 </div>
 
-<!-- Управление -->
+<!-- ═══ Управление ═══ -->
 <div class="arrows">
   <button class="arrow-btn" onclick="goTo(cur-1)">←</button>
   <span class="counter" id="counter">1 / 5</span>
@@ -492,19 +566,15 @@ function openFullscreen() {
   document.getElementById('overlay').classList.add('show');
   document.body.style.overflow = 'hidden';
 }
-
 function closeFullscreen() {
   document.getElementById('overlay').classList.remove('show');
   document.body.style.overflow = '';
 }
-
 function fsNav(dir) {
   const next = cur + dir;
   if (next < 0 || next >= total) return;
-  goTo(next);
-  openFullscreen();
+  goTo(next); openFullscreen();
 }
-
 document.addEventListener('keydown', e => {
   const fs = document.getElementById('overlay').classList.contains('show');
   if (e.key === 'ArrowRight') { goTo(cur+1); if(fs) openFullscreen(); }
