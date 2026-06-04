@@ -525,45 +525,39 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
 
   <div class="slide-num">05/05</div>
 
-  <!-- верх -->
-  <div style="position:absolute;top:4%;left:4%;right:4%;z-index:3;text-align:center;">
-    <span class="tag tag-dark">⏰ Акция заканчивается 30 июня</span>
-    <div class="h-hero" style="font-size:clamp(1.2rem,7.5cqw,1.85rem);margin-top:clamp(0.3rem,1.5cqw,0.5rem);">
+  <!-- ВЕСЬ ТЕКСТ в верхней половине -->
+  <div style="position:absolute;top:4%;left:4%;right:4%;z-index:6;text-align:center;">
+
+    <span class="tag tag-dark" style="margin-bottom:clamp(0.3rem,1.5cqw,0.5rem);display:inline-flex;">⏰ Акция до 30 июня</span>
+
+    <div class="h-hero" style="font-size:clamp(1.1rem,7cqw,1.7rem);margin-bottom:clamp(0.3rem,1.5cqw,0.4rem);">
       ХОЧЕШЬ БИЗНЕС<br>И <span class="purple">ПУТЕШЕСТВИЯ?</span>
     </div>
-  </div>
 
-  <!-- социальное доказательство -->
-  <div style="position:absolute;top:34%;left:4%;right:4%;z-index:3;text-align:center;">
-    <div style="background:#F3F0FF;border:1.5px solid #DDD6FE;border-radius:0.8em;padding:0.5em 0.8em;display:inline-block;">
-      <div style="font-size:clamp(0.5rem,2.5cqw,0.65rem);font-weight:800;color:#6D28D9;">
-        👥 Уже 15+ человек в клубе написали мне на этой неделе
+    <!-- соцдоказательство -->
+    <div style="background:#F3F0FF;border:1.5px solid #DDD6FE;border-radius:0.8em;padding:0.4em 0.7em;display:inline-block;margin-bottom:clamp(0.3rem,1.5cqw,0.5rem);">
+      <div style="font-size:clamp(0.46rem,2.3cqw,0.6rem);font-weight:800;color:#6D28D9;">
+        👥 Уже 15+ человек написали мне на этой неделе
       </div>
     </div>
-  </div>
 
-  <!-- центр — главный призыв -->
-  <div style="position:absolute;top:44%;left:4%;right:52%;z-index:3;text-align:left;">
-    <div class="h-sub" style="margin-bottom:0.2em;font-size:clamp(0.6rem,3cqw,0.78rem);">Пиши слово</div>
-    <div style="font-size:clamp(2rem,12cqw,3rem);font-weight:900;color:#7C3AED;line-height:1;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px;">АКЦИЯ</div>
-    <div class="h-tiny" style="margin-top:0.3em;">в директ или Telegram</div>
-    <div style="margin-top:0.4em;">
-      <span class="pill pill-purple" style="font-size:clamp(0.42rem,2.1cqw,0.56rem);">@Natali_Ivahnenko →</span>
+    <!-- ГЛАВНЫЙ ПРИЗЫВ -->
+    <div style="display:flex;align-items:baseline;justify-content:center;gap:0.3em;margin-bottom:0.2em;">
+      <div class="h-sub" style="font-size:clamp(0.6rem,3cqw,0.78rem);">Пиши слово</div>
+      <div style="font-size:clamp(2rem,12cqw,3rem);font-weight:900;color:#7C3AED;line-height:1;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px;">АКЦИЯ</div>
     </div>
+
+    <div class="h-tiny" style="margin-bottom:0.4em;">в директ или Telegram</div>
+    <span class="pill pill-purple" style="font-size:clamp(0.42rem,2.1cqw,0.56rem);">@Natali_Ivahnenko →</span>
     <div style="margin-top:0.3em;font-size:clamp(0.42rem,2cqw,0.54rem);color:#EF4444;font-weight:800;">
       ⚠️ После 30 июня — условие исчезнет
     </div>
   </div>
 
-  <!-- персонаж снизу-справа, сердечки -->
+  <!-- ПЕРСОНАЖ строго снизу, не достаёт до текста -->
   <img class="char" src="babushka-5.png" alt=""
-    style="bottom:0;right:-2%;height:56%;"
+    style="bottom:0;left:50%;transform:translateX(-50%);height:42%;z-index:4;"
     onerror="this.src='natalia_3d-4.jpg'">
-
-  <!-- контакт -->
-  <div style="position:absolute;bottom:5%;left:4%;z-index:4;">
-    <div class="pill pill-purple" style="font-size:clamp(0.45rem,2.2cqw,0.58rem);">@Natali_Ivahnenko →</div>
-  </div>
 
   <div class="handle">@nataliya_v_puti</div>
 </div>
