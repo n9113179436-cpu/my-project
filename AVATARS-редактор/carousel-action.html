@@ -32,7 +32,10 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
 .slide {
   width: min(380px, 92vw);
   aspect-ratio: 4/5;
-  background: white;
+  background:
+    radial-gradient(circle, rgba(109,40,217,0.07) 1px, transparent 1px),
+    #FDFBFF;
+  background-size: 22px 22px, 100%;
   border-radius: 1.2rem;
   overflow: hidden;
   position: relative;
@@ -41,6 +44,23 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
   container-type: inline-size;
 }
 .slide.active { display: block; }
+
+/* Верхняя акцентная полоска */
+.topline {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: clamp(3px, 0.8cqw, 5px);
+  z-index: 10;
+}
+/* Угловой декор */
+.corner-dec {
+  position: absolute;
+  width: clamp(2rem, 10cqw, 3rem);
+  height: clamp(2rem, 10cqw, 3rem);
+  pointer-events: none; z-index: 2;
+}
+.corner-dec.tl { top: 6%; left: 4%; border-top: 2px solid; border-left: 2px solid; border-color: rgba(109,40,217,0.2); border-radius: 3px 0 0 0; }
+.corner-dec.br { bottom: 5%; right: 4%; border-bottom: 2px solid; border-right: 2px solid; border-color: rgba(109,40,217,0.2); border-radius: 0 0 3px 0; }
 
 /* ═══ ОБЩИЕ ЭЛЕМЕНТЫ ═══ */
 
@@ -259,9 +279,14 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
      огромный заголовок занимает верх
 ══════════════════════════════════ -->
 <div class="slide active" id="s0">
-  <!-- фоновые блобы -->
-  <div class="bg-blob" style="width:55%;height:40%;top:-10%;right:-10%;background:radial-gradient(ellipse,rgba(167,139,250,0.15),transparent 70%);"></div>
-  <div class="bg-blob" style="width:40%;height:35%;bottom:15%;left:-8%;background:radial-gradient(ellipse,rgba(196,181,253,0.12),transparent 70%);"></div>
+  <!-- верхняя полоска -->
+  <div class="topline" style="background:linear-gradient(90deg,#7C3AED,#A855F7,#C084FC);"></div>
+  <!-- угловой декор -->
+  <div class="corner-dec tl"></div>
+  <div class="corner-dec br"></div>
+  <!-- фоновые блобы усиленные -->
+  <div class="bg-blob" style="width:60%;height:50%;top:-15%;right:-10%;background:radial-gradient(ellipse,rgba(167,139,250,0.25),transparent 65%);"></div>
+  <div class="bg-blob" style="width:45%;height:40%;bottom:10%;left:-8%;background:radial-gradient(ellipse,rgba(196,181,253,0.2),transparent 65%);"></div>
 
   <!-- звёздочки -->
   <span class="star" style="top:6%;left:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0s">✦</span>
@@ -316,7 +341,11 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
      Персонаж справа показывает на текст
 ══════════════════════════════════ -->
 <div class="slide" id="s1">
-  <div class="bg-blob" style="width:60%;height:50%;top:-15%;left:-15%;background:radial-gradient(ellipse,rgba(251,240,255,0.9),transparent 70%);"></div>
+  <div class="topline" style="background:linear-gradient(90deg,#F59E0B,#FBBF24,#FDE68A);"></div>
+  <div class="corner-dec tl" style="border-color:rgba(245,158,11,0.25);"></div>
+  <div class="corner-dec br" style="border-color:rgba(245,158,11,0.2);"></div>
+  <div class="bg-blob" style="width:65%;height:55%;top:-15%;left:-15%;background:radial-gradient(ellipse,rgba(254,243,199,0.8),transparent 65%);"></div>
+  <div class="bg-blob" style="width:45%;height:40%;bottom:5%;right:-5%;background:radial-gradient(ellipse,rgba(251,191,36,0.12),transparent 65%);"></div>
 
   <span class="star" style="top:5%;right:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0.2s">✦</span>
   <span class="star" style="top:16%;right:3%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.7s">✧</span>
@@ -370,10 +399,13 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
      Персонаж с руками вверх, огромная цифра
 ══════════════════════════════════ -->
 <div class="slide" id="s2">
-  <div class="bg-blob" style="width:70%;height:60%;top:-20%;right:-20%;background:radial-gradient(ellipse,rgba(237,233,254,0.8),transparent 65%);"></div>
-  <div class="bg-blob" style="width:50%;height:40%;bottom:-10%;left:-10%;background:radial-gradient(ellipse,rgba(221,214,254,0.5),transparent 65%);"></div>
+  <div class="topline" style="background:linear-gradient(90deg,#10B981,#34D399,#6EE7B7);"></div>
+  <div class="corner-dec tl" style="border-color:rgba(16,185,129,0.25);"></div>
+  <div class="corner-dec br" style="border-color:rgba(16,185,129,0.2);"></div>
+  <div class="bg-blob" style="width:70%;height:60%;top:-20%;right:-20%;background:radial-gradient(ellipse,rgba(209,250,229,0.7),transparent 60%);"></div>
+  <div class="bg-blob" style="width:50%;height:40%;bottom:-10%;left:-10%;background:radial-gradient(ellipse,rgba(167,243,208,0.5),transparent 65%);"></div>
 
-  <span class="star" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.4rem);animation-delay:0s">✦</span>
+  <span class="star" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.4rem);animation-delay:0s;color:#10B981;">✦</span>
   <span class="star" style="top:6%;right:6%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:0.6s">★</span>
   <span class="star" style="top:28%;left:3%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.3s">✧</span>
   <span class="star" style="bottom:28%;right:4%;font-size:clamp(0.8rem,4cqw,1.1rem);animation-delay:0.9s">✦</span>
@@ -427,9 +459,13 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
      Персонаж удивляется, карточки вокруг
 ══════════════════════════════════ -->
 <div class="slide" id="s3">
-  <div class="bg-blob" style="width:55%;height:45%;top:-10%;left:-10%;background:radial-gradient(ellipse,rgba(237,233,254,0.6),transparent 65%);"></div>
+  <div class="topline" style="background:linear-gradient(90deg,#6366F1,#818CF8,#A5B4FC);"></div>
+  <div class="corner-dec tl" style="border-color:rgba(99,102,241,0.25);"></div>
+  <div class="corner-dec br" style="border-color:rgba(99,102,241,0.2);"></div>
+  <div class="bg-blob" style="width:60%;height:50%;top:-12%;left:-12%;background:radial-gradient(ellipse,rgba(224,231,255,0.7),transparent 65%);"></div>
+  <div class="bg-blob" style="width:45%;height:40%;bottom:5%;right:-5%;background:radial-gradient(ellipse,rgba(199,210,254,0.4),transparent 65%);"></div>
 
-  <span class="star" style="top:5%;right:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0.3s">✦</span>
+  <span class="star" style="top:5%;right:5%;font-size:clamp(0.9rem,4.5cqw,1.3rem);animation-delay:0.3s;color:#6366F1;">✦</span>
   <span class="star" style="top:18%;left:4%;font-size:clamp(0.5rem,2.5cqw,0.7rem);color:#C084FC;animation-delay:0.7s">✧</span>
   <span class="star" style="bottom:28%;right:3%;font-size:clamp(0.7rem,3.5cqw,1rem);animation-delay:0.5s">★</span>
 
@@ -475,8 +511,11 @@ h1 { color: white; font-size: 0.8rem; font-weight: 700; opacity: 0.4; letter-spa
      Персонаж показывает на слово АКЦИЯ
 ══════════════════════════════════ -->
 <div class="slide" id="s4">
-  <div class="bg-blob" style="width:65%;height:55%;top:-15%;right:-15%;background:radial-gradient(ellipse,rgba(237,233,254,0.7),transparent 65%);"></div>
-  <div class="bg-blob" style="width:50%;height:40%;bottom:-10%;left:-10%;background:radial-gradient(ellipse,rgba(196,181,253,0.3),transparent 65%);"></div>
+  <div class="topline" style="background:linear-gradient(90deg,#EC4899,#A855F7,#7C3AED);"></div>
+  <div class="corner-dec tl" style="border-color:rgba(168,85,247,0.3);"></div>
+  <div class="corner-dec br" style="border-color:rgba(236,72,153,0.2);"></div>
+  <div class="bg-blob" style="width:65%;height:55%;top:-15%;right:-15%;background:radial-gradient(ellipse,rgba(237,233,254,0.7),transparent 60%);"></div>
+  <div class="bg-blob" style="width:55%;height:45%;bottom:-10%;left:-10%;background:radial-gradient(ellipse,rgba(251,207,232,0.4),transparent 65%);"></div>
 
   <span class="star" style="top:5%;left:5%;font-size:clamp(1rem,5cqw,1.4rem);animation-delay:0.1s">✦</span>
   <span class="star" style="top:8%;right:6%;font-size:clamp(0.6rem,3cqw,0.85rem);animation-delay:0.6s">★</span>
